@@ -4,6 +4,7 @@ import morgan from "morgan";
 import path from "path";
 import cors from "cors"
 import cookieParser from 'cookie-parser';
+import sequelize from "./config/db";
 
 
 // initialize configuration
@@ -31,9 +32,9 @@ const port = process.env.SERVER_PORT;
 
 const start= async():Promise<void> => {
     try {
-        // await sequelize.sync({ alter: true });
-        // // tslint:disable-next-line:no-console
-        // console.log(`Databases synced Successfully`);
+        await sequelize.sync({ alter: true });
+        // tslint:disable-next-line:no-console
+        console.log(`Databases synced Successfully`);
         app.listen(port, () => {
             // tslint:disable-next-line:no-console
             console.log(`Server running at http://localhost:${port}`);
