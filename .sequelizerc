@@ -1,0 +1,16 @@
+// Make env variables available
+require('dotenv').config()
+
+const path = require('path');
+
+module.exports = {
+    'config': path.resolve('./config', 'dbconfig.js'),
+    // Current environment for example development or production
+    'env': process.env.NODE_ENV,
+    // Folder to seeders
+    'seeders-path': path.resolve('./', 'seeders'),
+    // Folder to migrations
+    'migrations-path': path.resolve('./', 'migrations'),
+    // Url to connect to DB
+    'url': process.env.DB_URI
+};

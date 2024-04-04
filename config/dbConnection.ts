@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Create a new Sequelize instance with the connection configuration
-const sequelize = new Sequelize({
+const sequelizeConnection = new Sequelize({
     dialect: "mysql",
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
@@ -18,7 +18,7 @@ const sequelize = new Sequelize({
     models: [],
 });
 
-sequelize.authenticate()
+sequelizeConnection.authenticate()
   .then(() => {
     // tslint:disable-next-line:no-console
      console.log('Connection has been established successfully.');
@@ -29,4 +29,4 @@ sequelize.authenticate()
   })
 
 // Export the sequelize object as the default module
-export default sequelize;
+export default sequelizeConnection;
