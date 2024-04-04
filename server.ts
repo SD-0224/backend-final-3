@@ -2,10 +2,10 @@ import dotenv from "dotenv";
 import express, { Request, Response, Application } from 'express';
 import morgan from "morgan";
 import path from "path";
-import cors from "cors"
+import cors from "cors";
 import cookieParser from 'cookie-parser';
-import db from './models'
-import User from './models'
+import db from './models';
+import User from './models';
 
 
 // initialize configuration
