@@ -5,7 +5,7 @@ import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import db from "./models";
-import User from "./models";
+
 
 // initialize configuration
 dotenv.config();
