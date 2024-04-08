@@ -1,12 +1,15 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 interface OrderAttributes {
+  id:string;
   category: string;
   status: string;
 }
 
 module.exports = (sequelize: Sequelize) => {
   class Order extends Model<OrderAttributes> implements OrderAttributes {
+    public id!:string;
     public category!: string;
     public status!: string;
 
@@ -20,6 +23,12 @@ module.exports = (sequelize: Sequelize) => {
 
   Order.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue:() => uuidv4(),
+        allowNull: false,
+        primaryKey:true
+      },
       category: {
         type: DataTypes.STRING,
         allowNull: false,

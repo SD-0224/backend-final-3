@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 interface ProductImageAttributes {
+  id:string;
   url: string;
 }
 
@@ -9,6 +11,7 @@ module.exports = (sequelize: Sequelize) => {
     extends Model<ProductImageAttributes>
     implements ProductImageAttributes
   {
+    public id!:string;
     public url!: string;
 
     static associate(models: any) {
@@ -20,6 +23,12 @@ module.exports = (sequelize: Sequelize) => {
 
   ProductImage.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue:() => uuidv4(),
+        allowNull: false,
+        primaryKey:true
+      },
       url: {
         type: DataTypes.STRING,
         allowNull: false,
