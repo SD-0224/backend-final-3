@@ -12,7 +12,8 @@ module.exports = (sequelize: Sequelize) => {
     public itemscount!: number;
 
     static associate(models: any) {
-      Wishlist.belongsTo(models.User);
+      Wishlist.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Wishlist.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
     }
 
     // Define other model setup here, like hooks and scopes

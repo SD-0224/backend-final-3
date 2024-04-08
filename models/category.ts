@@ -20,7 +20,7 @@ module.exports = (sequelize: Sequelize) => {
     public subtitle!: string;
 
     static associate(models: any) {
-      Category.hasMany(models.Product);
+      Category.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
     }
 
     // Define other model setup here, like hooks and scopes

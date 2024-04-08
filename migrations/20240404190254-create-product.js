@@ -27,9 +27,6 @@ module.exports = {
       discountpercentage: {
         type: Sequelize.INTEGER,
       },
-      initialquantity: {
-        type: Sequelize.INTEGER,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

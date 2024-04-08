@@ -12,7 +12,7 @@ module.exports = (sequelize: Sequelize) => {
     public type!: string;
 
     static associate(models: any) {
-      Payments.belongsToMany(models.User, { through: "UserPayments" });
+      Payments.belongsToMany(models.User, { through: "UserPayments",onDelete:'CASCADE', onUpdate: 'CASCADE' });
     }
 
     // Define other model setup here, like hooks and scopes

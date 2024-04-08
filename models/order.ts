@@ -11,8 +11,9 @@ module.exports = (sequelize: Sequelize) => {
     public status!: string;
 
     static associate(models: any) {
-      Order.belongsTo(models.User);
-      Order.belongsToMany(models.Product, { through: "ProductOrders" });
+      Order.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Order.belongsTo(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Order.belongsToMany(models.Product, { through: "ProductOrders",onDelete:'CASCADE', onUpdate: 'CASCADE'});
     }
 
   }
