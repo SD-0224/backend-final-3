@@ -13,8 +13,8 @@ module.exports = (sequelize: Sequelize) => {
     public rating!: number;
 
     static associate(models: any) {
-      Review.belongsTo(models.User);
-      Review.belongsTo(models.Product);
+      Review.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Review.belongsTo(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
     }
   }
 

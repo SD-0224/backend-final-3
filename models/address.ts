@@ -21,8 +21,8 @@ module.exports = (sequelize: Sequelize) => {
     public mobileNumber!: string;
 
     static associate(models: any) {
-      Address.belongsTo(models.User);
-      Address.hasMany(models.Order);
+      Address.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Address.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
     }
   }
 

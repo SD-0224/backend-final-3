@@ -1,6 +1,7 @@
 // user.model.ts
 
 import { DataTypes, Model, Sequelize } from "sequelize";
+import bcrypt from "bcrypt";
 
 interface UserAttributes {
   firstName: string;
@@ -23,12 +24,12 @@ module.exports = (sequelize: Sequelize) => {
     public avatar!: string;
 
     static associate(models: any) {
-      User.hasMany(models.Review);
-      User.hasMany(models.Address);
-      User.hasMany(models.Order);
-      User.hasOne(models.Cart);
-      User.hasOne(models.Wishlist);
-      User.belongsToMany(models.Payments, { through: 'UserPayments' });
+      User.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      User.hasMany(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      User.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      User.hasOne(models.Cart,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      User.hasOne(models.Wishlist,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      User.belongsToMany(models.Payments, { through: 'UserPayments',onDelete:'CASCADE', onUpdate: 'CASCADE' });
     }
   }
 
@@ -58,6 +59,11 @@ module.exports = (sequelize: Sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        async set(password: string): Promise<void>  {
+          const salt= bcrypt.genSaltSync();
+          const hash= bcrypt.hashSync(password,salt)
+          this.setDataValue('password', hash)
+      }
       },
       avatar: {
         type: DataTypes.STRING,
