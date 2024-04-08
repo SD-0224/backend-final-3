@@ -13,8 +13,8 @@ module.exports = (sequelize: Sequelize) => {
     public rating!: number;
 
     static associate(models: any) {
-      Review.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Review.belongsTo(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Review.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Review.belongsTo(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
     }
   }
 
@@ -25,13 +25,14 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
       },
       rating: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
     },
     {
       sequelize,
       modelName: "Review",
+      tableName: 'reviews',
     }
   );
 

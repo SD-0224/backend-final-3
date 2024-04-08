@@ -20,13 +20,13 @@ module.exports = (sequelize: Sequelize) => {
 
 
     static associate(models: any) {
-      Product.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Product.hasMany(models.ProductImage,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Product.belongsTo(models.Category,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Product.belongsTo(models.Brand,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Product.belongsTo(models.Cart,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Product.belongsTo(models.Wishlist,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Product.belongsToMany(models.Order, { through: "ProductOrders",onDelete:'CASCADE', onUpdate: 'CASCADE' });
+      Product.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
+      Product.hasMany(models.ProductImage,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
+      Product.belongsTo(models.Category,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'categoryId'});
+      Product.belongsTo(models.Brand,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'brandId'});
+      Product.belongsTo(models.Cart,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'cartId'});
+      Product.belongsTo(models.Wishlist,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'wishlistId'});
+      Product.belongsToMany(models.Order, { through: "productOrders",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId' });
     }
 
     // Define other model setup here, like hooks and scopes
@@ -47,7 +47,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
       quantity: {
@@ -62,6 +62,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Product",
+      tableName: 'products',
     }
   );
 

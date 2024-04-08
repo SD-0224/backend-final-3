@@ -24,12 +24,12 @@ module.exports = (sequelize: Sequelize) => {
     public avatar!: string;
 
     static associate(models: any) {
-      User.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      User.hasMany(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      User.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      User.hasOne(models.Cart,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      User.hasOne(models.Wishlist,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      User.belongsToMany(models.Payments, { through: 'UserPayments',onDelete:'CASCADE', onUpdate: 'CASCADE' });
+      User.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasMany(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasOne(models.Cart,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasOne(models.Wishlist,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.belongsToMany(models.Payment, { through: 'userPayments',onDelete:'CASCADE', onUpdate: 'CASCADE' ,foreignKey: 'userId'});
     }
   }
 
@@ -53,15 +53,15 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
       },
       dateofbirth: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         async set(password: string): Promise<void>  {
-          const salt= bcrypt.genSaltSync();
-          const hash= bcrypt.hashSync(password,salt)
+          const salt= await bcrypt.genSalt();
+          const hash= await bcrypt.hash(password,salt)
           this.setDataValue('password', hash)
       }
       },
@@ -73,6 +73,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "User",
+      tableName: 'users',
     }
   );
 

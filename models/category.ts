@@ -20,7 +20,7 @@ module.exports = (sequelize: Sequelize) => {
     public subtitle!: string;
 
     static associate(models: any) {
-      Category.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Category.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'categoryId'});
     }
 
     // Define other model setup here, like hooks and scopes
@@ -52,6 +52,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Category",
+      tableName: 'categories',
     }
   );
 

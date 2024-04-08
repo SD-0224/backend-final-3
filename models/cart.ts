@@ -9,8 +9,8 @@ module.exports = (sequelize: Sequelize) => {
     public itemscount!: number;
 
     static associate(models: any) {
-      Cart.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Cart.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Cart.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Cart.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'cartId'});
     }
 
     // Define other model setup here, like hooks and scopes
@@ -26,6 +26,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Cart",
+      tableName: 'carts',
     }
   );
 
