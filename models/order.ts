@@ -11,9 +11,9 @@ module.exports = (sequelize: Sequelize) => {
     public status!: string;
 
     static associate(models: any) {
-      Order.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Order.belongsTo(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Order.belongsToMany(models.Product, { through: "ProductOrders",onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Order.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Order.belongsTo(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'addressId'});
+      Order.belongsToMany(models.Product, { through: "productOrders",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'orderId'});
     }
 
   }
@@ -32,6 +32,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Order",
+      tableName: 'orders',
     }
   );
 

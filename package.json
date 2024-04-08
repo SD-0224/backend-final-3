@@ -5,6 +5,7 @@
     "main": "./dist/server.js",
     "scripts": {
         "migrate": "npx sequelize-cli db:migrate",
+        "seed": "npx sequelize-cli db:seed:all",
         "migrate:undo": "npx sequelize-cli db:migrate:undo",
         "clean": "rimraf dist",
         "lint": "tslint -c tslint.json -p tsconfig.json --fix",

@@ -5,20 +5,20 @@ interface PaymentsAttributes {
 }
 
 module.exports = (sequelize: Sequelize) => {
-  class Payments
+  class Payment
     extends Model<PaymentsAttributes>
     implements PaymentsAttributes
   {
     public type!: string;
 
     static associate(models: any) {
-      Payments.belongsToMany(models.User, { through: "UserPayments",onDelete:'CASCADE', onUpdate: 'CASCADE' });
+      Payment.belongsToMany(models.User, { through: "userPayments",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'paymentId' });
     }
 
     // Define other model setup here, like hooks and scopes
   }
 
-  Payments.init(
+  Payment.init(
     {
       type: {
         type: DataTypes.STRING,
@@ -27,9 +27,10 @@ module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      modelName: "Payments",
+      modelName: "Payment",
+      tableName: 'payments',
     }
   );
 
-  return Payments;
+  return Payment;
 };

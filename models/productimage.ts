@@ -12,7 +12,7 @@ module.exports = (sequelize: Sequelize) => {
     public url!: string;
 
     static associate(models: any) {
-      ProductImage.belongsTo(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      ProductImage.belongsTo(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
     }
 
     // Define other model setup here, like hooks and scopes
@@ -28,6 +28,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "ProductImage",
+      tableName: 'productImages',
     }
   );
 

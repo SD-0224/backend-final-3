@@ -7,7 +7,7 @@ interface AddressAttributes {
   pinCode: string;
   city: string;
   state: string;
-  streetAdress: string;
+  streetAddress: string;
   mobileNumber: string;
 }
 
@@ -17,12 +17,12 @@ module.exports = (sequelize: Sequelize) => {
     public pinCode!: string;
     public city!: string;
     public state!: string;
-    public streetAdress!: string;
+    public streetAddress!: string;
     public mobileNumber!: string;
 
     static associate(models: any) {
-      Address.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
-      Address.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Address.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Address.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'addressId'});
     }
   }
 
@@ -44,7 +44,7 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      streetAdress: {
+      streetAddress: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -56,6 +56,8 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Address",
+      tableName: 'addresses',
+
     }
   );
 

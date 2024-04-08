@@ -11,7 +11,7 @@ module.exports = (sequelize: Sequelize) => {
     public image!: string;
 
     static associate(models: any) {
-      Brand.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE'});
+      Brand.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'brandId'});
     }
 
     // Define other model setup here, like hooks and scopes
@@ -31,6 +31,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Brand",
+      tableName: 'brands',
     }
   );
 

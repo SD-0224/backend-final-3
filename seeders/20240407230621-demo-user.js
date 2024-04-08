@@ -1,76 +1,79 @@
 'use strict';
 const bcrypt =require('bcrypt');
+const { timeStamp } = require('console');
 
 const hashedPassword=bcrypt.hashSync(process.env.seedPassword,10);
+const today = new Date().getTime();
+console.log(today)
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Users', [{
+    return queryInterface.bulkInsert('users', [{
       firstName: 'John',
       lastName: 'Doe',
       email: 'john@example.com',
       phone:"+409876332244",
-      dateofbirth:12345667,
+      dateofbirth:new Date(),
       password:hashedPassword,
       avatar:'https://urlimage/user',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: today,
+      updatedAt: today
     },
     {
       firstName: 'Amer',
       lastName: 'Hallaq',
       email: 'amer@example.com',
       phone:"+97055687354",
-      dateofbirth:12345667,
+      dateofbirth:new Date(),
       password:hashedPassword,
       avatar:'https://urlimage/user',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: today,
+      updatedAt: today
     },
     {
       firstName: 'Ahmad',
       lastName: 'Shaker',
       email: 'ahmad@example.com',
       phone:"+97057687354",
-      dateofbirth:12345667,
+      dateofbirth:new Date(),
       password:hashedPassword,
       avatar:'https://urlimage/user',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: today,
+      updatedAt: today
     },
     {
       firstName: 'Mahmoud',
       lastName: 'Abu Salem',
       email: 'mahmoud@example.com',
       phone:"+97051687354",
-      dateofbirth:12345667,
+      dateofbirth:new Date(),
       password:hashedPassword,
       avatar:'https://urlimage/user',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: today,
+      updatedAt: today
     },
     {
       firstName: 'Rana',
       lastName: 'Saleem',
       email: 'rana@example.com',
       phone:"+97251687354",
-      dateofbirth:12345667,
+      dateofbirth:new Date(),
       password:hashedPassword,
       avatar:'https://urlimage/user',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: today,
+      updatedAt: today
     },
     {
       firstName: 'Mike',
       lastName: 'Saleem',
       email: 'mike@example.com',
-      phone:"+40051687354",
-      dateofbirth:12345667,
+      phone:"+97151687354",
+      dateofbirth:new Date(),
       password:hashedPassword,
       avatar:'https://urlimage/user',
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: today,
+      updatedAt: today
     }
 
     ]);
