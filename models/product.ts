@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 interface ProductAttributes {
+  id:string;
   title: string;
   subtitle: string;
   description: Text;
@@ -11,6 +13,7 @@ interface ProductAttributes {
 
 module.exports = (sequelize: Sequelize) => {
   class Product extends Model<ProductAttributes> implements ProductAttributes {
+    public id!:string;
     public title!: string;
     public subtitle!: string;
     public description!: Text;
@@ -34,6 +37,12 @@ module.exports = (sequelize: Sequelize) => {
 
   Product.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue:() => uuidv4(),
+        allowNull: false,
+        primaryKey:true
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,

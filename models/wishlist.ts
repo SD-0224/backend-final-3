@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 interface WishlistAttributes {
+  id:string;
   itemscount: number;
 }
 
@@ -9,6 +11,7 @@ module.exports = (sequelize: Sequelize) => {
     extends Model<WishlistAttributes>
     implements WishlistAttributes
   {
+    public id!:string;
     public itemscount!: number;
 
     static associate(models: any) {
@@ -21,6 +24,12 @@ module.exports = (sequelize: Sequelize) => {
 
   Wishlist.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue:() => uuidv4(),
+        allowNull: false,
+        primaryKey:true
+      },
       itemscount: {
         type: DataTypes.INTEGER,
         allowNull: false,

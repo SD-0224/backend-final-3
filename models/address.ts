@@ -2,7 +2,9 @@
 
 import { DataTypes, Model, Sequelize } from "sequelize";
 
+
 interface AddressAttributes {
+  id:string;
   fullname: string;
   pinCode: string;
   city: string;
@@ -13,6 +15,7 @@ interface AddressAttributes {
 
 module.exports = (sequelize: Sequelize) => {
   class Address extends Model<AddressAttributes> implements AddressAttributes {
+    public id!:string;
     public fullname!: string;
     public pinCode!: string;
     public city!: string;
@@ -28,6 +31,12 @@ module.exports = (sequelize: Sequelize) => {
 
   Address.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue:() => uuidv4(),
+        allowNull: false,
+        primaryKey:true
+      },
       fullname: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -63,3 +72,7 @@ module.exports = (sequelize: Sequelize) => {
 
   return Address;
 };
+function uuidv4() {
+  throw new Error("Function not implemented.");
+}
+

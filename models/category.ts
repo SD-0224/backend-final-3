@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 interface CategoryAttributes {
+  id:string;
   name: string;
   homeImage: string;
   categoryImage: string;
@@ -9,10 +11,9 @@ interface CategoryAttributes {
 }
 
 module.exports = (sequelize: Sequelize) => {
-  class Category
-    extends Model<CategoryAttributes>
-    implements CategoryAttributes
+  class Category extends Model<CategoryAttributes> implements CategoryAttributes
   {
+    public id!:string;
     public name!: string;
     public homeImage!: string;
     public categoryImage!: string;
@@ -28,6 +29,12 @@ module.exports = (sequelize: Sequelize) => {
 
   Category.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue:() => uuidv4(),
+        allowNull: false,
+        primaryKey:true
+      },
       name: {
         type: DataTypes.STRING,
         allowNull: false,

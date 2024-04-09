@@ -1,13 +1,17 @@
 "use strict";
+
+const sequelize = require('sequelize');
+
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("users", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         
       },
       firstName: {
@@ -25,7 +29,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       dateofbirth: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       },
       password: {
         type: Sequelize.STRING,

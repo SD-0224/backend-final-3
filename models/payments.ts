@@ -1,6 +1,8 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 
 interface PaymentsAttributes {
+  id:string;
   type: string;
 }
 
@@ -9,6 +11,7 @@ module.exports = (sequelize: Sequelize) => {
     extends Model<PaymentsAttributes>
     implements PaymentsAttributes
   {
+    public id!:string;
     public type!: string;
 
     static associate(models: any) {
@@ -20,6 +23,12 @@ module.exports = (sequelize: Sequelize) => {
 
   Payment.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue:() => uuidv4(),
+        allowNull: false,
+        primaryKey:true
+      },
       type: {
         type: DataTypes.STRING,
         allowNull: false,
