@@ -5,6 +5,8 @@ interface OrderAttributes {
   id:string;
   category: string;
   status: string;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -12,6 +14,8 @@ module.exports = (sequelize: Sequelize) => {
     public id!:string;
     public category!: string;
     public status!: string;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
     static associate(models: any) {
       Order.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
@@ -36,6 +40,14 @@ module.exports = (sequelize: Sequelize) => {
       status: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
       },
     },
     {

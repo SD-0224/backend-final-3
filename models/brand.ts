@@ -5,6 +5,8 @@ interface BrandAttributes {
   id:string;
   name: string;
   image: string;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -12,6 +14,8 @@ module.exports = (sequelize: Sequelize) => {
     public id!:string;
     public name!: string;
     public image!: string;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
     static associate(models: any) {
       Brand.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'brandId'});
@@ -36,12 +40,21 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
     },
     {
       sequelize,
       modelName: "Brand",
       tableName: 'brands',
     }
+
   );
 
   return Brand;

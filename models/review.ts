@@ -7,6 +7,8 @@ interface ReviewAttributes {
   id:string;
   content: string;
   rating: number;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -14,6 +16,8 @@ module.exports = (sequelize: Sequelize) => {
     public id!:string;
     public content!: string;
     public rating!: number;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
     static associate(models: any) {
       Review.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
@@ -36,6 +40,14 @@ module.exports = (sequelize: Sequelize) => {
       rating: {
         type: DataTypes.FLOAT,
         allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
       },
     },
     {

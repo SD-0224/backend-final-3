@@ -8,7 +8,7 @@ const getAllUsers = async(req:Request,res:Response) => {
 
     db.User.findAll({raw:true})
     .then((users:any) => {
-        res.json(users)
+        res.json({users})
     })
     .catch((error:Error) => {
         res.status(500).json({ error: 'Database error' });
@@ -18,27 +18,27 @@ const getAllUsers = async(req:Request,res:Response) => {
 // This method returns a user by id
 const getUserById = async (req:Request,res:Response) => {
 
-    const userId=req.params.userid;
+    // const userId=req.params.id;
 
-
-    db.User.findByPk(userId)
-    .then((user:any) => {
-        if(!user) {
-            res.status(404).json({ error: 'User not found' });
-            return;
-        }
-        res.json(user)
-    })
-    .catch((error:Error) => {
-        // tslint:disable-next-line:no-console
-        console.error('Error finding user:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    })
+    // db.User.findOne({where:{id:userId}, include:[{model:db.Order, include:[db.ProductOrder]}]})
+    // .then((user:any) => {
+    //     if(!user) {
+    //         res.status(404).json({ error: 'User not found' });
+    //         return;
+    //     }
+    //     res.json({user})
+    // })
+    // .catch((error:Error) => {
+    //     // tslint:disable-next-line:no-console
+    //     console.error('Error finding user:', error);
+    //     res.status(500).json({ error: 'Internal server error' });
+    // })
 }
 
 
 // This method creates a new user
 const createNewUser = async (req:Request,res:Response) => {
+
     return;
 }
 
