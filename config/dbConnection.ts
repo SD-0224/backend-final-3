@@ -15,10 +15,10 @@ const sequelizeConnection = new Sequelize({
     database: process.env.DB_NAME,
     port: Number(process.env.DB_PORT),
     logging: false,
-    models: [],
 });
 
-sequelizeConnection.authenticate()
+async function checkConnection():Promise<void> {
+await sequelizeConnection.authenticate()
   .then(() => {
     // tslint:disable-next-line:no-console
      console.log('Connection has been established successfully.');
@@ -27,6 +27,7 @@ sequelizeConnection.authenticate()
     // tslint:disable-next-line:no-console
      console.error('Unable to connect to the database:', err);
   })
-
+}
+checkConnection()
 // Export the sequelize object as the default module
 export default sequelizeConnection;

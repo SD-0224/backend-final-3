@@ -33,7 +33,9 @@ fs
       file.indexOf('.test.js') === -1
     );
   })
+  // tslint:disable-next-line
   .forEach((file: any) => {
+    // tslint:disable-next-line
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });

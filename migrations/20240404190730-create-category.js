@@ -2,12 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Categories", {
+    await queryInterface.createTable("categories", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,  
       },
       name: {
         type: Sequelize.STRING,
@@ -26,15 +26,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.BIGINT,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.BIGINT,
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Categories");
+    await queryInterface.dropTable("categories");
   },
 };

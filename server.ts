@@ -5,7 +5,11 @@ import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import db from "./models";
-import User from "./models";
+import userRoutes from './routes/userRoutes';
+import productRoutes from './routes/productRoutes';
+import categoryRoutes from './routes/categoryRoutes';
+
+
 
 // initialize configuration
 dotenv.config();
@@ -32,7 +36,7 @@ const port = process.env.SERVER_PORT;
 
 const start = async (): Promise<void> => {
   try {
-    await db.sequelize.sync({ alter: true });
+    await db.sequelize.sync();
     // tslint:disable-next-line:no-console
     console.log(`Databases synced Successfully`);
     app.listen(port, () => {
@@ -54,6 +58,10 @@ app.get("/", (req: Request, res: Response, err: any) => {
 });
 
 // use routes in the routes folder
+// use routes in the routes folder
+app.use("/api",userRoutes);
+app.use("/api",productRoutes);
+app.use("/api",categoryRoutes);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {

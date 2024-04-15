@@ -2,12 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Addresses", {
+    await queryInterface.createTable("addresses", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
       fullname: {
         type: Sequelize.STRING,
@@ -21,7 +21,7 @@ module.exports = {
       state: {
         type: Sequelize.STRING,
       },
-      streetAdress: {
+      streetAddress: {
         type: Sequelize.STRING,
       },
       mobileNumber: {
@@ -29,15 +29,15 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.BIGINT,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.BIGINT,
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Addresses");
+    await queryInterface.dropTable("addresses");
   },
 };
