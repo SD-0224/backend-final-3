@@ -3,7 +3,7 @@ import {getAllUsers,getUserById,createNewUser,loginUser,logoutUser,updateUserByI
 
 const router=express.Router();
 
-router.get('/users',getAllUsers);  
+router.get('/users',getAllUsers);
 router.get('/users/:id',getUserById);
 router.post('/users',createNewUser);
 router.post('/users/login',loginUser);
