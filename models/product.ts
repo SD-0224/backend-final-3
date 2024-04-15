@@ -1,21 +1,21 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 interface ProductAttributes {
-  id:string;
+  id: string;
   title: string;
   subtitle: string;
   description: Text;
   price: number;
   quantity: number;
   discountpercentage: number;
-  createdAt:bigint;
-  updatedAt:bigint;
+  createdAt: bigint;
+  updatedAt: bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
   class Product extends Model<ProductAttributes> implements ProductAttributes {
-    public id!:string;
+    public id!: string;
     public title!: string;
     public subtitle!: string;
     public description!: Text;
@@ -25,15 +25,43 @@ module.exports = (sequelize: Sequelize) => {
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
-
     static associate(models: any) {
-      Product.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
-      Product.hasMany(models.ProductImage,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
-      Product.belongsTo(models.Category,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'categoryId'});
-      Product.belongsTo(models.Brand,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'brandId'});
-      Product.belongsTo(models.Cart,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'cartId'});
-      Product.belongsTo(models.Wishlist,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'wishlistId'});
-      Product.belongsToMany(models.Order, { through: "productOrders",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId' });
+      Product.hasMany(models.Review, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "productId",
+      });
+      Product.hasMany(models.ProductImage, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "productId",
+      });
+      Product.belongsTo(models.Category, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "categoryId",
+      });
+      Product.belongsTo(models.Brand, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "brandId",
+      });
+      Product.belongsTo(models.Cart, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "cartId",
+      });
+      Product.belongsTo(models.Wishlist, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "wishlistId",
+      });
+      Product.belongsToMany(models.Order, {
+        through: "productOrders",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "productId",
+      });
     }
 
     // Define other model setup here, like hooks and scopes
@@ -43,9 +71,9 @@ module.exports = (sequelize: Sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
-        defaultValue:() => uuidv4(),
+        defaultValue: () => uuidv4(),
         allowNull: false,
-        primaryKey:true
+        primaryKey: true,
       },
       title: {
         type: DataTypes.STRING,
@@ -60,7 +88,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.DOUBLE,
         allowNull: false,
       },
       quantity: {
@@ -83,7 +111,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Product",
-      tableName: 'products',
+      tableName: "products",
     }
   );
 
