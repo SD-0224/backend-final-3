@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import db from "../models"
+import db from "../models";
 import { error } from 'console';
 
 
@@ -15,31 +15,78 @@ const getAllUsers = async(req:Request,res:Response) => {
     })
 }
 
-// This method returns a user by id
+// This method returns a user by id including their orders,addresses,reviews
 const getUserById = async (req:Request,res:Response) => {
 
-    // const userId=req.params.id;
+    const userId=req.params.id;
 
-    // db.User.findOne({where:{id:userId}, include:[{model:db.Order, include:[db.ProductOrder]}]})
-    // .then((user:any) => {
-    //     if(!user) {
-    //         res.status(404).json({ error: 'User not found' });
-    //         return;
-    //     }
-    //     res.json({user})
-    // })
-    // .catch((error:Error) => {
-    //     // tslint:disable-next-line:no-console
-    //     console.error('Error finding user:', error);
-    //     res.status(500).json({ error: 'Internal server error' });
-    // })
+    db.User.findByPk(userId, {
+            include:[{model:db.Order,
+            attributes: ['id', 'createdAt', 'category', 'status'],
+            include:{model:db.Product,
+            attributes: ['id', 'quantity'],
+            through: { attributes: [] }}},
+            {
+            model:db.Address,
+            attributes: ['id']
+            },
+            {
+            model:db.Review,
+            attributes: ['productId','rating','content']
+            }
+            ]})
+    .then((user:any) => {
+        if(!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+        res.json({user})
+    })
+    .catch((error:Error) => {
+        // tslint:disable-next-line:no-console
+        console.error('Error finding user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    })
 }
 
 
 // This method creates a new user
 const createNewUser = async (req:Request,res:Response) => {
 
-    return;
+    const {firstName,lastName, email,phone,dateofbirth,avatar, password} = req.body;
+    // check if the email exists
+    const userExists= await db.User.findOne({where:{email}});
+    if(userExists) {
+        return res.status(400).send('Email is already associated with an account');
+    }
+    db.User.create({
+            firstName,
+            lastName,
+            email,
+            phone,
+            dateofbirth,
+            avatar,
+            password,
+         })
+    .then((user:any) => {
+        // tslint:disable-next-line:no-console
+        console.log("user created successfully");
+        res.json({user,message:"user created successfully"});
+    })
+    .catch((error:Error) => {
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            // tslint:disable-next-line:no-console
+            console.error('Error creating user:', 'Email address must be unique');
+            res.status(400).json({error:"Email address must be unique"})
+          }
+        else {
+            // tslint:disable-next-line:no-console
+            console.log(error.message);
+            res.status(400).json(error.message)
+        }
+
+    })
+
 }
 
 
