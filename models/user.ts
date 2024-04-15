@@ -13,6 +13,8 @@ interface UserAttributes {
   dateofbirth: Date;
   password: string;
   avatar: string;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -25,6 +27,8 @@ module.exports = (sequelize: Sequelize) => {
     public dateofbirth!: Date;
     public password!: string;
     public avatar!: string;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
     static associate(models: any) {
       User.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
@@ -77,6 +81,14 @@ module.exports = (sequelize: Sequelize) => {
       avatar: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
       },
     },
     {

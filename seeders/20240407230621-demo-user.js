@@ -3,6 +3,9 @@ const bcrypt =require('bcrypt');
 const { timeStamp } = require('console');
 const { v4: uuidv4 } = require('uuid');
 
+//**How to seed one file only */
+//npx sequelize db:seed --seed 20240407230621-demo-user.js
+
 const hashedPassword=bcrypt.hashSync(process.env.seedPassword,10);
 const today = new Date().getTime();
 console.log(today)

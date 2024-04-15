@@ -11,6 +11,8 @@ interface AddressAttributes {
   state: string;
   streetAddress: string;
   mobileNumber: string;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -22,6 +24,8 @@ module.exports = (sequelize: Sequelize) => {
     public state!: string;
     public streetAddress!: string;
     public mobileNumber!: string;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
     static associate(models: any) {
       Address.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
@@ -60,6 +64,14 @@ module.exports = (sequelize: Sequelize) => {
       mobileNumber: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
       },
     },
     {

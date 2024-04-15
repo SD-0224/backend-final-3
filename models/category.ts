@@ -8,6 +8,8 @@ interface CategoryAttributes {
   categoryImage: string;
   title: string;
   subtitle: string;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -19,6 +21,8 @@ module.exports = (sequelize: Sequelize) => {
     public categoryImage!: string;
     public title!: string;
     public subtitle!: string;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
     static associate(models: any) {
       Category.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'categoryId'});
@@ -54,6 +58,14 @@ module.exports = (sequelize: Sequelize) => {
       subtitle: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
       },
     },
     {

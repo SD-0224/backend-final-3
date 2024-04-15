@@ -9,6 +9,8 @@ interface ProductAttributes {
   price: number;
   quantity: number;
   discountpercentage: number;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -20,6 +22,8 @@ module.exports = (sequelize: Sequelize) => {
     public price!: number;
     public quantity!: number;
     public discountpercentage!: number;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
 
     static associate(models: any) {
@@ -66,6 +70,14 @@ module.exports = (sequelize: Sequelize) => {
       discountpercentage: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
       },
     },
     {

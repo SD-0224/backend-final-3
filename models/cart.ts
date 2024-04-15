@@ -5,12 +5,16 @@ import { v4 as uuidv4 } from 'uuid';
 interface CartAttributes {
   id:string;
   itemscount: number;
+  createdAt:bigint;
+  updatedAt:bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
   class Cart extends Model<CartAttributes> implements CartAttributes {
     public id!:string;
     public itemscount!: number;
+    public createdAt!: bigint;
+    public updatedAt!: bigint;
 
     static associate(models: any) {
       Cart.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
@@ -31,6 +35,14 @@ module.exports = (sequelize: Sequelize) => {
       itemscount: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.BIGINT,
       },
     },
     {
