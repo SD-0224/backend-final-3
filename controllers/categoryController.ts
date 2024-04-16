@@ -13,24 +13,7 @@ const getAllCategories = async (req: Request, res: Response) => {
 };
 
 // This method returns a specific category by ID
-const getCategoryById = async (req: Request, res: Response) => {
-  /* const categoryId = req.params.id;
-  db.Category.findByPk(categoryId, {
-    include: [{ model: db.Brand, attributes: ["id", "name", "image"] }],
-  })
-    .then((category: any) => {
-      if (!category) {
-        res.status(404).json({ error: "User not found" });
-        return;
-      }
-      res.json({ category });
-    })
-    .catch((error: Error) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error finding user:", error);
-      res.status(500).json({ error: "Internal server error" });
-    });*/
-};
+const getCategoryById = async (req: Request, res: Response) => {};
 
 // This method returns all brands for a specific category id
 const getCategoryBrands = async (req: Request, res: Response) => {
@@ -59,14 +42,15 @@ const getBrandById = async (req: Request, res: Response) => {
   db.Brand.findByPk(brandId)
     .then((brand: any) => {
       if (!brand) {
-        res.status(404).json({ error: "User not found" });
+        res.status(404).json({ error: "Brand not found" });
+
         return;
       }
       res.json({ brand });
     })
     .catch((error: Error) => {
       // tslint:disable-next-line:no-console
-      console.error("Error finding user:", error);
+      console.error("Error finding Brand:", error);
       res.status(500).json({ error: "Internal server error" });
     });
 };
