@@ -34,6 +34,19 @@ const getCategoryById = async (req: Request, res: Response) => {
 
 // This method returns all brands for a specific category id
 const getCategoryBrands = async (req: Request, res: Response) => {
+  const categoryId=req.params.id;
+  db.Category.findByPk(categoryId, {
+    include: [{model: db.Product,
+    attributes: ["brandId"],
+    include:{model:db.Brand}
+    }]
+  })
+  .then((category:any)=> {
+    res.json({category})
+  })
+  .catch((error:Error) => {
+    res.status(500).json({ error: 'Internal server error' });
+})
   return;
 };
 
