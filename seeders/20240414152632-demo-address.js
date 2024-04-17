@@ -19,7 +19,7 @@ module.exports = {
         state:'Minnesota',
         streetAddress:'Abbott Stravenue',
         mobileNumber:'+409876332244',
-        userId:"e3b365bc-9575-4d8d-b7ac-f96d869ca882",
+        userId:"a3fd1ced-3107-4fc7-b3cf-50373321dd7a",
         createdAt: today,
         updatedAt: today
       }
