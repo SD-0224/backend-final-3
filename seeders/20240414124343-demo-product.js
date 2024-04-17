@@ -1,5 +1,5 @@
 "use strict";
-
+const { v4: uuidv4 } = require('uuid');
 const today = new Date().getTime();
 
 //**How to seed this file only */
@@ -23,18 +23,19 @@ module.exports = {
         updatedAt: today,
       },*/
       {
-        id: "36174128-b266-45e6-999b-52e519d4cee4",
-        title: "Awesome Granite Shirt",
-        subtitle: "Iusto distinctio iusto consequatur.",
+        id: uuidv4(),
+        title: "Licensed Soft Bikeeee",
+        subtitle: "Error officiis explicabooo.",
         description:
-          "Iusto perspiciatis provident tenetur consectetur voluptas nihil non hic sit. Dignissimos ex est fuga. Eos aliquid vel quisquam voluptatem voluptas placeat et fugit. Aut animi non officia. Doloremque voluptas aut unde esse.",
-        price: 34,
-        quantity: 8,
-        categoryId: "5e68da67-fc6a-48b6-bb14-83ec887159ac",
-        brandId: "a9603dfd-1c0e-4b5c-a952-2ad71bafb14a",
-        discountpercentage: 1,
+          "Officiis blanditiis illo et fugiat ut ullam quasi. Iste ut dolores in deserunt. Ea adipisci sunt sapiente ex quia qui sapiente sit qui.",
+        price: 100.99,
+        quantity: 35,
+        categoryId: "7e02ce34-52fe-4fdf-8ec7-16f8baa40abc",
+        brandId: "1ef74724-c8fb-4259-b446-5c1fcb7b89c8",
+        discountpercentage: 20,
         createdAt: today,
         updatedAt: today,
+
       },
       // {
       //   id: "298e8bf9-1da1-4377-83d0-1faf4c33e6a7",
