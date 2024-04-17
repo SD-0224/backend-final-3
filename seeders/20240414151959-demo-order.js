@@ -15,8 +15,8 @@ module.exports = {
         id:uuidv4(),
         category: 'processing',
         status: 'unpaid',
-        addressId: 'c747c9b5-6649-4b81-81fb-57174dc1aa22',
-        userId:'e3b365bc-9575-4d8d-b7ac-f96d869ca882',
+        addressId: '4ac84632-5a7d-44e9-b1d3-ece706040f1b',
+        userId:'a3fd1ced-3107-4fc7-b3cf-50373321dd7a',
         createdAt: today,
         updatedAt: today
       }
