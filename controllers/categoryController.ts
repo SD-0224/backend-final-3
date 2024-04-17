@@ -14,7 +14,7 @@ const getAllCategories = async (req: Request, res: Response) => {
 
 // This method returns a specific category by ID
 const getCategoryById = async (req: Request, res: Response) => {
-<<<<<<< HEAD
+
   const categoryId = req.params.id;
   db.Category.findByPk(categoryId)
     .then((category: any) => {
@@ -29,9 +29,6 @@ const getCategoryById = async (req: Request, res: Response) => {
       console.error("Error finding Category:", error);
       res.status(500).json({ error: "Internal server error" });
     });
-=======
-  return;
->>>>>>> cb4f3e96281d6331aabd77a31de8bbecdd911c57
 };
 
 // This method returns all brands for a specific category id
