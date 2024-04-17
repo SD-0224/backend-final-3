@@ -21,7 +21,7 @@ module.exports = {
         discountpercentage: 42,
         createdAt: today,
         updatedAt: today,
-      },*/
+      },
       {
         id: "a4517436-34fb-4741-9e52-cd59dfbd2af8",
         title: "Ergonomic Cotton Pizzaa",
@@ -74,6 +74,20 @@ module.exports = {
         quantity: 39,
         categoryId: "7e02ce34-52fe-4fdf-8ec7-16f8baa40abc",
         brandId: "b7a1a08f-448e-42d5-9adf-e1deb4cb2b53",
+        discountpercentage: 36,
+        createdAt: today,
+        updatedAt: today,
+      },*/
+      {
+        id: "298e8bf9-1da1-4377-83d0-1faf4c33e6a7q",
+        title: "Licensed Soft Bikeeee",
+        subtitle: "Error officiis explicabooo.",
+        description:
+          "Officiis blanditiis illo et fugiat ut ullam quasi. Iste ut dolores in deserunt. Ea adipisci sunt sapiente ex quia qui sapiente sit qui.",
+        price: 168,
+        quantity: 39,
+        categoryId: "7e02ce34-52fe-4fdf-8ec7-16f8baa40abc",
+        brandId: "c6056d97-f5cd-4f5b-abd6-3ca455befcf5",
         discountpercentage: 36,
         createdAt: today,
         updatedAt: today,
