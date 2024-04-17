@@ -32,7 +32,42 @@ const getCategoryById = async (req: Request, res: Response) => {
 
 // This method returns all brands for a specific category id
 const getCategoryBrands = async (req: Request, res: Response) => {
-  return;
+  const categoryId = req.params.id;
+  try {
+    const category = await db.Category.findByPk(categoryId, {
+      include: [
+        {
+          model: db.Product,
+          include: { model: db.Brand },
+        },
+      ],
+    });
+
+    if (!category) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    const brands = category.Products.map((product: any) => ({
+      id: product.Brand.id,
+      name: product.Brand.name,
+      image: product.Brand.image,
+      createdAt: product.Brand.createdAt,
+      updatedAt: product.Brand.updatedAt,
+    }));
+
+    const categoryWithBrands = {
+      ...category.toJSON(),
+      brands,
+    };
+
+    delete categoryWithBrands.Products;
+
+    res.json({ category: categoryWithBrands });
+  } catch (error) {
+    // tslint:disable-next-line:no-console
+    console.error("Error fetching category with brands:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 // This method filters and returns products based on category id and brand id
