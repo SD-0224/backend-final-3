@@ -13,7 +13,9 @@ const getAllCategories = async (req: Request, res: Response) => {
 };
 
 // This method returns a specific category by ID
-const getCategoryById = async (req: Request, res: Response) => {};
+const getCategoryById = async (req: Request, res: Response) => {
+  return;
+};
 
 // This method returns all brands for a specific category id
 const getCategoryBrands = async (req: Request, res: Response) => {
