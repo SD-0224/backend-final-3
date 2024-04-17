@@ -14,78 +14,17 @@ console.log(today)
 module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('users', [{
-      id:uuidv4(),
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john@example.com',
-      phone:"+409876332244",
+      id:"c36c7fe7-e2db-43b6-993f-a3c0b5846b1b",
+      firstName: 'Nicklaus',
+      lastName: 'Kertzmann',
+      email: 'Vergie.Macejkovic@yahoo.com',
+      phone:"1-489-687-6594",
       dateofbirth:new Date(),
       password:hashedPassword,
-      avatar:'https://urlimage/user',
+      avatar:'https://loremflickr.com/320/240/person?random=147',
       createdAt: today,
       updatedAt: today
     },
-    {
-      id:uuidv4(),
-      firstName: 'Amer',
-      lastName: 'Hallaq',
-      email: 'amer@example.com',
-      phone:"+97055687354",
-      dateofbirth:new Date(),
-      password:hashedPassword,
-      avatar:'https://urlimage/user',
-      createdAt: today,
-      updatedAt: today
-    },
-    {
-      id:uuidv4(),
-      firstName: 'Ahmad',
-      lastName: 'Shaker',
-      email: 'ahmad@example.com',
-      phone:"+97057687354",
-      dateofbirth:new Date(),
-      password:hashedPassword,
-      avatar:'https://urlimage/user',
-      createdAt: today,
-      updatedAt: today
-    },
-    {
-      id:uuidv4(),
-      firstName: 'Mahmoud',
-      lastName: 'Abu Salem',
-      email: 'mahmoud@example.com',
-      phone:"+97051687354",
-      dateofbirth:new Date(),
-      password:hashedPassword,
-      avatar:'https://urlimage/user',
-      createdAt: today,
-      updatedAt: today
-    },
-    {
-      id:uuidv4(),
-      firstName: 'Rana',
-      lastName: 'Saleem',
-      email: 'rana@example.com',
-      phone:"+97251687354",
-      dateofbirth:new Date(),
-      password:hashedPassword,
-      avatar:'https://urlimage/user',
-      createdAt: today,
-      updatedAt: today
-    },
-    {
-      id:uuidv4(),
-      firstName: 'Mike',
-      lastName: 'Saleem',
-      email: 'mike@example.com',
-      phone:"+97151687354",
-      dateofbirth:new Date(),
-      password:hashedPassword,
-      avatar:'https://urlimage/user',
-      createdAt: today,
-      updatedAt: today
-    }
-
     ]);
   },
 
