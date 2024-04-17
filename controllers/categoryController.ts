@@ -14,22 +14,22 @@ const getAllCategories = async (req: Request, res: Response) => {
 
 // This method returns a specific category by ID
 const getCategoryById = async (req: Request, res: Response) => {
-
   const categoryId = req.params.id;
+
   db.Category.findByPk(categoryId)
     .then((category: any) => {
       if (!category) {
         res.status(404).json({ error: "Category not found" });
         return;
       }
-      res.json({ category });
+      res.json({category});
     })
     .catch((error: Error) => {
       // tslint:disable-next-line:no-console
       console.error("Error finding Category:", error);
-      res.status(500).json({ error: "Internal server error" });
-    });
-};
+      res.status(500).json({ error: "Internal server error" });
+  });
+}
 
 // This method returns all brands for a specific category id
 const getCategoryBrands = async (req: Request, res: Response) => {
@@ -53,21 +53,15 @@ const getCategoryBrands = async (req: Request, res: Response) => {
       name: product.Brand.name,
       image: product.Brand.image,
       createdAt: product.Brand.createdAt,
-      updatedAt: product.Brand.updatedAt,
     }));
-
     const categoryWithBrands = {
       ...category.toJSON(),
       brands,
     };
-
     delete categoryWithBrands.Products;
-
     res.json({ category: categoryWithBrands });
   } catch (error) {
-    // tslint:disable-next-line:no-console
-    console.error("Error fetching category with brands:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
