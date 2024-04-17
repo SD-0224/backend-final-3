@@ -85,7 +85,7 @@ module.exports = {
         description:
           "Officiis blanditiis illo et fugiat ut ullam quasi. Iste ut dolores in deserunt. Ea adipisci sunt sapiente ex quia qui sapiente sit qui.",
         price: 168,
-        quantity: 39,
+        quantity: 40,
         categoryId: "7e02ce34-52fe-4fdf-8ec7-16f8baa40abc",
         brandId: "c6056d97-f5cd-4f5b-abd6-3ca455befcf5",
         discountpercentage: 36,
