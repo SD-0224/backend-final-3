@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 interface ProductAttributes {
   id: string;
   title: string;
-  subtitle: string;
+  longSubtitle: string;
+  shortSubtitle: string;
   description: Text;
   price: number;
   quantity: number;
@@ -17,7 +18,8 @@ module.exports = (sequelize: Sequelize) => {
   class Product extends Model<ProductAttributes> implements ProductAttributes {
     public id!: string;
     public title!: string;
-    public subtitle!: string;
+    public longSubtitle!: string;
+    public shortSubtitle!: string;
     public description!: Text;
     public price!: number;
     public quantity!: number;
@@ -79,16 +81,20 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      subtitle: {
+      longSubtitle: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      shortSubtitle: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
       price: {
-        type: DataTypes.DOUBLE,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       quantity: {
