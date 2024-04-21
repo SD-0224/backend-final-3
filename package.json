@@ -16,6 +16,7 @@
         "start": "node ./dist/server.js",
         "preserve": "npm run build",
         "serve": "nodemon -w ts-node ./server.ts",
+        "dev": "nodemon -w ts-node ./server.ts",
         "test": "npx jest--forceExit  --detectOpenHandles __tests__/allTests.test.ts",
         "test_pr": "npx jest --forceExit  --detectOpenHandles __tests__/baselineCheck.test.ts"
     },
