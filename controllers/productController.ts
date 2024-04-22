@@ -4,13 +4,14 @@ import { Op, fn, col, literal } from "sequelize";
 import { subMonths } from "date-fns";
 // This method returns all products
 const getAllProducts = async (req: Request, res: Response) => {
-  db.Product.findAll({ raw: true })
-    .then((product: any) => {
-      res.json({ product });
-    })
-    .catch((error: Error) => {
-      res.status(500).json({ error: "Database error" });
-    });
+  try {
+    const products = await db.Product.findAll({ raw: true });
+    res.json({ products });
+  } catch (error) {
+    // tslint:disable-next-line:no-console
+    console.error("Error retrieving all products:", error);
+    res.status(500).json({ error: "Database error" });
+  }
 };
 
 // This method returns a specific product by ID
@@ -78,9 +79,9 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
 const createNewProduct = async (req: Request, res: Response) => {
   return;
 };
-const getNewArrivals = (req: Request, res: Response) => {
-  const threeMonthsAgo = new Date();
-  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+const getNewArrivals = async (req: Request, res: Response) => {
+  const currentDate = new Date();
+  const threeMonthsAgo = currentDate.setMonth(currentDate.getMonth() - 3);
 
   db.Product.findAll({
     where: {
@@ -88,30 +89,16 @@ const getNewArrivals = (req: Request, res: Response) => {
         [Op.gt]: threeMonthsAgo,
       },
     },
-    attributes: [
-      "id",
-      "title",
-      "subtitle",
-      "description",
-      "price",
-      "quantity",
-      "discountpercentage",
-      "createdAt",
-      "updatedAt",
-      "brandId",
-      "cartId",
-      "categoryId",
-      "wishlistId",
-    ],
   })
     .then((products: any) => {
-      if (products.length === 0) {
+      if (!products || products.length === 0) {
         res.status(404).json({ message: "No new arrival products found." });
         return;
       }
       res.json({ products });
     })
     .catch((error: Error) => {
+      // tslint:disable-next-line:no-console
       console.error("Error retrieving new arrival products:", error);
       res.status(500).json({ error: "Database error", details: error.message });
     });
@@ -135,10 +122,18 @@ const getHandPickedProducts = (req: Request, res: Response): void => {
     attributes: [
       "id",
       "title",
-      "subtitle",
+      "shortSubTitle",
+      "longSubTitle",
+      "description",
       "price",
       "quantity",
       "discountpercentage",
+      "createdAt",
+      "updatedAt",
+      "brandId",
+      "cartId",
+      "categoryId",
+      "wishlistId",
       [fn("AVG", col("`Reviews`.`rating`")), "averageRating"],
     ],
     order: [[fn("AVG", col("`Reviews`.`rating`")), "DESC"]],
@@ -152,6 +147,7 @@ const getHandPickedProducts = (req: Request, res: Response): void => {
       res.json({ products });
     })
     .catch((error: Error) => {
+      // tslint:disable-next-line:no-console
       console.error("Error retrieving handpicked products:", error);
       res.status(500).json({ error: "Database error", details: error.message });
     });
@@ -167,21 +163,6 @@ const getLimitedEditionProducts = async (
           [db.Sequelize.Op.lt]: 20,
         },
       },
-      attributes: [
-        "id",
-        "title",
-        "subtitle",
-        "description",
-        "price",
-        "quantity",
-        "discountpercentage",
-        "createdAt",
-        "updatedAt",
-        "brandId",
-        "cartId",
-        "categoryId",
-        "wishlistId",
-      ],
     });
 
     if (products.length === 0) {
@@ -190,6 +171,7 @@ const getLimitedEditionProducts = async (
       res.json({ products });
     }
   } catch (error: any) {
+    // tslint:disable-next-line:no-console
     console.error("Error retrieving limited edition products:", error);
     res.status(500).json({ error: "Database error", details: error.message });
   }
@@ -205,21 +187,6 @@ const getOnSaleProducts = async (
           [db.Sequelize.Op.gte]: 15,
         },
       },
-      attributes: [
-        "id",
-        "title",
-        "subtitle",
-        "description",
-        "price",
-        "quantity",
-        "discountpercentage",
-        "createdAt",
-        "updatedAt",
-        "brandId",
-        "cartId",
-        "categoryId",
-        "wishlistId",
-      ],
     });
 
     if (products.length === 0) {
@@ -228,34 +195,56 @@ const getOnSaleProducts = async (
       res.json({ products });
     }
   } catch (error: any) {
+    // tslint:disable-next-line:no-console
     console.error("Error retrieving products on sale:", error);
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-const getPopularProducts = async (req: Request, res: Response) => {
-  try {
-    const popularProducts = await db.Product.findAll({
-      include: [
-        {
-          model: db.Review,
-          attributes: [],
-          where: {
-            rating: {
-              [db.Sequelize.Op.gte]: 4.5,
-            },
-          },
-        },
-      ],
+const getPopularProducts = (req: Request, res: Response): void => {
+  db.Product.findAll({
+    include: [
+      {
+        model: db.Review,
+        as: "Reviews",
+        attributes: [],
+      },
+    ],
+    group: ["Product.id"],
+    having: literal("AVG(`Reviews`.`rating`) >= 4.5"),
+    attributes: [
+      "id",
+      "title",
+      "shortSubTitle",
+      "longSubTitle",
+      "description",
+      "price",
+      "quantity",
+      "discountpercentage",
+      "createdAt",
+      "updatedAt",
+      "brandId",
+      "cartId",
+      "categoryId",
+      "wishlistId",
+      [fn("AVG", col("`Reviews`.`rating`")), "averageRating"],
+    ],
+    order: [[fn("AVG", col("`Reviews`.`rating`")), "DESC"]],
+    raw: true,
+  })
+    .then((popularProducts: any) => {
+      if (popularProducts.length === 0) {
+        res.status(404).json({ message: "No popular products found." });
+        return;
+      }
+      res.json({ products: popularProducts });
+    })
+    .catch((error: Error) => {
+      // tslint:disable-next-line:no-console
+      console.error("Error retrieving popular products:", error);
+      res.status(500).json({ error: "Database error", details: error.message });
     });
-
-    return res.json({ products: popularProducts });
-  } catch (error: any) {
-    console.error("Error fetching popular products:", error);
-    return res
-      .status(500)
-      .json({ error: "Database error", details: error.message });
-  }
 };
+
 export {
   getAllProducts,
   getProductById,
