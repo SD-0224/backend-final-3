@@ -1,7 +1,8 @@
 'use strict';
 
 const { v4: uuidv4 } = require('uuid');
-
+const fs = require('fs');
+const path = require('path');
 const today = new Date().getTime();
 
 //**How to seed this file only */
@@ -10,18 +11,25 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('orders', [
-      {
-        id:uuidv4(),
-        category: 'processing',
-        status: 'unpaid',
-        addressId: '4ac84632-5a7d-44e9-b1d3-ece706040f1b',
-        userId:'a3fd1ced-3107-4fc7-b3cf-50373321dd7a',
-        createdAt: today,
-        updatedAt: today
-      }
-    
-      ])
+    const filePath = path.join(__dirname, '../fakeData/user.json');
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const users=data.users;
+    const allOrders = [];
+
+    users.forEach(user => {
+      const orders = Object.entries(user.orders).map(([id, order]) => ({
+      id,
+      userId:user.id,
+      createdAt:order.date,
+      updatedAt:today,
+      category:order.category,
+      status:order.status,
+      }));
+        
+        
+      allOrders.push(...orders);
+      });
+    await queryInterface.bulkInsert('orders', allOrders, {});  
   },
 
   async down (queryInterface, Sequelize) {

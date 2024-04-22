@@ -1,0 +1,405 @@
+{
+    "categories":
+    [
+      {
+        "id": "1db307b6-6961-4748-b6b1-bcef7b8aa979",
+        "name": "Handbags",
+        "homeImage": "https://source.unsplash.com/400x400/?handbags",
+        "categoryImage": "https://source.unsplash.com/400x400/?handbags",
+        "title": "At ducimus animi provident illum dolor suscipit.",
+        "subtitle": "Quaerat qui harum",
+        "brands": {
+          "a66f898d-40b8-4d81-9776-27ebd73c38d1": {
+            "id": "a66f898d-40b8-4d81-9776-27ebd73c38d1",
+            "name": "Calvin Klein",
+            "image": "https://via.placeholder.com/400x200.png?text=Calvin%20Klein"
+          },
+          "1853c7d2-d155-4ef2-ae40-d6784557ac9c": {
+            "id": "1853c7d2-d155-4ef2-ae40-d6784557ac9c",
+            "name": "Rolex",
+            "image": "https://via.placeholder.com/400x200.png?text=Rolex"
+          },
+          "eb1e71c6-2f3c-48c0-9d6c-d6f31b8f3198": {
+            "id": "eb1e71c6-2f3c-48c0-9d6c-d6f31b8f3198",
+            "name": "Kenzo",
+            "image": "https://via.placeholder.com/400x200.png?text=Kenzo"
+          }
+        }
+      },
+      {
+        "id": "d31bfb5f-350d-49e0-9064-a429da42818c",
+        "name": "Watches",
+        "homeImage": "https://source.unsplash.com/400x400/?watches",
+        "categoryImage": "https://source.unsplash.com/400x400/?watches",
+        "title": "Quo velit eos numquam totam.",
+        "subtitle": "Dolor maxime at molestias magnam.",
+        "brands": {
+          "c95c1d3e-61d2-4377-84f7-316f60531497": {
+            "id": "c95c1d3e-61d2-4377-84f7-316f60531497",
+            "name": "Guess",
+            "image": "https://via.placeholder.com/400x200.png?text=Guess"
+          },
+          "a66f898d-40b8-4d81-9776-27ebd73c38d1": {
+            "id": "a66f898d-40b8-4d81-9776-27ebd73c38d1",
+            "name": "Calvin Klein",
+            "image": "https://via.placeholder.com/400x200.png?text=Calvin%20Klein"
+          },
+          "27424240-1ab9-4220-852d-1db6f67124f6": {
+            "id": "27424240-1ab9-4220-852d-1db6f67124f6",
+            "name": "Zara",
+            "image": "https://via.placeholder.com/400x200.png?text=Zara"
+          }
+        }
+      },
+      {
+        "id": "2efc7b8d-8e5b-40aa-8e7b-9a511b79b10b",
+        "name": "Skincare",
+        "homeImage": "https://source.unsplash.com/400x400/?skincare",
+        "categoryImage": "https://source.unsplash.com/400x400/?skincare",
+        "title": "Et qui autem ullam explicabo ab quos tempora.",
+        "subtitle": "Officiis labore aut quidem nihil cum repellat sint. ",
+        "brands": {
+          "afda3fd7-45b3-42d0-ae3c-4dae3ab230a0": {
+            "id": "afda3fd7-45b3-42d0-ae3c-4dae3ab230a0",
+            "name": "Saint Laurent",
+            "image": "https://via.placeholder.com/400x200.png?text=Saint%20Laurent"
+          },
+          "4ced8190-3c51-4a78-aca7-fb9ba64dd199": {
+            "id": "4ced8190-3c51-4a78-aca7-fb9ba64dd199",
+            "name": "Bvlgari",
+            "image": "https://via.placeholder.com/400x200.png?text=Bvlgari"
+          },
+          "82454250-ca4e-4bb9-858e-7952e345ac3e": {
+            "id": "82454250-ca4e-4bb9-858e-7952e345ac3e",
+            "name": "Coach",
+            "image": "https://via.placeholder.com/400x200.png?text=Coach"
+          },
+          "a66f898d-40b8-4d81-9776-27ebd73c38d1": {
+            "id": "a66f898d-40b8-4d81-9776-27ebd73c38d1",
+            "name": "Calvin Klein",
+            "image": "https://via.placeholder.com/400x200.png?text=Calvin%20Klein"
+          },
+          "2b4e47ce-8829-42a8-8798-df588f5650c6": {
+            "id": "2b4e47ce-8829-42a8-8798-df588f5650c6",
+            "name": "Tiffany & Co",
+            "image": "https://via.placeholder.com/400x200.png?text=Tiffany%20&%20Co"
+          },
+          "a098a22e-b759-48eb-9378-4861863e66d1": {
+            "id": "a098a22e-b759-48eb-9378-4861863e66d1",
+            "name": "Dolce & Gabbana",
+            "image": "https://via.placeholder.com/400x200.png?text=Dolce%20&%20Gabbana"
+          },
+          "ec22bb88-592d-44a3-99a7-4773cada2bd1": {
+            "id": "ec22bb88-592d-44a3-99a7-4773cada2bd1",
+            "name": "Levi's",
+            "image": "https://via.placeholder.com/400x200.png?text=Levi's"
+          },
+          "a18f18ff-bb4b-4a19-aee8-edf1f9fccaec": {
+            "id": "a18f18ff-bb4b-4a19-aee8-edf1f9fccaec",
+            "name": "Salvatore Ferragamo",
+            "image": "https://via.placeholder.com/400x200.png?text=Salvatore%20Ferragamo"
+          }
+        }
+      },
+      {
+        "id": "bc2ea01d-0c45-4271-b1a8-ead141064ee5",
+        "name": "Jewellery",
+        "homeImage": "https://source.unsplash.com/400x400/?jewellery",
+        "categoryImage": "https://source.unsplash.com/400x400/?jewellery",
+        "title": "Rem qui dolorem animi in dolor saepe veritatis.",
+        "subtitle": "Minima ut magnam est non vel molestiae iure.",
+        "brands": {
+          "4e93c5db-5f7e-45d3-8b7e-90e276ad1d10": {
+            "id": "4e93c5db-5f7e-45d3-8b7e-90e276ad1d10",
+            "name": "Van Cleef & Arpels",
+            "image": "https://via.placeholder.com/400x200.png?text=Van%20Cleef%20&%20Arpels"
+          },
+          "4821f735-c631-46c5-ab37-ac7eb8f1b250": {
+            "id": "4821f735-c631-46c5-ab37-ac7eb8f1b250",
+            "name": "Prada",
+            "image": "https://via.placeholder.com/400x200.png?text=Prada"
+          },
+          "6582ff8d-85f2-43aa-919e-0b92b4469ea6": {
+            "id": "6582ff8d-85f2-43aa-919e-0b92b4469ea6",
+            "name": "Balenciaga",
+            "image": "https://via.placeholder.com/400x200.png?text=Balenciaga"
+          },
+          "ec22bb88-592d-44a3-99a7-4773cada2bd1": {
+            "id": "ec22bb88-592d-44a3-99a7-4773cada2bd1",
+            "name": "Levi's",
+            "image": "https://via.placeholder.com/400x200.png?text=Levi's"
+          },
+          "aad54273-251d-4188-9298-e65ba8cdfdcb": {
+            "id": "aad54273-251d-4188-9298-e65ba8cdfdcb",
+            "name": "Hugo Boss",
+            "image": "https://via.placeholder.com/400x200.png?text=Hugo%20Boss"
+          },
+          "0f3b4260-db16-4867-a621-ca7c1fe62b57": {
+            "id": "0f3b4260-db16-4867-a621-ca7c1fe62b57",
+            "name": "Montblanc",
+            "image": "https://via.placeholder.com/400x200.png?text=Montblanc"
+          },
+          "21373275-eb22-4965-8967-fcb99755c8db": {
+            "id": "21373275-eb22-4965-8967-fcb99755c8db",
+            "name": "Diesel",
+            "image": "https://via.placeholder.com/400x200.png?text=Diesel"
+          },
+          "d8040f38-79db-4998-ba5c-fba9470e41da": {
+            "id": "d8040f38-79db-4998-ba5c-fba9470e41da",
+            "name": "Patek Philippe",
+            "image": "https://via.placeholder.com/400x200.png?text=Patek%20Philippe"
+          },
+          "a18f18ff-bb4b-4a19-aee8-edf1f9fccaec": {
+            "id": "a18f18ff-bb4b-4a19-aee8-edf1f9fccaec",
+            "name": "Salvatore Ferragamo",
+            "image": "https://via.placeholder.com/400x200.png?text=Salvatore%20Ferragamo"
+          }
+        }
+      },
+      {
+        "id": "a43c843a-97ab-49b4-826e-702f4c1adc1f",
+        "name": "Aapparels",
+        "homeImage": "https://source.unsplash.com/400x400/?apparels",
+        "categoryImage": "https://source.unsplash.com/400x400/?apparels",
+        "title": "Voluptatem accusantium unde error accusamus qui culpa et.",
+        "subtitle": "Est culpa quia id earum. Qui enim sit sequi harum voluptas a.",
+        "brands": {
+          "afda3fd7-45b3-42d0-ae3c-4dae3ab230a0": {
+            "id": "afda3fd7-45b3-42d0-ae3c-4dae3ab230a0",
+            "name": "Saint Laurent",
+            "image": "https://via.placeholder.com/400x200.png?text=Saint%20Laurent"
+          },
+          "961f9784-e82e-4799-b06a-7963b944396c": {
+            "id": "961f9784-e82e-4799-b06a-7963b944396c",
+            "name": "Patagonia",
+            "image": "https://via.placeholder.com/400x200.png?text=Patagonia"
+          },
+          "ec22bb88-592d-44a3-99a7-4773cada2bd1": {
+            "id": "ec22bb88-592d-44a3-99a7-4773cada2bd1",
+            "name": "Levi's",
+            "image": "https://via.placeholder.com/400x200.png?text=Levi's"
+          },
+          "912522b8-51c5-4998-ad1c-051f41f23493": {
+            "id": "912522b8-51c5-4998-ad1c-051f41f23493",
+            "name": "Valentino",
+            "image": "https://via.placeholder.com/400x200.png?text=Valentino"
+          }
+        }
+      },
+      {
+        "id": "17ca8db8-45f9-433b-a8a6-77f17cfb0854",
+        "name": "Personal care",
+        "homeImage": "https://source.unsplash.com/400x400/?Personal care",
+        "categoryImage": "https://source.unsplash.com/400x400/?Personal care",
+        "title": "Iste non itaque expedita eos exercitationem nisi.",
+        "subtitle": "Et consequatur voluptatem omnis eaque.",
+        "brands": {
+          "6a176d2a-4e99-452f-afa3-d10db37035da": {
+            "id": "6a176d2a-4e99-452f-afa3-d10db37035da",
+            "name": "Piaget",
+            "image": "https://via.placeholder.com/400x200.png?text=Piaget"
+          },
+          "c80c9f44-6fc6-409c-bdaa-0e28ccb8a88d": {
+            "id": "c80c9f44-6fc6-409c-bdaa-0e28ccb8a88d",
+            "name": "Nautica",
+            "image": "https://via.placeholder.com/400x200.png?text=Nautica"
+          },
+          "d8040f38-79db-4998-ba5c-fba9470e41da": {
+            "id": "d8040f38-79db-4998-ba5c-fba9470e41da",
+            "name": "Patek Philippe",
+            "image": "https://via.placeholder.com/400x200.png?text=Patek%20Philippe"
+          },
+          "a04fb1e3-d624-4733-9da3-e87f88f17ef1": {
+            "id": "a04fb1e3-d624-4733-9da3-e87f88f17ef1",
+            "name": "Hermes",
+            "image": "https://via.placeholder.com/400x200.png?text=Hermes"
+          },
+          "6be9600a-f126-4827-ab78-975240e7bd6c": {
+            "id": "6be9600a-f126-4827-ab78-975240e7bd6c",
+            "name": "Armani",
+            "image": "https://via.placeholder.com/400x200.png?text=Armani"
+          },
+          "912522b8-51c5-4998-ad1c-051f41f23493": {
+            "id": "912522b8-51c5-4998-ad1c-051f41f23493",
+            "name": "Valentino",
+            "image": "https://via.placeholder.com/400x200.png?text=Valentino"
+          }
+        }
+      },
+      {
+        "id": "935df94b-8c51-4007-95c2-b1103361028f",
+        "name": "Sun Glasses",
+        "homeImage": "https://source.unsplash.com/400x400/?Sun Glasses",
+        "categoryImage": "https://source.unsplash.com/400x400/?Sun Glasses",
+        "title": "Animi labore minus incidunt.",
+        "subtitle": "Sunt id veritatis ratione nam minima rerum animi consequuntur.",
+        "brands": {
+          "45612ded-266b-4dac-b33d-c2b1c98d0041": {
+            "id": "45612ded-266b-4dac-b33d-c2b1c98d0041",
+            "name": "Fendi",
+            "image": "https://via.placeholder.com/400x200.png?text=Fendi"
+          },
+          "1853c7d2-d155-4ef2-ae40-d6784557ac9c": {
+            "id": "1853c7d2-d155-4ef2-ae40-d6784557ac9c",
+            "name": "Rolex",
+            "image": "https://via.placeholder.com/400x200.png?text=Rolex"
+          },
+          "90b874a2-d30d-4dbe-9b00-d6910bf68758": {
+            "id": "90b874a2-d30d-4dbe-9b00-d6910bf68758",
+            "name": "Longines",
+            "image": "https://via.placeholder.com/400x200.png?text=Longines"
+          },
+          "912522b8-51c5-4998-ad1c-051f41f23493": {
+            "id": "912522b8-51c5-4998-ad1c-051f41f23493",
+            "name": "Valentino",
+            "image": "https://via.placeholder.com/400x200.png?text=Valentino"
+          },
+          "21373275-eb22-4965-8967-fcb99755c8db": {
+            "id": "21373275-eb22-4965-8967-fcb99755c8db",
+            "name": "Diesel",
+            "image": "https://via.placeholder.com/400x200.png?text=Diesel"
+          },
+          "82454250-ca4e-4bb9-858e-7952e345ac3e": {
+            "id": "82454250-ca4e-4bb9-858e-7952e345ac3e",
+            "name": "Coach",
+            "image": "https://via.placeholder.com/400x200.png?text=Coach"
+          },
+          "0835d30e-ee91-4855-99c3-0de5a256e0c8": {
+            "id": "0835d30e-ee91-4855-99c3-0de5a256e0c8",
+            "name": "Versace",
+            "image": "https://via.placeholder.com/400x200.png?text=Versace"
+          },
+          "8a3608b7-04ff-43f7-9182-279460aaa5af": {
+            "id": "8a3608b7-04ff-43f7-9182-279460aaa5af",
+            "name": "Tommy Hilfiger",
+            "image": "https://via.placeholder.com/400x200.png?text=Tommy%20Hilfiger"
+          },
+          "afda3fd7-45b3-42d0-ae3c-4dae3ab230a0": {
+            "id": "afda3fd7-45b3-42d0-ae3c-4dae3ab230a0",
+            "name": "Saint Laurent",
+            "image": "https://via.placeholder.com/400x200.png?text=Saint%20Laurent"
+          },
+          "4821f735-c631-46c5-ab37-ac7eb8f1b250": {
+            "id": "4821f735-c631-46c5-ab37-ac7eb8f1b250",
+            "name": "Prada",
+            "image": "https://via.placeholder.com/400x200.png?text=Prada"
+          }
+        }
+      },
+      {
+        "id": "ff889e14-c5b0-42c3-b260-d4de589f4cb5",
+        "name": "Perfumes",
+        "homeImage": "https://source.unsplash.com/400x400/?Perfumes",
+        "categoryImage": "https://source.unsplash.com/400x400/?Perfumes",
+        "title": "Beatae ad saepe optio omnis ut alias molestiae sit.",
+        "subtitle": "Quia harum omnis deserunt et sed saepe est aut.",
+        "brands": {
+          "fbf966d3-b706-4fd4-ae75-fefb3487f2a7": {
+            "id": "fbf966d3-b706-4fd4-ae75-fefb3487f2a7",
+            "name": "Gucci",
+            "image": "https://via.placeholder.com/400x200.png?text=Gucci"
+          },
+          "a04fb1e3-d624-4733-9da3-e87f88f17ef1": {
+            "id": "a04fb1e3-d624-4733-9da3-e87f88f17ef1",
+            "name": "Hermes",
+            "image": "https://via.placeholder.com/400x200.png?text=Hermes"
+          },
+          "45612ded-266b-4dac-b33d-c2b1c98d0041": {
+            "id": "45612ded-266b-4dac-b33d-c2b1c98d0041",
+            "name": "Fendi",
+            "image": "https://via.placeholder.com/400x200.png?text=Fendi"
+          },
+          "2625fcae-487c-47f9-98db-1fb6c23e83b6": {
+            "id": "2625fcae-487c-47f9-98db-1fb6c23e83b6",
+            "name": "Cartier",
+            "image": "https://via.placeholder.com/400x200.png?text=Cartier"
+          }
+        }
+      },
+      {
+        "id": "1948c880-e09a-4783-b654-6ca1cfcbc2ca",
+        "name": "Hats",
+        "homeImage": "https://source.unsplash.com/400x400/?Hats",
+        "categoryImage": "https://source.unsplash.com/400x400/?Hats",
+        "title": "Sed ab consequatur sunt eos.",
+        "subtitle": "Rerum libero voluptate reprehenderit iste aut eaque optio quibusdam.",
+        "brands": {
+          "1a9b28b2-ce1a-456f-aa95-f1acdf94a0f3": {
+            "id": "1a9b28b2-ce1a-456f-aa95-f1acdf94a0f3",
+            "name": "Marc Jacobs",
+            "image": "https://via.placeholder.com/400x200.png?text=Marc%20Jacobs"
+          },
+          "a04fb1e3-d624-4733-9da3-e87f88f17ef1": {
+            "id": "a04fb1e3-d624-4733-9da3-e87f88f17ef1",
+            "name": "Hermes",
+            "image": "https://via.placeholder.com/400x200.png?text=Hermes"
+          },
+          "752c21da-224f-4c99-8069-9b420467bee9": {
+            "id": "752c21da-224f-4c99-8069-9b420467bee9",
+            "name": "Michael Kors",
+            "image": "https://via.placeholder.com/400x200.png?text=Michael%20Kors"
+          },
+          "c95c1d3e-61d2-4377-84f7-316f60531497": {
+            "id": "c95c1d3e-61d2-4377-84f7-316f60531497",
+            "name": "Guess",
+            "image": "https://via.placeholder.com/400x200.png?text=Guess"
+          },
+          "5b17e9c6-ba32-4656-91c7-c465a56f9f77": {
+            "id": "5b17e9c6-ba32-4656-91c7-c465a56f9f77",
+            "name": "Chanel",
+            "image": "https://via.placeholder.com/400x200.png?text=Chanel"
+          },
+          "4522d8e7-0cfe-4c22-ae57-5db8af3e8667": {
+            "id": "4522d8e7-0cfe-4c22-ae57-5db8af3e8667",
+            "name": "Chopard",
+            "image": "https://via.placeholder.com/400x200.png?text=Chopard"
+          }
+        }
+      },
+      {
+        "id": "74198223-cd9b-446e-9d56-23d7fe9e9978",
+        "name": "Shoes",
+        "homeImage": "https://source.unsplash.com/400x400/?Shoes",
+        "categoryImage": "https://source.unsplash.com/400x400/?Shoes",
+        "title": "Laborum laboriosam facere fugiat.",
+        "subtitle": "Vel eum libero excepturi error explicabo rerum temporibus.",
+        "brands": {
+          "941a0ecf-2b66-4fe9-b62c-c1a8da097312": {
+            "id": "941a0ecf-2b66-4fe9-b62c-c1a8da097312",
+            "name": "Yves Saint Laurent",
+            "image": "https://via.placeholder.com/400x200.png?text=Yves%20Saint%20Laurent"
+          },
+          "a18f18ff-bb4b-4a19-aee8-edf1f9fccaec": {
+            "id": "a18f18ff-bb4b-4a19-aee8-edf1f9fccaec",
+            "name": "Salvatore Ferragamo",
+            "image": "https://via.placeholder.com/400x200.png?text=Salvatore%20Ferragamo"
+          },
+          "0294cc8c-a65b-4c41-813f-ef17ee193d33": {
+            "id": "0294cc8c-a65b-4c41-813f-ef17ee193d33",
+            "name": "Uniqlo",
+            "image": "https://via.placeholder.com/400x200.png?text=Uniqlo"
+          },
+          "6be9600a-f126-4827-ab78-975240e7bd6c": {
+            "id": "6be9600a-f126-4827-ab78-975240e7bd6c",
+            "name": "Armani",
+            "image": "https://via.placeholder.com/400x200.png?text=Armani"
+          },
+          "21373275-eb22-4965-8967-fcb99755c8db": {
+            "id": "21373275-eb22-4965-8967-fcb99755c8db",
+            "name": "Diesel",
+            "image": "https://via.placeholder.com/400x200.png?text=Diesel"
+          },
+          "c95c1d3e-61d2-4377-84f7-316f60531497": {
+            "id": "c95c1d3e-61d2-4377-84f7-316f60531497",
+            "name": "Guess",
+            "image": "https://via.placeholder.com/400x200.png?text=Guess"
+          },
+          "4ced8190-3c51-4a78-aca7-fb9ba64dd199": {
+            "id": "4ced8190-3c51-4a78-aca7-fb9ba64dd199",
+            "name": "Bvlgari",
+            "image": "https://via.placeholder.com/400x200.png?text=Bvlgari"
+          }
+        }
+      }
+    ]
+}
