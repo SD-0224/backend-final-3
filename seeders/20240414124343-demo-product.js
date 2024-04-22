@@ -1,5 +1,5 @@
 "use strict";
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 const today = new Date().getTime();
 
 //**How to seed this file only */
@@ -78,20 +78,34 @@ module.exports = {
         discountpercentage: 36,
         createdAt: today,
         updatedAt: today,
-      },*/
+      },
       {
-        id: "298e8bf9-1da1-4377-83d0-1faf4c33e6a7q",
-        title: "Licensed Soft Bikeeee",
-        subtitle: "Error officiis explicabooo.",
+        id: "298e8bf9-1da1-4377-83d0-1faf4c33e6ax",
+        title: "Licensed Soft Bikee231ee",
+        subtitle: "Error officiis explicab123ooo.",
         description:
-          "Officiis blanditiis illo et fugiat ut ullam quasi. Iste ut dolores in deserunt. Ea adipisci sunt sapiente ex quia qui sapiente sit qui.",
-        price: 168,
-        quantity: 40,
+          "Officiis blanditiis illo et fugiat ut123 ullam quasi. Iste ut dolores in deserunt. Ea adipisci sunt sapiente ex quia qui sapiente sit qui.",
+        price: 11,
+        quantity: 30,
         categoryId: "7e02ce34-52fe-4fdf-8ec7-16f8baa40abc",
         brandId: "c6056d97-f5cd-4f5b-abd6-3ca455befcf5",
-        discountpercentage: 36,
+        discountpercentage: 10,
         createdAt: today,
         updatedAt: today,
+      },*/
+      {
+        id: "298e8bf9-1da1-4377-83d0-1faf4c33e6av",
+        title: "Licensed Soft Bikee231ee123123",
+        subtitle: "Error officiis explicab123oooooooooooo.",
+        description:
+          "Officiis blanditiis illo et fugiat ut123 ullam quasi. Iste ut dolores in deserunt. Ea adipisci sunt sapiente ex quia qui sapiente sit qui.",
+        price: 20,
+        quantity: 20,
+        categoryId: "7e02ce34-52fe-4fdf-8ec7-16f8baa40abc",
+        brandId: "c6056d97-f5cd-4f5b-abd6-3ca455befcf5",
+        discountpercentage: 20,
+        createdAt: 1700252820000,
+        updatedAt: 1700252820000,
       },
     ]);
   },
