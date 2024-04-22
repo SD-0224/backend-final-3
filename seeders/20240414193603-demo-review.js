@@ -1,6 +1,7 @@
-"use strict";
-
-const { v4: uuidv4 } = require("uuid");
+'use strict';
+const fs = require('fs');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const today = new Date().getTime();
 
@@ -9,46 +10,25 @@ const today = new Date().getTime();
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert("reviews", [
-      {
-        id: uuidv4(),
-        content: "Voluptatibus porro eveniet qui molestiae.",
-        rating: "2",
-        productId: "e0369fef-c43e-4ca2-aca3-d4765dc416c8",
-        userId: "498a98c2-ea45-4de2-bebd-c5c9fade59af",
-        createdAt: today,
-        updatedAt: today,
-      },
-      {
-        id: uuidv4(),
-        content:
-          "Deleniti ea delectus. Accusamus ad sit qui facilis quidem. Eum blanditiis et.",
-        rating: "4",
-        productId: "ee95587d-f688-4ea7-9808-7dd9de6d1145",
-        userId: "498a98c2-ea45-4de2-bebd-c5c9fade59af",
-        createdAt: today,
-        updatedAt: today,
-      },
-      {
-        id: uuidv4(),
-        content:
-          "Deleniti ea delectus. Accusamus ad sit qui facilis quidem. Eum blanditiis et.",
-        rating: "5",
-        productId: "a4517436-34fb-4741-9e52-cd59dfbd2af8",
-        userId: "498a98c2-ea45-4de2-bebd-c5c9fade59af",
-        createdAt: today,
-        updatedAt: today,
-      },
-    ]);
+  async up (queryInterface, Sequelize) {
+    const filePath = path.join(__dirname, '../fakeData/product.json');
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const products=data.products;
+    const allReviews = [];
+
+    products.forEach(product => {
+      const reviews = Object.entries(product.reviews).map(([id, review]) => ({
+      id,
+      ...review,
+      }));
+    allReviews.push(...reviews);
+    });
+    await queryInterface.bulkInsert('reviews', allReviews, {});  
   },
 
-  async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  },
+  async down (queryInterface, Sequelize) {
+   
+    await queryInterface.bulkDelete('reviews', null, {});
+     
+  }
 };

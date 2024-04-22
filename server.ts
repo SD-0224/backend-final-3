@@ -30,16 +30,16 @@ app.use(express.json());
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
-const port = process.env.SERVER_PORT;
+const port:any = process.env.SERVER_PORT;
 
 const start = async (): Promise<void> => {
   try {
     await db.sequelize.sync();
     // tslint:disable-next-line:no-console
     console.log(`Databases synced Successfully`);
-    app.listen(port, () => {
+    app.listen(port,'0.0.0.0', () => {
       // tslint:disable-next-line:no-console
-      console.log(`Server running at http://localhost:${port}`);
+      console.log(`Server running at port:${port}`);
     });
   } catch (error) {
     // tslint:disable-next-line:no-console
