@@ -8,6 +8,7 @@ interface UserAttributes {
   id:string;
   firstName: string;
   lastName: string;
+  user:string;
   email: string;
   phone: string;
   dateofbirth: Date;
@@ -22,6 +23,7 @@ module.exports = (sequelize: Sequelize) => {
     public id!:string;
     public firstName!: string;
     public lastName!: string;
+    public user!: string;
     public email!: string;
     public phone!: string;
     public dateofbirth!: Date;
@@ -55,6 +57,11 @@ module.exports = (sequelize: Sequelize) => {
       lastName: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      user: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
       },
       email: {
         type: DataTypes.STRING,

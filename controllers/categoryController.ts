@@ -27,7 +27,7 @@ const getCategoryById = async (req: Request, res: Response) => {
     .catch((error: Error) => {
       // tslint:disable-next-line:no-console
       console.error("Error finding Category:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error"});
   });
 }
 
@@ -61,7 +61,7 @@ const getCategoryBrands = async (req: Request, res: Response) => {
     delete categoryWithBrands.Products;
     res.json({ category: categoryWithBrands });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error"});
   }
 };
 

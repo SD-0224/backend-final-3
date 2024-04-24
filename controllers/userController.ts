@@ -6,7 +6,7 @@ import { error } from 'console';
 // This method returns all users
 const getAllUsers = async(req:Request,res:Response) => {
 
-    db.User.findAll({raw:true})
+    db.User.findAll({raw:true, attributes: { exclude: ['createdAt','createdAt'] }})
     .then((users:any) => {
         res.json({users})
     })
@@ -20,7 +20,7 @@ const getUserById = async (req:Request,res:Response) => {
 
     const userId=req.params.id;
 
-    db.User.findByPk(userId, {
+    db.User.findByPk(userId, {attributes: { exclude: ['createdAt','createdAt'] },
         include:[{model:db.Order,
         attributes: ['id', 'createdAt', 'category', 'status'],
         include:{model:db.Product,

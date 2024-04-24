@@ -16,10 +16,10 @@ module.exports = {
     const orders=data.orders;
     const products=data.products
     let AllproductOrders=[];
-    let orderIndex=70
-    while(orderIndex<90) {
-      let count=1004;
-      let index=1000;
+    let orderIndex=90
+    while(orderIndex<100) {
+      let count=1800;
+      let index=1797;
       while(count-index!=0) {
         let productOrder={
           orderId:orders[orderIndex].id,
