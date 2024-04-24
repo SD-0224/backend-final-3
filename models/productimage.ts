@@ -3,9 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface ProductImageAttributes {
   id:string;
-  url: string;
-  width:number;
-  height:number;
+  largeImageUrl: string;
+  smallImageUrl: string;
   createdAt:bigint;
   updatedAt:bigint;
 }
@@ -16,9 +15,8 @@ module.exports = (sequelize: Sequelize) => {
     implements ProductImageAttributes
   {
     public id!:string;
-    public url!: string;
-    public width!: number;
-    public height!: number;
+    public largeImageUrl!: string;
+    public smallImageUrl!: string;
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
@@ -37,17 +35,13 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         primaryKey:true
       },
-      url: {
+      largeImageUrl: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      width: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      height: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
+      smallImageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
