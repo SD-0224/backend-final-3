@@ -6,7 +6,7 @@ import { error } from 'console';
 // This method returns all users
 const getAllUsers = async(req:Request,res:Response) => {
 
-    db.User.findAll({raw:true, attributes: { exclude: ['createdAt','createdAt'] }})
+    db.User.findAll({raw:true, attributes: { exclude: ['createdAt','updatedAt'] }})
     .then((users:any) => {
         res.json({users})
     })
@@ -20,7 +20,7 @@ const getUserById = async (req:Request,res:Response) => {
 
     const userId=req.params.id;
 
-    db.User.findByPk(userId, {attributes: { exclude: ['createdAt','createdAt'] },
+    db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
         include:[{model:db.Order,
         attributes: ['id', 'createdAt', 'category', 'status'],
         include:{model:db.Product,
@@ -43,8 +43,6 @@ const getUserById = async (req:Request,res:Response) => {
         res.json({user})
     })
     .catch((error:Error) => {
-        // tslint:disable-next-line:no-console
-        console.error('Error finding user:', error);
         res.status(500).json({ error: 'Internal server error' });
     })
 }
@@ -53,7 +51,7 @@ const getUserById = async (req:Request,res:Response) => {
 // This method creates a new user
 const createNewUser = async (req:Request,res:Response) => {
 
-    const {firstName,lastName, email,phone,dateofbirth,avatar, password} = req.body;
+    const {firstName,lastName,user, email,phone,dateofbirth,avatar, password} = req.body;
     // check if the email exists
     const userExists= await db.User.findOne({where:{email}});
     if(userExists) {
@@ -62,6 +60,7 @@ const createNewUser = async (req:Request,res:Response) => {
     db.User.create({
             firstName,
             lastName,
+            user,
             email,
             phone,
             dateofbirth,
@@ -69,19 +68,13 @@ const createNewUser = async (req:Request,res:Response) => {
             password,
          })
     .then((user:any) => {
-        // tslint:disable-next-line:no-console
-        console.log("user created successfully");
         res.json({user,message:"user created successfully"});
     })
     .catch((error:Error) => {
         if (error.name === 'SequelizeUniqueConstraintError') {
-            // tslint:disable-next-line:no-console
-            console.error('Error creating user:', 'Email address must be unique');
             res.status(400).json({error:"Email address must be unique"})
           }
         else {
-            // tslint:disable-next-line:no-console
-            console.log(error.message);
             res.status(400).json(error.message)
         }
 

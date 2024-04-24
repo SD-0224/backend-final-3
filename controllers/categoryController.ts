@@ -3,39 +3,21 @@ import db from "../models";
 
 // This method returns all categories
 const getAllCategories = async (req: Request, res: Response) => {
-  db.Category.findAll({ raw: true })
-    .then((category: any) => {
-      res.json({ category });
+  db.Category.findAll({ raw: true, attributes: { exclude: ['createdAt','updatedAt'] } })
+    .then((categories: any) => {
+      res.json({ categories });
     })
     .catch((error: Error) => {
       res.status(500).json({ error: "Database error" });
     });
 };
 
-// This method returns a specific category by ID
+
+// This method returns a specific category by ID with their brands
 const getCategoryById = async (req: Request, res: Response) => {
   const categoryId = req.params.id;
-
-  db.Category.findByPk(categoryId)
-    .then((category: any) => {
-      if (!category) {
-        res.status(404).json({ error: "Category not found" });
-        return;
-      }
-      res.json({category});
-    })
-    .catch((error: Error) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error finding Category:", error);
-      res.status(500).json({ error: "Internal server error"});
-  });
-}
-
-// This method returns all brands for a specific category id
-const getCategoryBrands = async (req: Request, res: Response) => {
-  const categoryId = req.params.id;
   try {
-    const category = await db.Category.findByPk(categoryId, {
+    const category = await db.Category.findByPk(categoryId, {attributes: { exclude: ['createdAt','updatedAt'] },
       include: [
         {
           model: db.Product,
@@ -51,8 +33,6 @@ const getCategoryBrands = async (req: Request, res: Response) => {
     const brands = category.Products.map((product: any) => ({
       id: product.Brand.id,
       name: product.Brand.name,
-      image: product.Brand.image,
-      createdAt: product.Brand.createdAt,
     }));
     const categoryWithBrands = {
       ...category.toJSON(),
@@ -65,16 +45,11 @@ const getCategoryBrands = async (req: Request, res: Response) => {
   }
 };
 
-// This method filters and returns products based on category id and brand id
-const filterByCategoryByBrand = async (req: Request, res: Response) => {
-  return;
-};
-
 // This method returns all brands
 const getAllBrands = async (req: Request, res: Response) => {
-  db.Brand.findAll({ raw: true })
-    .then((brand: any) => {
-      res.json({ brand });
+  db.Brand.findAll({ raw: true,attributes: { exclude: ['createdAt','updatedAt'] } })
+    .then((brands: any) => {
+      res.json({ brands });
     })
     .catch((error: Error) => {
       res.status(500).json({ error: "Database error" });
@@ -84,7 +59,7 @@ const getAllBrands = async (req: Request, res: Response) => {
 // This method returns a specific brand by ID
 const getBrandById = async (req: Request, res: Response) => {
   const brandId = req.params.id;
-  db.Brand.findByPk(brandId)
+  db.Brand.findByPk(brandId,{attributes: { exclude: ['createdAt','updatedAt'] }})
     .then((brand: any) => {
       if (!brand) {
         res.status(404).json({ error: "Brand not found" });
@@ -94,8 +69,6 @@ const getBrandById = async (req: Request, res: Response) => {
       res.json({ brand });
     })
     .catch((error: Error) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error finding Brand:", error);
       res.status(500).json({ error: "Internal server error" });
     });
 };
@@ -103,8 +76,6 @@ const getBrandById = async (req: Request, res: Response) => {
 export {
   getAllCategories,
   getCategoryById,
-  getCategoryBrands,
-  filterByCategoryByBrand,
   getAllBrands,
   getBrandById,
 };
