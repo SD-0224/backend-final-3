@@ -11,11 +11,10 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/category.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const categories=data.categories;
     categories.map((category)=> {
-      delete category.brands
       category.createdAt= today;
       category.updatedAt= today;
     })

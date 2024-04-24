@@ -12,22 +12,12 @@ const path = require('path');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/user.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    const users=data.users;
-    let addresses=[]
-    users.map((user)=> {
-        const addressKey=Object.keys(user.address)
-        const addressVal=user.address[addressKey];
-        let address=new Map()
-        address={id:addressKey[0],...addressVal}
-        delete address.country
-        address.userId=user.id
-        address.fullname=user.firstName+" "+user.lastName
-        address.mobileNumber=user.phone
+    const addresses=data.addresses;
+    addresses.map((address)=> {
         address.createdAt= today;
         address.updatedAt= today;
-        addresses.push(address)
     })
     await queryInterface.bulkInsert('addresses', addresses, {});  
   },

@@ -10,12 +10,10 @@ const path = require('path');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/product.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const products=data.products;
     products.map((product)=> {
-      delete product.url;
-      delete product.reviews;
       product.updatedAt= today;
     })
     await queryInterface.bulkInsert('products', products, {});  

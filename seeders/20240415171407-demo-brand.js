@@ -8,7 +8,7 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/brand.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const brands=data.brands;
     brands.map((brand)=> {

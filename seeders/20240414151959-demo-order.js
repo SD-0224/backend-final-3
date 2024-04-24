@@ -11,33 +11,20 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/user.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    const users=data.users;
-    const allOrders = [];
+    const orders=data.orders;
 
-    users.forEach(user => {
-      const orders = Object.entries(user.orders).map(([id, order]) => ({
-      id,
-      userId:user.id,
-      createdAt:order.date,
-      updatedAt:today,
-      category:order.category,
-      status:order.status,
-      }));
-        
-        
-      allOrders.push(...orders);
-      });
-    await queryInterface.bulkInsert('orders', allOrders, {});  
+    orders.map((order)=> {
+      order.updatedAt= today;
+    })
+    await queryInterface.bulkInsert('orders', orders, {});  
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    
+    
+    await queryInterface.bulkDelete('orders', null, {});
+    
   }
 };

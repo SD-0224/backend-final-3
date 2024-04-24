@@ -1,0 +1,106 @@
+
+{   
+    "products":
+    
+      {
+        "id": "6e63099a-a985-40ac-9241-b87e5277920c",
+        "title": "Back-end",
+        "shortSubtitle": "Computers Chicken Polarised",
+        "longSubtitle": "esse",
+        "description": "Vel sunt aliquid pariatur eius non. Odio consequatur qui quo reiciendis et fuga nisi maxime voluptatem. Sequi dolores veritatis consequuntur dolores et.",
+        "createdAt": 1713651202584,
+        "price": 35,
+        "quantity": 69,
+        "discountPercentage": 5,
+        "brandId":"1853c7d2-d155-4ef2-ae40-d6784557ac9c",
+        "categoryId":"1db307b6-6961-4748-b6b1-bcef7b8aa979",
+        "cartId":"b84ae6de-fa3e-4c6c-b271-38f7a12daa2c",
+        "whishlistId":"75053aab-d0ef-49b7-b213-7d519e504738"
+      },
+    "users":
+    
+      {
+        "id": "db0aa465-65e4-49d6-8f3b-74ebe91864f0",
+        "password": "1EPz4aaqQcv7CvM",
+        "avatar": "https://loremflickr.com/320/240/person?random=609",
+        "firstName": "Marcelo",
+        "lastName": "Schmitt",
+        "phone": "(809) 409-0242",
+        "email": "Abby.Beier@yahoo.com",
+        "dateofbirth": "1989-03-24"
+      },
+
+      
+    "categories":
+    
+      {
+        "id": "1db307b6-6961-4748-b6b1-bcef7b8aa979",
+        "name": "Handbags",
+        "homeImage": "https://source.unsplash.com/400x400/?handbags",
+        "categoryImage": "https://source.unsplash.com/400x400/?handbags",
+        "title": "At ducimus animi provident illum dolor suscipit.",
+        "subtitle": "Quaerat qui harum"
+      },
+
+    "brands":
+      
+    {
+        "id": "fbf966d3-b706-4fd4-ae75-fefb3487f2a7",
+        "name": "Gucci",
+        "image": "https://via.placeholder.com/400x200.png?text=Gucci"
+    },
+
+    "address": 
+        {   
+            "id":"d7202bea-e422-49c6-a23b-80e0f007ae19",
+            "userId":"db0aa465-65e4-49d6-8f3b-74ebe91864f0",
+            "fullname":"Marcelo Schmitt",
+            "streetAddress": "Deshaun Freeway",
+            "city": "East Laishashire",
+            "state": "Pennsylvania",
+            "pinCode": "21118-9431",
+            "mobileNumber": "(809) 409-0242"
+        },
+
+    "reviews": {
+            "id":"e7d248bb-9bb6-4b11-a397-302aa5a7f93b",
+            "userId": "5cf2df74-e9d7-40f7-b0b0-a82863df77fb",
+            "productId": "6e63099a-a985-40ac-9241-b87e5277920c",
+            "rating": 2.5,
+            "content": "Voluptatem totam veniam cum soluta laudantium.",
+            "createdAt": 1651095938722,
+            "updatedAt": 1713647933056
+        },
+
+    "productImages": {
+        "id":"e7d248bb-9bb6-4b11-a397-302aa5a7f93b",
+        "url": "https://source.unsplash.com/400x400/?handbags",
+        "productId": "6e63099a-a985-40ac-9241-b87e5277920c",
+        "width": 400,
+        "height":400
+        },
+        "orders": {
+            "id":"eb224bb4-72d1-4dd9-b0e8-3d9cd00ac703",
+            "addressId":"d7202bea-e422-49c6-a23b-80e0f007ae19",
+            "userId":"db0aa465-65e4-49d6-8f3b-74ebe91864f0",
+            "category": "processing",
+            "status": "paid",
+            "createdAt": 1713732135613
+        },
+
+        "carts": {
+            "id":"eb224bb4-72d1-4dd9-b0e8-3d9cd00ac703",
+            "userId":"db0aa465-65e4-49d6-8f3b-74ebe91864f0",
+            "itemscount": 4,
+            "createdAt": 1713732135613,
+            "updatedAt": 1713647933056
+        },
+        "wishlists": {
+            "id":"eb224bb4-72d1-4dd9-b0e8-3d9cd00ac703",
+            "userId":"db0aa465-65e4-49d6-8f3b-74ebe91864f0",
+            "itemscount": 4,
+            "createdAt": 1713732135613,
+            "updatedAt": 1713647933056
+        }
+          
+    }

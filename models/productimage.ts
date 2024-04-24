@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 interface ProductImageAttributes {
   id:string;
   url: string;
+  width:number;
+  height:number;
   createdAt:bigint;
   updatedAt:bigint;
 }
@@ -15,6 +17,8 @@ module.exports = (sequelize: Sequelize) => {
   {
     public id!:string;
     public url!: string;
+    public width!: number;
+    public height!: number;
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
@@ -36,6 +40,14 @@ module.exports = (sequelize: Sequelize) => {
       url: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      width: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      height: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

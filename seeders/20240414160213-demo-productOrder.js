@@ -1,5 +1,6 @@
 'use strict';
-
+const fs = require('fs');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
 const today = new Date().getTime();
@@ -10,16 +11,30 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('productOrders', [
-      {
-        
-        orderId: '73012fe3-fec0-4260-9da9-82e4f63d8f16',
-        productId:'e0369fef-c43e-4ca2-aca3-d4765dc416c8',
-        createdAt: new Date(),
-        updatedAt: new Date()
+    const filePath = path.join(__dirname, '../fakeData/database.json');
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const orders=data.orders;
+    const products=data.products
+    let AllproductOrders=[];
+    let orderIndex=70
+    while(orderIndex<90) {
+      let count=1004;
+      let index=1000;
+      while(count-index!=0) {
+        let productOrder={
+          orderId:orders[orderIndex].id,
+          productId:products[index].id,
+          createdAt:orders[orderIndex].createdAt,
+          updatedAt:today
+        }
+        AllproductOrders.push(productOrder)
+        index++;
       }
-    
-      ])
+      count+=index;
+      orderIndex++;
+      
+    }
+    await queryInterface.bulkInsert('productOrders', AllproductOrders, {});  
   },
 
   async down (queryInterface, Sequelize) {

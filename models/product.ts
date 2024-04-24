@@ -9,7 +9,7 @@ interface ProductAttributes {
   description: Text;
   price: number;
   quantity: number;
-  discountpercentage: number;
+  discountPercentage: number;
   createdAt: bigint;
   updatedAt: bigint;
 }
@@ -23,7 +23,7 @@ module.exports = (sequelize: Sequelize) => {
     public description!: Text;
     public price!: number;
     public quantity!: number;
-    public discountpercentage!: number;
+    public discountPercentage!: number;
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
@@ -101,7 +101,7 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      discountpercentage: {
+      discountPercentage: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

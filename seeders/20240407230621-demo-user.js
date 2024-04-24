@@ -18,14 +18,10 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/user.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const users=data.users;
     users.map((user)=> {
-      delete user.username;
-      delete user.address;
-      delete user.reviews;
-      delete user.orders;
       user.password=hashPassword(user.password)
       user.createdAt= today;
       user.updatedAt= today;

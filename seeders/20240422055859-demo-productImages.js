@@ -10,19 +10,12 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/product.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    const products=data.products;
-    const productImages=[];
-    products.map((product)=> {
-        const image= { }
-        image.id=uuidv4()
-        image.productId=product.id,
-        image.url=product.url,
-        image.createdAt=product.createdAt,
+    const productImages=data.productImages;
+    productImages.map((image)=> {
+        image.createdAt=today
         image.updatedAt=today
-        productImages.push(image)
-    
     })  
     await queryInterface.bulkInsert('productImages', productImages, {}); 
   },

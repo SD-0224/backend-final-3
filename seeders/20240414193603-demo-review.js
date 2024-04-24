@@ -11,19 +11,11 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/product.json');
+    const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    const products=data.products;
-    const allReviews = [];
+    const reviews=data.reviews;
 
-    products.forEach(product => {
-      const reviews = Object.entries(product.reviews).map(([id, review]) => ({
-      id,
-      ...review,
-      }));
-    allReviews.push(...reviews);
-    });
-    await queryInterface.bulkInsert('reviews', allReviews, {});  
+    await queryInterface.bulkInsert('reviews', reviews, {});  
   },
 
   async down (queryInterface, Sequelize) {
