@@ -28,8 +28,8 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Address.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      Address.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'addressId'});
+      Address.belongsTo(models.User,{as: 'user',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Address.hasMany(models.Order,{as: 'orders',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'addressId'});
     }
   }
 

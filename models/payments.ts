@@ -19,7 +19,7 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Payment.belongsToMany(models.User, { through: "userPayments",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'paymentId' });
+      Payment.belongsToMany(models.User, {as: 'users', through: "userPayments",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'paymentId' });
     }
 
     // Define other model setup here, like hooks and scopes

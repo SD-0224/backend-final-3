@@ -20,8 +20,8 @@ const getCategoryById = async (req: Request, res: Response) => {
     const category = await db.Category.findByPk(categoryId, {attributes: { exclude: ['createdAt','updatedAt'] },
       include: [
         {
-          model: db.Product,
-          include: { model: db.Brand },
+          model: db.Product, as:"products",
+          include: { model: db.Brand ,as:"brand"},
         },
       ],
     });
@@ -30,15 +30,15 @@ const getCategoryById = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    const brands = category.Products.map((product: any) => ({
-      id: product.Brand.id,
-      name: product.Brand.name,
+    const brands = category.products.map((product: any) => ({
+      id: product.brand.id,
+      name: product.brand.name,
     }));
     const categoryWithBrands = {
       ...category.toJSON(),
       brands,
     };
-    delete categoryWithBrands.Products;
+    delete categoryWithBrands.products;
     res.json(categoryWithBrands);
   } catch (error) {
     res.status(500).json({ error: "Internal server error"});

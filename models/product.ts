@@ -29,36 +29,43 @@ module.exports = (sequelize: Sequelize) => {
 
     static associate(models: any) {
       Product.hasMany(models.Review, {
+        as: 'reviews',
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "productId",
       });
       Product.hasMany(models.ProductImage, {
+        as: 'images',
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "productId",
       });
       Product.belongsTo(models.Category, {
+        as: 'category',
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "categoryId",
       });
       Product.belongsTo(models.Brand, {
+        as: 'brand',
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "brandId",
       });
       Product.belongsTo(models.Cart, {
+        as: 'cart',
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "cartId",
       });
       Product.belongsTo(models.Wishlist, {
+        as: 'wishlist',
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "wishlistId",
       });
       Product.belongsToMany(models.Order, {
+        as: 'orders',
         through: "productOrders",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
