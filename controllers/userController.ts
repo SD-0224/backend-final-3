@@ -66,7 +66,7 @@ const getUserById = async (req:Request,res:Response) => {
             reviews: user.reviews.reduce((acc: { [productId: string]: any }, review: any) => {
                 acc[review.productId] = {
                     rating: review.rating,
-                    review: review.content
+                    content: review.content
                 };
                 return acc;
             }, {}),
