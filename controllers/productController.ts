@@ -5,12 +5,60 @@ import { subMonths } from "date-fns";
 // This method returns all products
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const products = await db.Product.findAll({ raw: true });
-    res.json(products);
-  } catch (error) {
+    const products = await db.Product.findAll({
+      attributes: {
+        exclude: ["updatedAt", "wishlistId", "cartId"],
+      },
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["largeImageUrl", "smallImageUrl"],
+        },
+      ],
+    });
+
+    if (!products.length) {
+      res.status(404).json({ error: "No products found" });
+      return;
+    }
+
+    res.json(
+      products.map((product: any) => {
+        const plainProduct = product.get({ plain: true });
+        const normalizedProduct = {
+          ...plainProduct,
+          reviews: plainProduct.reviews.map((review: any) => ({
+            userId: review.userId,
+            rating: review.rating,
+            content: review.content,
+          })),
+          largeImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].largeImageUrl
+              : null,
+          smallImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].smallImageUrl
+              : null,
+        };
+
+        delete normalizedProduct.images;
+
+        return normalizedProduct;
+      })
+    );
+  } catch (error: any) {
     // tslint:disable-next-line:no-console
-    console.error("Error retrieving all products:", error);
-    res.status(500).json({ error: "Database error" });
+    console.error("Error fetching products:", error);
+    res
+      .status(500)
+      .json({ error: "Internal server error", details: error.message });
   }
 };
 
@@ -18,26 +66,82 @@ const getAllProducts = async (req: Request, res: Response) => {
 const getProductById = async (req: Request, res: Response) => {
   const productId = req.params.id;
 
-  db.Product.findByPk(productId)
-    .then((product: any) => {
-      if (!product) {
-        res.status(404).json({ error: "product not found" });
-        return;
-      }
-      res.json(product);
-    })
-    .catch((error: Error) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error finding product:", error);
-      res.status(500).json({ error: "Internal server error" });
+  try {
+    const product = await db.Product.findByPk(productId, {
+      attributes: {
+        exclude: ["updatedAt", "wishlistId", "cartId"],
+      },
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["largeImageUrl", "smallImageUrl"],
+        },
+      ],
     });
+
+    if (!product) {
+      res.status(404).json({ error: "Product not found" });
+      return;
+    }
+
+    // Normalize the product data
+    const normalizedProduct = {
+      ...product.get({ plain: true }),
+      reviews: product.reviews
+        ? product.reviews.map((review: any) => ({
+            userId: review.userId,
+            rating: review.rating,
+            content: review.content,
+          }))
+        : [],
+      largeImageUrl:
+        product.images && product.images.length > 0
+          ? product.images[0].largeImageUrl
+          : null,
+      smallImageUrl:
+        product.images && product.images.length > 0
+          ? product.images[0].smallImageUrl
+          : null,
+    };
+
+    delete normalizedProduct.images;
+
+    res.json(normalizedProduct);
+  } catch (error) {
+    // tslint:disable-next-line:no-console
+    console.error("Error finding product:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 // This method returns all products for a specific category ID
 const getProductsByCategoryId = async (req: Request, res: Response) => {
   const categoryId = req.params.id;
 
-  db.Product.findAll({ where: { categoryId } })
+  db.Product.findAll({
+    where: { categoryId },
+    attributes: {
+      exclude: ["updatedAt", "wishlistId", "cartId"],
+    },
+    include: [
+      {
+        model: db.Review,
+        as: "reviews",
+        attributes: ["userId", "rating", "content"],
+      },
+      {
+        model: db.ProductImage,
+        as: "images",
+        attributes: ["largeImageUrl", "smallImageUrl"],
+      },
+    ],
+  })
     .then((products: any) => {
       if (!products || products.length === 0) {
         res
@@ -45,9 +149,34 @@ const getProductsByCategoryId = async (req: Request, res: Response) => {
           .json({ error: "No products found for the given category ID" });
         return;
       }
-      res.json(products);
+
+      const normalizedProducts = products.map((product: any) => {
+        const plainProduct = product.get({ plain: true });
+        const normalizedProduct = {
+          ...plainProduct,
+          reviews: plainProduct.reviews.map((review: any) => ({
+            userId: review.userId,
+            rating: review.rating,
+            content: review.content,
+          })),
+          largeImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].largeImageUrl
+              : null,
+          smallImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].smallImageUrl
+              : null,
+        };
+
+        delete normalizedProduct.images;
+
+        return normalizedProduct;
+      });
+
+      res.json(normalizedProducts);
     })
-    .catch((error: Error) => {
+    .catch((error: any) => {
       // tslint:disable-next-line:no-console
       console.error("Error finding products by category ID:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -58,7 +187,24 @@ const getProductsByCategoryId = async (req: Request, res: Response) => {
 const getProductsByBrandId = async (req: Request, res: Response) => {
   const brandId = req.params.id;
 
-  db.Product.findAll({ where: { brandId } })
+  db.Product.findAll({
+    where: { brandId },
+    attributes: {
+      exclude: ["updatedAt", "wishlistId", "cartId"],
+    },
+    include: [
+      {
+        model: db.Review,
+        as: "reviews",
+        attributes: ["userId", "rating", "content"],
+      },
+      {
+        model: db.ProductImage,
+        as: "images",
+        attributes: ["largeImageUrl", "smallImageUrl"],
+      },
+    ],
+  })
     .then((products: any) => {
       if (!products || products.length === 0) {
         res
@@ -66,9 +212,34 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
           .json({ error: "No products found for the given brand ID" });
         return;
       }
-      res.json(products);
+
+      const normalizedProducts = products.map((product: any) => {
+        const plainProduct = product.get({ plain: true });
+        const normalizedProduct = {
+          ...plainProduct,
+          reviews: plainProduct.reviews.map((review: any) => ({
+            userId: review.userId,
+            rating: review.rating,
+            content: review.content,
+          })),
+          largeImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].largeImageUrl
+              : null,
+          smallImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].smallImageUrl
+              : null,
+        };
+
+        delete normalizedProduct.images;
+
+        return normalizedProduct;
+      });
+
+      res.json(normalizedProducts);
     })
-    .catch((error: Error) => {
+    .catch((error: any) => {
       // tslint:disable-next-line:no-console
       console.error("Error finding products by brand ID:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -89,13 +260,53 @@ const getNewArrivals = async (req: Request, res: Response) => {
         [Op.gt]: threeMonthsAgo,
       },
     },
+    attributes: {
+      exclude: ["updatedAt", "wishlistId", "cartId"],
+    },
+    include: [
+      {
+        model: db.Review,
+        as: "reviews",
+        attributes: ["userId", "rating", "content"],
+      },
+      {
+        model: db.ProductImage,
+        as: "images",
+        attributes: ["largeImageUrl", "smallImageUrl"],
+      },
+    ],
   })
     .then((products: any) => {
       if (!products || products.length === 0) {
-        res.status(404).json({ message: "No new arrival products found." });
+        res.status(404).json({ error: "No products found as new Arrivals" });
         return;
       }
-      res.json(products);
+
+      const normalizedProducts = products.map((product: any) => {
+        const plainProduct = product.get({ plain: true });
+        const normalizedProduct = {
+          ...plainProduct,
+          reviews: plainProduct.reviews.map((review: any) => ({
+            userId: review.userId,
+            rating: review.rating,
+            content: review.content,
+          })),
+          largeImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].largeImageUrl
+              : null,
+          smallImageUrl:
+            plainProduct.images && plainProduct.images.length > 0
+              ? plainProduct.images[0].smallImageUrl
+              : null,
+        };
+
+        delete normalizedProduct.images;
+
+        return normalizedProduct;
+      });
+
+      res.json(normalizedProducts);
     })
     .catch((error: Error) => {
       // tslint:disable-next-line:no-console
@@ -103,55 +314,92 @@ const getNewArrivals = async (req: Request, res: Response) => {
       res.status(500).json({ error: "Database error", details: error.message });
     });
 };
-const getHandPickedProducts = (req: Request, res: Response): void => {
-  db.Product.findAll({
-    include: [
-      {
-        model: db.Review,
-        as: "Reviews",
-        attributes: [],
+const getHandPickedProducts = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const products = await db.Product.findAll({
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["largeImageUrl", "smallImageUrl"],
+        },
+      ],
+      where: {
+        price: {
+          [Op.lt]: 100,
+        },
       },
-    ],
-    where: {
-      price: {
-        [Op.lt]: 100,
-      },
-    },
-    group: ["Product.id"],
-    having: literal("AVG(`Reviews`.`rating`) > 4.5"),
-    attributes: [
-      "id",
-      "title",
-      "shortSubTitle",
-      "longSubTitle",
-      "description",
-      "price",
-      "quantity",
-      "discountpercentage",
-      "createdAt",
-      "updatedAt",
-      "brandId",
-      "cartId",
-      "categoryId",
-      "wishlistId",
-      [fn("AVG", col("`Reviews`.`rating`")), "averageRating"],
-    ],
-    order: [[fn("AVG", col("`Reviews`.`rating`")), "DESC"]],
-    raw: true,
-  })
-    .then((products: any) => {
-      if (products.length === 0) {
-        res.status(404).json({ message: "No handpicked products found." });
-        return;
-      }
-      res.json(products);
-    })
-    .catch((error: Error) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error retrieving handpicked products:", error);
-      res.status(500).json({ error: "Database error", details: error.message });
+      attributes: [
+        "id",
+        "title",
+        "shortSubTitle",
+        "longSubTitle",
+        "description",
+        "price",
+        "quantity",
+        "discountPercentage",
+        "brandId",
+        "categoryId",
+        "createdAt",
+      ],
     });
+
+    const handPickedProducts = products
+      .filter((product: any) => {
+        const averageRating =
+          product.reviews.reduce(
+            (acc: any, review: any) => acc + review.rating,
+            0
+          ) / product.reviews.length;
+        return averageRating >= 4.5;
+      })
+      .map((product: any) => ({
+        id: product.id,
+        title: product.title,
+        shortSubTitle: product.shortSubTitle,
+        longSubTitle: product.longSubTitle,
+        description: product.description,
+        price: product.price,
+        quantity: product.quantity,
+        discountPercentage: product.discountPercentage,
+        brandId: product.brandId,
+        categoryId: product.categoryId,
+        createdAt: product.createdAt,
+        reviews: product.reviews.map((review: any) => ({
+          userId: review.userId,
+          rating: review.rating,
+          content: review.content,
+        })),
+        largeImageUrl:
+          product.images && product.images.length > 0
+            ? product.images[0].largeImageUrl
+            : null,
+        smallImageUrl:
+          product.images && product.images.length > 0
+            ? product.images[0].smallImageUrl
+            : null,
+      }));
+
+    if (handPickedProducts.length === 0) {
+      res.status(404).json({ message: "No handpicked products found." });
+    } else {
+      res.json(handPickedProducts);
+    }
+  } catch (error: any) {
+    // tslint:disable-next-line:no-console
+    console.error("Error retrieving handpicked products:", error);
+    res.status(500).json({ error: "Database error", details: error.message });
+  }
 };
+
 const getLimitedEditionProducts = async (
   req: Request,
   res: Response
@@ -163,19 +411,52 @@ const getLimitedEditionProducts = async (
           [db.Sequelize.Op.lt]: 20,
         },
       },
+      attributes: {
+        exclude: ["updatedAt", "wishlistId", "cartId"],
+      },
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["largeImageUrl", "smallImageUrl"],
+        },
+      ],
     });
 
-    if (products.length === 0) {
-      res.status(404).json({ message: "No limited edition products found." });
-    } else {
-      res.json(products);
+    if (!products || products.length === 0) {
+      res.status(404).json({ error: "No limited-edition products found." });
+      return;
     }
+
+    const normalizedProducts = products.map((product: any) => {
+      const plainProduct = product.get({ plain: true });
+      const largeImageUrl =
+        plainProduct.images.length > 0
+          ? plainProduct.images[0].largeImageUrl
+          : null;
+      const smallImageUrl =
+        plainProduct.images.length > 0
+          ? plainProduct.images[0].smallImageUrl
+          : null;
+      delete plainProduct.images;
+      return {
+        ...plainProduct,
+        largeImageUrl,
+        smallImageUrl,
+      };
+    });
+
+    res.json(normalizedProducts);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
-    console.error("Error retrieving limited edition products:", error);
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
+
 const getOnSaleProducts = async (
   req: Request,
   res: Response
@@ -187,62 +468,130 @@ const getOnSaleProducts = async (
           [db.Sequelize.Op.gte]: 15,
         },
       },
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["largeImageUrl", "smallImageUrl"],
+        },
+      ],
+      attributes: {
+        exclude: ["updatedAt", "wishlistId", "cartId"],
+      },
     });
 
     if (products.length === 0) {
       res.status(404).json({ message: "No products on sale found." });
     } else {
-      res.json(products);
+      const normalizedProducts = products.map((product: any) => {
+        const plainProduct = product.get({ plain: true });
+        const largeImageUrl =
+          plainProduct.images.length > 0
+            ? plainProduct.images[0].largeImageUrl
+            : null;
+        const smallImageUrl =
+          plainProduct.images.length > 0
+            ? plainProduct.images[0].smallImageUrl
+            : null;
+        delete plainProduct.images;
+        return {
+          ...plainProduct,
+          largeImageUrl,
+          smallImageUrl,
+        };
+      });
+      res.json(normalizedProducts);
     }
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
-    console.error("Error retrieving products on sale:", error);
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-const getPopularProducts = (req: Request, res: Response): void => {
-  db.Product.findAll({
-    include: [
-      {
-        model: db.Review,
-        as: "Reviews",
-        attributes: [],
-      },
-    ],
-    group: ["Product.id"],
-    having: literal("AVG(`Reviews`.`rating`) >= 4.5"),
-    attributes: [
-      "id",
-      "title",
-      "shortSubTitle",
-      "longSubTitle",
-      "description",
-      "price",
-      "quantity",
-      "discountpercentage",
-      "createdAt",
-      "updatedAt",
-      "brandId",
-      "cartId",
-      "categoryId",
-      "wishlistId",
-      [fn("AVG", col("`Reviews`.`rating`")), "averageRating"],
-    ],
-    order: [[fn("AVG", col("`Reviews`.`rating`")), "DESC"]],
-    raw: true,
-  })
-    .then((popularProducts: any) => {
-      if (popularProducts.length === 0) {
-        res.status(404).json({ message: "No popular products found." });
-        return;
-      }
-      res.json(popularProducts);
-    })
-    .catch((error: Error) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error retrieving popular products:", error);
-      res.status(500).json({ error: "Database error", details: error.message });
+
+const getPopularProducts = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const products = await db.Product.findAll({
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["largeImageUrl", "smallImageUrl"],
+        },
+      ],
+
+      attributes: [
+        "id",
+        "title",
+        "shortSubTitle",
+        "longSubTitle",
+        "description",
+        "price",
+        "quantity",
+        "discountPercentage",
+        "brandId",
+        "categoryId",
+        "createdAt",
+      ],
     });
+
+    const PopularProducts = products
+      .filter((product: any) => {
+        const averageRating =
+          product.reviews.reduce(
+            (acc: any, review: any) => acc + review.rating,
+            0
+          ) / product.reviews.length;
+        return averageRating >= 4.5;
+      })
+      .map((product: any) => ({
+        id: product.id,
+        title: product.title,
+        shortSubTitle: product.shortSubTitle,
+        longSubTitle: product.longSubTitle,
+        description: product.description,
+        price: product.price,
+        quantity: product.quantity,
+        discountPercentage: product.discountPercentage,
+        brandId: product.brandId,
+        categoryId: product.categoryId,
+        createdAt: product.createdAt,
+        reviews: product.reviews.map((review: any) => ({
+          userId: review.userId,
+          rating: review.rating,
+          content: review.content,
+        })),
+        largeImageUrl:
+          product.images && product.images.length > 0
+            ? product.images[0].largeImageUrl
+            : null,
+        smallImageUrl:
+          product.images && product.images.length > 0
+            ? product.images[0].smallImageUrl
+            : null,
+      }));
+
+    if (PopularProducts.length === 0) {
+      res.status(404).json({ message: "No Popular products found." });
+    } else {
+      res.json(PopularProducts);
+    }
+  } catch (error: any) {
+    // tslint:disable-next-line:no-console
+    console.error("Error retrieving Popular products:", error);
+    res.status(500).json({ error: "Database error", details: error.message });
+  }
 };
 
 export {
