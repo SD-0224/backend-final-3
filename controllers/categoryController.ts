@@ -5,7 +5,7 @@ import db from "../models";
 const getAllCategories = async (req: Request, res: Response) => {
   db.Category.findAll({ raw: true, attributes: { exclude: ['createdAt','updatedAt'] } })
     .then((categories: any) => {
-      res.json({ categories });
+      res.json(categories);
     })
     .catch((error: Error) => {
       res.status(500).json({ error: "Database error" });
@@ -39,7 +39,7 @@ const getCategoryById = async (req: Request, res: Response) => {
       brands,
     };
     delete categoryWithBrands.Products;
-    res.json({ category: categoryWithBrands });
+    res.json(categoryWithBrands);
   } catch (error) {
     res.status(500).json({ error: "Internal server error"});
   }
@@ -49,7 +49,7 @@ const getCategoryById = async (req: Request, res: Response) => {
 const getAllBrands = async (req: Request, res: Response) => {
   db.Brand.findAll({ raw: true,attributes: { exclude: ['createdAt','updatedAt'] } })
     .then((brands: any) => {
-      res.json({ brands });
+      res.json(brands);
     })
     .catch((error: Error) => {
       res.status(500).json({ error: "Database error" });
@@ -66,7 +66,7 @@ const getBrandById = async (req: Request, res: Response) => {
 
         return;
       }
-      res.json({ brand });
+      res.json(brand);
     })
     .catch((error: Error) => {
       res.status(500).json({ error: "Internal server error" });

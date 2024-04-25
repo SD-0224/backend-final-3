@@ -8,7 +8,7 @@ const getAllUsers = async(req:Request,res:Response) => {
 
     db.User.findAll({raw:true, attributes: { exclude: ['createdAt','updatedAt'] }})
     .then((users:any) => {
-        res.json({users})
+        res.json(users)
     })
     .catch((error:Error) => {
         res.status(500).json({ error: 'Database error' });
@@ -40,7 +40,7 @@ const getUserById = async (req:Request,res:Response) => {
             res.status(404).json({ error: 'User not found' });
             return;
         }
-        res.json({user})
+        res.json(user)
     })
     .catch((error:Error) => {
         res.status(500).json({ error: 'Internal server error' });
