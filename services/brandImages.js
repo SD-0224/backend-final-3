@@ -20,6 +20,3 @@ fs.writeFile(newFilePath, brandsJson, 'utf-8',(err)=> {
         return console.log(err);
     }
 });
-
-console.log("number of brands=",i)
-console.log(brands)

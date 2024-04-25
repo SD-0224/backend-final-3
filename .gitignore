@@ -5,3 +5,6 @@ dist
 DOCKER.md
 Dockerfile
 docker-compose.dev.yml
+seeders
+migrations
+fakeData
