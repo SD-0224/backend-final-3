@@ -18,7 +18,7 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Brand.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'brandId'});
+      Brand.hasMany(models.Product,{as: 'products',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'brandId'});
     }
 
     // Define other model setup here, like hooks and scopes

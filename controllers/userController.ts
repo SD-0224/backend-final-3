@@ -21,17 +21,17 @@ const getUserById = async (req:Request,res:Response) => {
     const userId=req.params.id;
 
     db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
-        include:[{model:db.Order,
+        include:[{model:db.Order,as: "orders",
         attributes: ['id', 'createdAt', 'category', 'status'],
-        include:{model:db.Product,
+        include:{model:db.Product,as: "products",
         attributes: ['id', 'quantity'],
         through: { attributes: [] }}},
         {
-        model:db.Address,
+        model:db.Address,as: "addresses",
         attributes: ['id']
         },
         {
-        model:db.Review,
+        model:db.Review,as: "reviews",
         attributes: ['productId','rating','content']
         }
         ]})

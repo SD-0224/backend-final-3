@@ -11,7 +11,7 @@ interface UserAttributes {
   user:string;
   email: string;
   phone: string;
-  dateofbirth: Date;
+  dateOfBirth: Date;
   password: string;
   avatar: string;
   createdAt:bigint;
@@ -26,19 +26,19 @@ module.exports = (sequelize: Sequelize) => {
     public user!: string;
     public email!: string;
     public phone!: string;
-    public dateofbirth!: Date;
+    public dateOfBirth!: Date;
     public password!: string;
     public avatar!: string;
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      User.hasMany(models.Review,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasMany(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasMany(models.Order,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasOne(models.Cart,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasOne(models.Wishlist,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.belongsToMany(models.Payment, { through: 'userPayments',onDelete:'CASCADE', onUpdate: 'CASCADE' ,foreignKey: 'userId'});
+      User.hasMany(models.Review,{as: 'reviews',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasMany(models.Address,{as: 'addresses',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasMany(models.Order,{as: 'orders',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasOne(models.Cart,{as: 'cart',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.hasOne(models.Wishlist,{as: 'wishlist',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      User.belongsToMany(models.Payment, {as: 'payments', through: 'userPayments',onDelete:'CASCADE', onUpdate: 'CASCADE' ,foreignKey: 'userId'});
     }
   }
 
@@ -72,7 +72,7 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      dateofbirth: {
+      dateOfBirth: {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },

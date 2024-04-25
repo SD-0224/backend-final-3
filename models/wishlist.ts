@@ -19,8 +19,8 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Wishlist.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      Wishlist.hasMany(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'wishlistId'});
+      Wishlist.belongsTo(models.User,{as: 'user',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Wishlist.hasMany(models.Product,{as: 'products',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'wishlistId'});
     }
 
     // Define other model setup here, like hooks and scopes

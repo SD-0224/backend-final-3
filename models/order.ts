@@ -18,9 +18,9 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Order.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      Order.belongsTo(models.Address,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'addressId'});
-      Order.belongsToMany(models.Product, { through: "productOrders",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'orderId'});
+      Order.belongsTo(models.User,{as: 'user',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Order.belongsTo(models.Address,{as: 'address',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'addressId'});
+      Order.belongsToMany(models.Product, {as: 'products', through: "productOrders",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'orderId'});
     }
 
   }

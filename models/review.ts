@@ -20,8 +20,8 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Review.belongsTo(models.User,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      Review.belongsTo(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
+      Review.belongsTo(models.User,{as: 'user',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
+      Review.belongsTo(models.Product,{as: 'product',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
     }
   }
 

@@ -21,7 +21,7 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      ProductImage.belongsTo(models.Product,{onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
+      ProductImage.belongsTo(models.Product,{as: 'product',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
     }
 
     // Define other model setup here, like hooks and scopes
