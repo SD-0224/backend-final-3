@@ -30,13 +30,15 @@ const getCategoryById = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    const brands = category.products.map((product: any) => ({
-      id: product.brand.id,
-      name: product.brand.name,
-    }));
+    const brands:any={}
+    category.products.map((product: any) => {
+      brands[product.brand.id]={
+        name:product.brand.name,
+        image:product.brand.image}
+  });
     const categoryWithBrands = {
       ...category.toJSON(),
-      brands,
+      brands:brands,
     };
     delete categoryWithBrands.products;
     res.json(categoryWithBrands);

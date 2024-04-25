@@ -5,7 +5,7 @@ import { DataTypes, Model, Sequelize } from "sequelize";
 
 interface AddressAttributes {
   id:string;
-  fullname: string;
+  fullName: string;
   pinCode: string;
   city: string;
   state: string;
@@ -18,7 +18,7 @@ interface AddressAttributes {
 module.exports = (sequelize: Sequelize) => {
   class Address extends Model<AddressAttributes> implements AddressAttributes {
     public id!:string;
-    public fullname!: string;
+    public fullName!: string;
     public pinCode!: string;
     public city!: string;
     public state!: string;
@@ -41,7 +41,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         primaryKey:true
       },
-      fullname: {
+      fullName: {
         type: DataTypes.STRING,
         allowNull: false,
       },

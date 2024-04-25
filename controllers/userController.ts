@@ -20,31 +20,100 @@ const getUserById = async (req:Request,res:Response) => {
 
     const userId=req.params.id;
 
-    db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
+    try {
+        const user= await db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
         include:[{model:db.Order,as: "orders",
         attributes: ['id', 'createdAt', 'category', 'status'],
-        include:{model:db.Product,as: "products",
+        include:[{model:db.Product,as: "products",
         attributes: ['id', 'quantity'],
-        through: { attributes: [] }}},
+        through: { attributes: [] }},
+        {model:db.Address,as: 'address',attributes: { exclude: ['createdAt','updatedAt','userId']}}]},
         {
         model:db.Address,as: "addresses",
-        attributes: ['id']
+        attributes: { exclude: ['createdAt','updatedAt','userId'] }
         },
         {
         model:db.Review,as: "reviews",
         attributes: ['productId','rating','content']
         }
         ]})
-    .then((user:any) => {
         if(!user) {
             res.status(404).json({ error: 'User not found' });
             return;
         }
-        res.json(user)
-    })
-    .catch((error:Error) => {
+
+        const userData= {
+            id:user.id,
+            user:user.user,
+            password:user.password,
+            avatar: user.avatar,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            mobile: user.phone,
+            email: user.email,
+            address: user.addresses.reduce((acc: { [addressId: string]: any }, address: any) => {
+                acc[address.id] = {
+                    fullName:address.fullName,
+                    pinCode:address.pinCode,
+                    city:address.city,
+                    staty:address.state,
+                    streetAddress:address.streetAddress,
+                    mobileNumber:address.mobileNumber
+                } ;
+
+                return acc;
+            }, {}),
+            reviews: user.reviews.reduce((acc: { [productId: string]: any }, review: any) => {
+                acc[review.productId] = {
+                    rating: review.rating,
+                    review: review.content
+                };
+                return acc;
+            }, {}),
+            orders: user.orders.reduce((acc: { [orderId: string]: any }, order: any) => {
+                acc[order.id] = {
+                    products: order.products,
+                    date:order.createdAt,
+                    category:order.category,
+                    status:order.status,
+                    address:order.address
+                };
+                return acc;
+            }, {})
+
+        }
+
+        res.json(userData)
+    }
+    catch {
         res.status(500).json({ error: 'Internal server error' });
-    })
+    }
+
+    // db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
+    //     include:[{model:db.Order,as: "orders",
+    //     attributes: ['id', 'createdAt', 'category', 'status'],
+    //     include:{model:db.Product,as: "products",
+    //     attributes: ['id', 'quantity'],
+    //     through: { attributes: [] }}},
+    //     {
+    //     model:db.Address,as: "addresses",
+    //     attributes: ['id']
+    //     },
+    //     {
+    //     model:db.Review,as: "reviews",
+    //     attributes: ['productId','rating','content']
+    //     }
+    //     ]})
+    // .then((user:any) => {
+    //     if(!user) {
+    //         res.status(404).json({ error: 'User not found' });
+    //         return;
+    //     }
+    //     res.json(user)
+    // })
+    // .catch((error:Error) => {
+    //     res.status(500).json({ error: 'Internal server error' });
+    // })
 }
 
 
