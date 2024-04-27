@@ -7,13 +7,14 @@ const getAllOrders = async (req: Request, res: Response) => {
   try {
     const orders = await db.Order.findAll({
       attributes: {
-        exclude: ["updatedAt"],
+        exclude: ["updatedAt", "addressId"],
       },
       include: [
         {
           model: db.Product,
           as: "products",
           attributes: ["id", "quantity"],
+          through: { attributes: [] },
         },
         {
           model: db.Address,
@@ -27,25 +28,7 @@ const getAllOrders = async (req: Request, res: Response) => {
       return;
     }
 
-    res.json(
-      orders.map((order: any) => {
-        const plainOrder = order.get({ plain: true });
-        const normalizedOrder = {
-          id: plainOrder.id,
-          userId: plainOrder.userId,
-          products: plainOrder.products.map((product: any) => ({
-            productId: product.id,
-            quantity: product.quantity,
-          })),
-          date: Date.now(),
-          category: plainOrder.category,
-          status: plainOrder.status,
-          address: plainOrder.address,
-        };
-
-        return normalizedOrder;
-      })
-    );
+    res.json(orders);
   } catch (error: any) {
     // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
@@ -60,13 +43,14 @@ const getOrderById = async (req: Request, res: Response) => {
   try {
     const order = await db.Order.findByPk(orderId, {
       attributes: {
-        exclude: ["updatedAt"],
+        exclude: ["updatedAt", "addressId"],
       },
       include: [
         {
           model: db.Product,
           as: "products",
           attributes: ["id", "quantity"],
+          through: { attributes: [] },
         },
         {
           model: db.Address,
@@ -76,27 +60,11 @@ const getOrderById = async (req: Request, res: Response) => {
     });
 
     if (!order) {
-      // Check if order is null
       res.status(404).json({ error: "Order was not found" });
       return;
     }
 
-    // Normalize the order data
-    const plainOrder = order.get({ plain: true });
-    const normalizedOrder = {
-      id: plainOrder.id,
-      userId: plainOrder.userId,
-      products: plainOrder.products.map((product: any) => ({
-        productId: product.id,
-        quantity: product.quantity,
-      })),
-      date: Date.now(),
-      category: plainOrder.category,
-      status: plainOrder.status,
-      address: plainOrder.address,
-    };
-
-    res.json(normalizedOrder); // Send the normalized order data
+    res.json(order);
   } catch (error: any) {
     // tslint:disable-next-line:no-console
     console.error("Error fetching order:", error);
@@ -107,20 +75,19 @@ const getOrderById = async (req: Request, res: Response) => {
 };
 
 const getOrderByUserId = async (req: Request, res: Response) => {
-  const userId = req.params.id; // Assuming userId is passed as a parameter in the request
-
+  const userId = req.params.id;
   try {
-    // Fetch orders associated with the given userId
     const orders = await db.Order.findAll({
-      where: { userId }, // Filter orders by userId
+      where: { userId },
       attributes: {
-        exclude: ["updatedAt"], // Exclude updatedAt from the result
+        exclude: ["updatedAt", "addressId"],
       },
       include: [
         {
           model: db.Product,
           as: "products",
-          attributes: ["id", "quantity"], // Include only id and quantity of products
+          attributes: ["id", "quantity"],
+          through: { attributes: [] },
         },
         {
           model: db.Address,
@@ -130,28 +97,11 @@ const getOrderByUserId = async (req: Request, res: Response) => {
     });
 
     if (!orders.length) {
-      // If no orders found for the user
-      return res.status(404).json({ error: "No orders found for the user" });
+      res.status(404).json({ error: "No orders found for the user" });
+      return;
     }
 
-    // Normalize the order data and send as response
-    const normalizedOrders = orders.map((order: any) => {
-      const plainOrder = order.get({ plain: true });
-      return {
-        id: plainOrder.id,
-        userId: plainOrder.userId,
-        products: plainOrder.products.map((product: any) => ({
-          productId: product.id,
-          quantity: product.quantity,
-        })),
-        date: Date.now(), // Assuming you want to set the current date for each order
-        category: plainOrder.category,
-        status: plainOrder.status,
-        address: plainOrder.address,
-      };
-    });
-
-    res.json(normalizedOrders); // Send the normalized orders data
+    res.json(orders);
   } catch (error: any) {
     // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
