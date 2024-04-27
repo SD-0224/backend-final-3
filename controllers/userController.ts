@@ -89,31 +89,6 @@ const getUserById = async (req:Request,res:Response) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 
-    // db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
-    //     include:[{model:db.Order,as: "orders",
-    //     attributes: ['id', 'createdAt', 'category', 'status'],
-    //     include:{model:db.Product,as: "products",
-    //     attributes: ['id', 'quantity'],
-    //     through: { attributes: [] }}},
-    //     {
-    //     model:db.Address,as: "addresses",
-    //     attributes: ['id']
-    //     },
-    //     {
-    //     model:db.Review,as: "reviews",
-    //     attributes: ['productId','rating','content']
-    //     }
-    //     ]})
-    // .then((user:any) => {
-    //     if(!user) {
-    //         res.status(404).json({ error: 'User not found' });
-    //         return;
-    //     }
-    //     res.json(user)
-    // })
-    // .catch((error:Error) => {
-    //     res.status(500).json({ error: 'Internal server error' });
-    // })
 }
 
 

@@ -38,7 +38,7 @@ const getCategoryById = async (req: Request, res: Response) => {
   });
     const categoryWithBrands = {
       ...category.toJSON(),
-      brands:brands,
+      brands,
     };
     delete categoryWithBrands.products;
     res.json(categoryWithBrands);
