@@ -8,6 +8,7 @@ import db from "./models";
 import userRoutes from "./routes/userRoutes";
 import productRoutes from "./routes/productRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
+import orderRoutes from "./routes/orderRoutes";
 
 // initialize configuration
 dotenv.config();
@@ -60,6 +61,7 @@ app.get("/", (req: Request, res: Response, err: any) => {
 app.use("/api", userRoutes);
 app.use("/api", productRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api/orders", orderRoutes);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {
