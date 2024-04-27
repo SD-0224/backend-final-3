@@ -61,6 +61,81 @@ const getAllProducts = async (req: Request, res: Response) => {
       .json({ error: "Internal server error", details: error.message });
   }
 };
+const filterProductsWithSearch = async (req: Request, res: Response) => {
+  const { query } = req.params;
+  try {
+    const products = await db.Product.findAll({
+      attributes: {
+        exclude: ["updatedAt", "wishlistId", "cartId"],
+      },
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["smallImageUrl"],
+        },
+        {
+          model: db.Brand,
+          as: "brand",
+          attributes: ["id"],
+        },
+      ],
+      where: {
+        [db.Sequelize.Op.or]: [
+          db.Sequelize.where(
+            db.Sequelize.fn("lower", db.Sequelize.col("title")),
+            "LIKE",
+            `%${query.toLowerCase()}%`
+          ),
+          db.Sequelize.where(
+            db.Sequelize.fn("lower", db.Sequelize.col("brand.name")),
+            "LIKE",
+            `%${query.toLowerCase()}%`
+          ),
+        ],
+      },
+    });
+
+    if (!products.length) {
+      return res.status(404).json({ error: "No products found" });
+    }
+
+    const formattedProducts = products.map((product: any) => {
+      const plainProduct = product.get({ plain: true });
+      return {
+        id: plainProduct.id,
+        smallImageUrl:
+          plainProduct.images && plainProduct.images.length > 0
+            ? plainProduct.images[0].smallImageUrl
+            : null,
+        title: plainProduct.title,
+        shortSubtitle: plainProduct.shortSubtitle,
+        createdAt: plainProduct.createdAt,
+        reviews: plainProduct.reviews.map((review: any) => ({
+          userId: review.userId,
+          rating: review.rating,
+          content: review.content,
+        })),
+        price: plainProduct.price,
+        discountPercentage: plainProduct.discountPercentage,
+        brandId: plainProduct.brand.id,
+      };
+    });
+
+    res.json(formattedProducts);
+  } catch (error: any) {
+    // tslint:disable-next-line:no-console
+    console.error("Error fetching products:", error);
+    res
+      .status(500)
+      .json({ error: "Internal server error", details: error.message });
+  }
+};
 
 // This method returns a specific product by ID
 const getProductById = async (req: Request, res: Response) => {
@@ -605,4 +680,5 @@ export {
   getLimitedEditionProducts,
   getOnSaleProducts,
   getPopularProducts,
+  filterProductsWithSearch,
 };
