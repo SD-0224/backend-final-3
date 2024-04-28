@@ -11,25 +11,17 @@ import {
   getOnSaleProducts,
   getPopularProducts,
   filterProductsWithSearch,
-  getHandPickedProductsByCategory
+  getHandPickedProductsByCategory,
 } from "../controllers/productController";
 
 const router = express.Router();
 
-<<<<<<< HEAD
-router.get("/products/new-arrivals", getNewArrivals);
-router.get("/products/handpicked", getHandPickedProducts);
-router.get("/products/handpicked/:categoryId", getHandPickedProductsByCategory);
-router.get("/products/limited-edition", getLimitedEditionProducts);
-router.get("/products/on-sale", getOnSaleProducts);
-router.get("/products/popular", getPopularProducts);
-=======
 router.get("/new-arrivals", getNewArrivals);
 router.get("/handpicked", getHandPickedProducts);
+router.get("/handpicked/:categoryId", getHandPickedProductsByCategory);
 router.get("/limited-edition", getLimitedEditionProducts);
 router.get("/on-sale", getOnSaleProducts);
 router.get("/popular", getPopularProducts);
->>>>>>> 328f73675358898886482bc382f3f45d9be656a4
 
 router.get("/", getAllProducts);
 router.get("/category/:id", getProductsByCategoryId);
