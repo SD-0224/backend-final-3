@@ -58,7 +58,7 @@ app.get("/", (req: Request, res: Response, err: any) => {
 
 // use routes in the routes folder
 // use routes in the routes folder
-app.use("/api", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api", productRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api/orders", orderRoutes);
