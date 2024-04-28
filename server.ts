@@ -9,6 +9,8 @@ import userRoutes from "./routes/userRoutes";
 import productRoutes from "./routes/productRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
 import orderRoutes from "./routes/orderRoutes";
+import brandRoutes from "./routes/brandRoutes";
+import reviewRoutes from "./routes/reviewRoutes";
 
 // initialize configuration
 dotenv.config();
@@ -53,15 +55,16 @@ const start = async (): Promise<void> => {
 void start();
 
 app.get("/", (req: Request, res: Response, err: any) => {
-  res.send("Hello World, this is our final project group#3");
+  res.send("E-Commerce Website Backend Service for Group#3 TAP-SD-0224");
 });
 
 // use routes in the routes folder
-// use routes in the routes folder
-app.use("/api", userRoutes);
-app.use("/api", productRoutes);
-app.use("/api", categoryRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/brands", brandRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {

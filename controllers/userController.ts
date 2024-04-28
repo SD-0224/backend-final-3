@@ -5,14 +5,50 @@ import { error } from 'console';
 
 // This method returns all users
 const getAllUsers = async(req:Request,res:Response) => {
+    try {
 
-    db.User.findAll({raw:true, attributes: { exclude: ['createdAt','updatedAt'] }})
-    .then((users:any) => {
-        res.json(users)
-    })
-    .catch((error:Error) => {
-        res.status(500).json({ error: 'Database error' });
-    })
+        const users= await db.User.findAll({attributes: { exclude: ['createdAt','updatedAt', 'dateOfBirth'] },
+        include: {model:db.Address,as: "addresses",
+        attributes: { exclude: ['createdAt','updatedAt', 'userId'] }}})
+        const normalizedUsers:any=[]
+        users.map((user:any) => {
+        const transformedAddress:any={}
+        user.addresses.forEach((addr:any) => {
+        transformedAddress[addr.id] = {
+            fullName: addr.fullName,
+            pinCode: addr.pinCode,
+            city: addr.city,
+            state: addr.state,
+            streetAddress: addr.streetAddress,
+            mobileNumber: addr.mobileNumber
+            };
+            user.addresses={...transformedAddress};
+
+        })
+        const normalizedUser:any= {
+
+            id:user.id,
+            user:user.user,
+            password:user.password,
+            avatar: user.avatar,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            mobile: user.phone,
+            email: user.email,
+            address:user.addresses
+
+        }
+        normalizedUsers.push(normalizedUser)
+
+});
+
+
+        res.json(normalizedUsers)
+    }
+    catch {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+
 }
 
 // This method returns a user by id including their orders,addresses,reviews
@@ -22,19 +58,10 @@ const getUserById = async (req:Request,res:Response) => {
 
     try {
         const user= await db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
-        include:[{model:db.Order,as: "orders",
-        attributes: ['id', 'createdAt', 'category', 'status'],
-        include:[{model:db.Product,as: "products",
-        attributes: ['id', 'quantity'],
-        through: { attributes: [] }},
-        {model:db.Address,as: 'address',attributes: { exclude: ['createdAt','updatedAt','userId']}}]},
+        include:[
         {
         model:db.Address,as: "addresses",
         attributes: { exclude: ['createdAt','updatedAt','userId'] }
-        },
-        {
-        model:db.Review,as: "reviews",
-        attributes: ['productId','rating','content']
         }
         ]})
         if(!user) {
@@ -44,8 +71,6 @@ const getUserById = async (req:Request,res:Response) => {
 
         const userData= {
             id:user.id,
-            user:user.user,
-            password:user.password,
             avatar: user.avatar,
             firstName: user.firstName,
             lastName: user.lastName,
@@ -56,31 +81,13 @@ const getUserById = async (req:Request,res:Response) => {
                     fullName:address.fullName,
                     pinCode:address.pinCode,
                     city:address.city,
-                    staty:address.state,
+                    state:address.state,
                     streetAddress:address.streetAddress,
                     mobileNumber:address.mobileNumber
                 } ;
 
                 return acc;
             }, {}),
-            reviews: user.reviews.reduce((acc: { [productId: string]: any }, review: any) => {
-                acc[review.productId] = {
-                    rating: review.rating,
-                    content: review.content
-                };
-                return acc;
-            }, {}),
-            orders: user.orders.reduce((acc: { [orderId: string]: any }, order: any) => {
-                acc[order.id] = {
-                    products: order.products,
-                    date:order.createdAt,
-                    category:order.category,
-                    status:order.status,
-                    address:order.address
-                };
-                return acc;
-            }, {})
-
         }
 
         res.json(userData)
@@ -89,31 +96,6 @@ const getUserById = async (req:Request,res:Response) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 
-    // db.User.findByPk(userId, {attributes: { exclude: ['createdAt','updatedAt'] },
-    //     include:[{model:db.Order,as: "orders",
-    //     attributes: ['id', 'createdAt', 'category', 'status'],
-    //     include:{model:db.Product,as: "products",
-    //     attributes: ['id', 'quantity'],
-    //     through: { attributes: [] }}},
-    //     {
-    //     model:db.Address,as: "addresses",
-    //     attributes: ['id']
-    //     },
-    //     {
-    //     model:db.Review,as: "reviews",
-    //     attributes: ['productId','rating','content']
-    //     }
-    //     ]})
-    // .then((user:any) => {
-    //     if(!user) {
-    //         res.status(404).json({ error: 'User not found' });
-    //         return;
-    //     }
-    //     res.json(user)
-    // })
-    // .catch((error:Error) => {
-    //     res.status(500).json({ error: 'Internal server error' });
-    // })
 }
 
 
