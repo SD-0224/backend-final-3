@@ -10,7 +10,7 @@ const getAllUsers = async(req:Request,res:Response) => {
         const users= await db.User.findAll({attributes: { exclude: ['createdAt','updatedAt', 'dateOfBirth'] },
         include: {model:db.Address,as: "addresses",
         attributes: { exclude: ['createdAt','updatedAt', 'userId'] }}})
-        let normalizedUsers:any=[]
+        const normalizedUsers:any=[]
         users.map((user:any) => {
         const transformedAddress:any={}
         user.addresses.forEach((addr:any) => {
@@ -23,7 +23,7 @@ const getAllUsers = async(req:Request,res:Response) => {
             mobileNumber: addr.mobileNumber
             };
             user.addresses={...transformedAddress};
-            
+
         })
         const normalizedUser:any= {
 
@@ -39,7 +39,7 @@ const getAllUsers = async(req:Request,res:Response) => {
 
         }
         normalizedUsers.push(normalizedUser)
-        
+
 });
 
 

@@ -15,11 +15,11 @@ const getAllCategories = async (req: Request, res: Response) => {
 
     let leftCategory=0;
     let rightCategory=categories.length-1;
-    let normalizedCategories:any=[];
+    const normalizedCategories:any=[];
     while(leftCategory<=rightCategory) {
       let normalizedCategory:any={};
       const brands:any= {};
-      if(leftCategory!=rightCategory) {
+      if(leftCategory!==rightCategory) {
         categories[leftCategory].products.map((product:any)=> {
           brands[product.brand.id]={
             name:product.brand.name,
@@ -32,7 +32,7 @@ const getAllCategories = async (req: Request, res: Response) => {
         delete normalizedCategory.products;
         normalizedCategories.push(normalizedCategory)
         leftCategory++;
-//****************************************** */
+
         categories[rightCategory].products.map((product:any)=> {
           brands[product.brand.id]={
             name:product.brand.name,
@@ -45,7 +45,7 @@ const getAllCategories = async (req: Request, res: Response) => {
         delete normalizedCategory.products;
         normalizedCategories.push(normalizedCategory)
         rightCategory--;
-                
+
         }
 
         else {
@@ -64,15 +64,15 @@ const getAllCategories = async (req: Request, res: Response) => {
         }
 
         }
-    
+
     res.json(normalizedCategories);
     }
     catch (error) {
       res.status(500).json({ error: "Internal server error"});
     }
   }
-  
-    
+
+
 // This method returns a specific category by ID with their brands
 const getCategoryById = async (req: Request, res: Response) => {
   const categoryId = req.params.id;
@@ -107,37 +107,8 @@ const getCategoryById = async (req: Request, res: Response) => {
   }
 };
 
-// This method returns all brands
-const getAllBrands = async (req: Request, res: Response) => {
-  db.Brand.findAll({ raw: true,attributes: { exclude: ['createdAt','updatedAt'] } })
-    .then((brands: any) => {
-      res.json(brands);
-    })
-    .catch((error: Error) => {
-      res.status(500).json({ error: "Database error" });
-    });
-};
-
-// This method returns a specific brand by ID
-const getBrandById = async (req: Request, res: Response) => {
-  const brandId = req.params.id;
-  db.Brand.findByPk(brandId,{attributes: { exclude: ['createdAt','updatedAt'] }})
-    .then((brand: any) => {
-      if (!brand) {
-        res.status(404).json({ error: "Brand not found" });
-
-        return;
-      }
-      res.json(brand);
-    })
-    .catch((error: Error) => {
-      res.status(500).json({ error: "Internal server error" });
-    });
-};
-
 export {
   getAllCategories,
   getCategoryById,
-  getAllBrands,
-  getBrandById,
+
 };
