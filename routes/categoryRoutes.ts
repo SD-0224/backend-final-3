@@ -1,11 +1,10 @@
 import express from "express"
-import {getAllCategories,getCategoryById,getAllBrands,getBrandById} from "../controllers/categoryController";
+import {getAllCategories,getCategoryById} from "../controllers/categoryController";
 
 const router=express.Router();
 
-router.get('/categories',getAllCategories)
-router.get('/categories/:id',getCategoryById)
-router.get('/brands',getAllBrands)
-router.get('/brands/:id',getBrandById)
+router.get('/',getAllCategories)
+router.get('/:id',getCategoryById)
+
 
 export default router;
