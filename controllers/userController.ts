@@ -71,8 +71,6 @@ const getUserById = async (req:Request,res:Response) => {
 
         const userData= {
             id:user.id,
-            user:user.user,
-            password:user.password,
             avatar: user.avatar,
             firstName: user.firstName,
             lastName: user.lastName,
