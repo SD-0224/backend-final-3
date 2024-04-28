@@ -3,13 +3,13 @@ import {getAllUsers,getUserById,createNewUser,loginUser,logoutUser,updateUserByI
 
 const router=express.Router();
 
-router.get('/users',getAllUsers);
-router.get('/users/:id',getUserById);
-router.post('/users',createNewUser);
-router.post('/users/login',loginUser);
-router.get('/users/logout',logoutUser);
-router.put('/users/:userid',updateUserById);
-router.delete('/users/:userid',deleteUserById);
+router.get('/',getAllUsers);
+router.get('/:id',getUserById);
+router.post('/',createNewUser);
+router.post('/login',loginUser);
+router.get('/logout',logoutUser);
+router.put('/:userid',updateUserById);
+router.delete('/:userid',deleteUserById);
 
 
 export default router;

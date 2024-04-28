@@ -3,16 +3,76 @@ import db from "../models";
 
 // This method returns all categories
 const getAllCategories = async (req: Request, res: Response) => {
-  db.Category.findAll({ raw: true, attributes: { exclude: ['createdAt','updatedAt'] } })
-    .then((categories: any) => {
-      res.json(categories);
-    })
-    .catch((error: Error) => {
-      res.status(500).json({ error: "Database error" });
-    });
-};
+  try {
+    const categories=await db.Category.findAll({attributes: { exclude: ['createdAt','updatedAt'] },
+    include: [
+      {
+        model: db.Product, as:"products",
+        attributes: ["id"] ,
+        include: { model: db.Brand ,as:"brand"},
+      },
+    ], })
 
+    let leftCategory=0;
+    let rightCategory=categories.length-1;
+    let normalizedCategories:any=[];
+    while(leftCategory<=rightCategory) {
+      let normalizedCategory:any={};
+      const brands:any= {};
+      if(leftCategory!=rightCategory) {
+        categories[leftCategory].products.map((product:any)=> {
+          brands[product.brand.id]={
+            name:product.brand.name,
+            image:product.brand.image}
+        })
+        normalizedCategory = {
+          ...categories[leftCategory].toJSON(),
+          brands,
+        };
+        delete normalizedCategory.products;
+        normalizedCategories.push(normalizedCategory)
+        leftCategory++;
+//****************************************** */
+        categories[rightCategory].products.map((product:any)=> {
+          brands[product.brand.id]={
+            name:product.brand.name,
+            image:product.brand.image}
+        })
+         normalizedCategory = {
+          ...categories[rightCategory].toJSON(),
+          brands,
+        };
+        delete normalizedCategory.products;
+        normalizedCategories.push(normalizedCategory)
+        rightCategory--;
+                
+        }
 
+        else {
+          categories[leftCategory].products.map((product:any)=> {
+            brands[product.brand.id]={
+              name:product.brand.name,
+              image:product.brand.image}
+          })
+          normalizedCategory = {
+            ...categories[leftCategory].toJSON(),
+            brands,
+          };
+          delete normalizedCategory.products;
+          normalizedCategories.push(normalizedCategory)
+          leftCategory++;
+        }
+
+        }
+    
+    res.json(normalizedCategories);
+    }
+    catch (error) {
+      res.status(500).json({ error: "Internal server error"});
+    }
+  }
+  
+    
 // This method returns a specific category by ID with their brands
 const getCategoryById = async (req: Request, res: Response) => {
   const categoryId = req.params.id;
