@@ -229,11 +229,6 @@ const getProductsByCategoryId = async (req: Request, res: Response) => {
         const plainProduct = product.get({ plain: true });
         const normalizedProduct = {
           ...plainProduct,
-          reviews: plainProduct.reviews.map((review: any) => ({
-            userId: review.userId,
-            rating: review.rating,
-            content: review.content,
-          })),
           largeImageUrl:
             plainProduct.images && plainProduct.images.length > 0
               ? plainProduct.images[0].largeImageUrl
@@ -292,11 +287,6 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
         const plainProduct = product.get({ plain: true });
         const normalizedProduct = {
           ...plainProduct,
-          reviews: plainProduct.reviews.map((review: any) => ({
-            userId: review.userId,
-            rating: review.rating,
-            content: review.content,
-          })),
           largeImageUrl:
             plainProduct.images && plainProduct.images.length > 0
               ? plainProduct.images[0].largeImageUrl
@@ -361,11 +351,6 @@ const getNewArrivals = async (req: Request, res: Response) => {
         const plainProduct = product.get({ plain: true });
         const normalizedProduct = {
           ...plainProduct,
-          reviews: plainProduct.reviews.map((review: any) => ({
-            userId: review.userId,
-            rating: review.rating,
-            content: review.content,
-          })),
           largeImageUrl:
             plainProduct.images && plainProduct.images.length > 0
               ? plainProduct.images[0].largeImageUrl
@@ -448,11 +433,7 @@ const getHandPickedProducts = async (
         brandId: product.brandId,
         categoryId: product.categoryId,
         createdAt: product.createdAt,
-        reviews: product.reviews.map((review: any) => ({
-          userId: review.userId,
-          rating: review.rating,
-          content: review.content,
-        })),
+        reviews: product.reviews,
         largeImageUrl:
           product.images && product.images.length > 0
             ? product.images[0].largeImageUrl
@@ -642,11 +623,7 @@ const getPopularProducts = async (
         brandId: product.brandId,
         categoryId: product.categoryId,
         createdAt: product.createdAt,
-        reviews: product.reviews.map((review: any) => ({
-          userId: review.userId,
-          rating: review.rating,
-          content: review.content,
-        })),
+        reviews: product.reviews,
         largeImageUrl:
           product.images && product.images.length > 0
             ? product.images[0].largeImageUrl
