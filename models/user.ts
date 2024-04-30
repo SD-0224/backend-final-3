@@ -79,11 +79,11 @@ module.exports = (sequelize: Sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        async set(password: string): Promise<void>  {
-          const salt= await bcrypt.genSalt();
-          const hash= await bcrypt.hash(password,salt)
-          this.setDataValue('password', hash)
-      }
+          set(value: string) {
+          const salt=bcrypt.genSaltSync();
+          const hash=bcrypt.hashSync(value, salt);
+          this.setDataValue('password', hash);
+        },
       },
       avatar: {
         type: DataTypes.STRING,
@@ -102,8 +102,21 @@ module.exports = (sequelize: Sequelize) => {
       sequelize,
       modelName: "User",
       tableName: 'users',
-    }
+      hooks: {
+        beforeCreate: (user: any) => {
+          user.createdAt = new Date().getTime();
+          user.updatedAt = new Date().getTime();
+        },
+        beforeUpdate: (user: any) => {
+          user.updatedAt = new Date().getTime();
+        },
+      },
+    },
+
+
   );
+
+
 
   return User;
 };

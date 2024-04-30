@@ -125,6 +125,15 @@ module.exports = (sequelize: Sequelize) => {
       sequelize,
       modelName: "Product",
       tableName: "products",
+      hooks: {
+        beforeCreate: (product: any) => {
+          product.createdAt = new Date().getTime();
+          product.updatedAt = new Date().getTime();
+        },
+        beforeUpdate: (product: any) => {
+          product.updatedAt = new Date().getTime();
+        },
+      },
     }
   );
 

@@ -18,7 +18,7 @@ const today = new Date().getTime();
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const filePath = path.join(__dirname, '../fakeData/database.json');
+    const filePath = path.join(__dirname, '../fakeData/newData.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     const users=data.users;
     users.map((user)=> {

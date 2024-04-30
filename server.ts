@@ -23,6 +23,7 @@ app.use(morgan("dev"));
 // Use cookie-parser middleware
 app.use(cookieParser());
 
+// Enable using APIs from everywhere
 app.use(cors());
 
 // Data coming from HTML forms

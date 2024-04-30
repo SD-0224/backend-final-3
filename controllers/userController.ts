@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import db from "../models";
 import { error } from 'console';
+import { Op } from "sequelize";
 
 
 // This method returns all users
@@ -102,11 +103,14 @@ const getUserById = async (req:Request,res:Response) => {
 // This method creates a new user
 const createNewUser = async (req:Request,res:Response) => {
 
-    const {firstName,lastName,user, email,phone,dateofbirth,avatar, password} = req.body;
-    // check if the email exists
-    const userExists= await db.User.findOne({where:{email}});
+    // tslint:disable-next-line:no-console
+    console.error("hello");
+
+    const {firstName,lastName,user, email,phone,dateOfBirth,password} = req.body;
+    // check if the email or username exists
+    const userExists= await db.User.findOne({where:{[Op.or]: [{ email }, { user }]}});
     if(userExists) {
-        return res.status(400).send('Email is already associated with an account');
+        return res.status(400).send('Email or username is already associated with an account');
     }
     db.User.create({
             firstName,
@@ -114,8 +118,7 @@ const createNewUser = async (req:Request,res:Response) => {
             user,
             email,
             phone,
-            dateofbirth,
-            avatar,
+            dateOfBirth,
             password,
          })
     .then((user:any) => {

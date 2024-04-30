@@ -13,13 +13,15 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const filePath = path.join(__dirname, '../fakeData/database.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    const orders=data.orders;
+    const orderFilePath = path.join(__dirname, '../fakeData/newData.json');
+    const newData = JSON.parse(fs.readFileSync(orderFilePath, 'utf-8'));
+    const orders=newData.orders;
     const products=data.products
     let AllproductOrders=[];
-    let orderIndex=90
-    while(orderIndex<100) {
-      let count=1800;
-      let index=1797;
+    let orderIndex=606
+    while(orderIndex<607) {
+      let count=500;
+      let index=490;
       while(count-index!=0) {
         let productOrder={
           orderId:orders[orderIndex].id,
