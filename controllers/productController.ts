@@ -516,11 +516,7 @@ const getHandPickedProductsByCategory = async (
         brandId: product.brandId,
         categoryId: product.categoryId,
         createdAt: product.createdAt,
-        reviews: product.reviews.map((review: any) => ({
-          userId: review.userId,
-          rating: review.rating,
-          content: review.content,
-        })),
+        reviews: product.reviews,
         largeImageUrl:
           product.images && product.images.length > 0
             ? product.images[0].largeImageUrl
