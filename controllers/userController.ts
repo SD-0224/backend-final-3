@@ -120,6 +120,8 @@ const createNewUser = async (req:Request,res:Response) => {
             phone,
             dateOfBirth,
             password,
+            createdAt:Date.now(),
+            updatedAt:Date.now(),
          })
     .then((user:any) => {
         res.json({user,message:"user created successfully"});

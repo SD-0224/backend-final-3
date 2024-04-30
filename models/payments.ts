@@ -50,6 +50,7 @@ module.exports = (sequelize: Sequelize) => {
       sequelize,
       modelName: "Payment",
       tableName: 'payments',
+      timestamps: false,
     }
   );
 

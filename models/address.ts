@@ -78,6 +78,7 @@ module.exports = (sequelize: Sequelize) => {
       sequelize,
       modelName: "Address",
       tableName: 'addresses',
+      timestamps: false,
 
     }
   );

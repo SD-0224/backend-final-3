@@ -51,6 +51,7 @@ module.exports = (sequelize: Sequelize) => {
       sequelize,
       modelName: "Wishlist",
       tableName: 'wishlists',
+      timestamps: false,
     }
   );
 
