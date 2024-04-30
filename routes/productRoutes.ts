@@ -11,12 +11,14 @@ import {
   getOnSaleProducts,
   getPopularProducts,
   filterProductsWithSearch,
+  getHandPickedProductsByCategory,
 } from "../controllers/productController";
 
 const router = express.Router();
 
 router.get("/new-arrivals", getNewArrivals);
 router.get("/handpicked", getHandPickedProducts);
+router.get("/handpicked/:categoryId", getHandPickedProductsByCategory);
 router.get("/limited-edition", getLimitedEditionProducts);
 router.get("/on-sale", getOnSaleProducts);
 router.get("/popular", getPopularProducts);

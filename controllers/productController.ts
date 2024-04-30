@@ -455,6 +455,93 @@ const getHandPickedProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
+const getHandPickedProductsByCategory = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const categoryId = req.params.categoryId;
+  try {
+    const products = await db.Product.findAll({
+      include: [
+        {
+          model: db.Review,
+          as: "reviews",
+          attributes: ["userId", "rating", "content"],
+        },
+        {
+          model: db.ProductImage,
+          as: "images",
+          attributes: ["largeImageUrl", "smallImageUrl"],
+        },
+      ],
+      where: {
+        categoryId,
+        price: {
+          [Op.lt]: 100,
+        },
+      },
+      attributes: [
+        "id",
+        "title",
+        "shortSubTitle",
+        "longSubTitle",
+        "description",
+        "price",
+        "quantity",
+        "discountPercentage",
+        "brandId",
+        "categoryId",
+        "createdAt",
+      ],
+    });
+
+    const handPickedProducts = products
+      .filter((product: any) => {
+        const averageRating =
+          product.reviews.reduce(
+            (acc: any, review: any) => acc + review.rating,
+            0
+          ) / product.reviews.length;
+        return averageRating >= 4.5;
+      })
+      .map((product: any) => ({
+        id: product.id,
+        title: product.title,
+        shortSubTitle: product.shortSubTitle,
+        longSubTitle: product.longSubTitle,
+        description: product.description,
+        price: product.price,
+        quantity: product.quantity,
+        discountPercentage: product.discountPercentage,
+        brandId: product.brandId,
+        categoryId: product.categoryId,
+        createdAt: product.createdAt,
+        reviews: product.reviews.map((review: any) => ({
+          userId: review.userId,
+          rating: review.rating,
+          content: review.content,
+        })),
+        largeImageUrl:
+          product.images && product.images.length > 0
+            ? product.images[0].largeImageUrl
+            : null,
+        smallImageUrl:
+          product.images && product.images.length > 0
+            ? product.images[0].smallImageUrl
+            : null,
+      }));
+
+    if (handPickedProducts.length === 0) {
+      res.status(404).json({ message: "No handpicked products found." });
+    } else {
+      res.json(handPickedProducts);
+    }
+  } catch (error: any) {
+    // tslint:disable-next-line:no-console
+    console.error("Error retrieving handpicked products:", error);
+    res.status(500).json({ error: "Database error", details: error.message });
+  }
+};
 
 const getLimitedEditionProducts = async (
   req: Request,
@@ -658,4 +745,5 @@ export {
   getOnSaleProducts,
   getPopularProducts,
   filterProductsWithSearch,
+  getHandPickedProductsByCategory,
 };
