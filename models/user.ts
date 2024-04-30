@@ -102,15 +102,8 @@ module.exports = (sequelize: Sequelize) => {
       sequelize,
       modelName: "User",
       tableName: 'users',
-      hooks: {
-        beforeCreate: (user: any) => {
-          user.createdAt = new Date().getTime();
-          user.updatedAt = new Date().getTime();
-        },
-        beforeUpdate: (user: any) => {
-          user.updatedAt = new Date().getTime();
-        },
-      },
+      timestamps: false,
+      
     },
 
 

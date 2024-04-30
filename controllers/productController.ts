@@ -313,7 +313,41 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
 
 // This method creates a new product
 const createNewProduct = async (req: Request, res: Response) => {
-  return;
+
+  const {title,longSubtitle,description, price,quantity,discountPercentage,shortSubtitle,
+          brandName,categoryName} = req.body;
+  try {
+    const newProduct= await db.Product.create({
+      title,
+      longSubtitle,
+      description,
+      price,
+      quantity,
+      discountPercentage,
+      shortSubtitle,
+      createdAt:Date.now(),
+      updatedAt:Date.now(),
+    })
+    const newBrand=db.Brand.findOrCreate({
+      where: { name: brandName.toLowerCase() },
+      defaults: {
+        name: brandName,
+        image:"image",
+        createdAt:Date.now(),
+        updatedAt:Date.now(),
+      },
+    });
+    // Add product to category
+    // write function here
+    /////////////////
+
+    res.json(newProduct)
+  }
+  catch {
+    res.status(500).json({ error: 'Internal server error' });
+}
+
+
 };
 const getNewArrivals = async (req: Request, res: Response) => {
   const currentDate = new Date();
