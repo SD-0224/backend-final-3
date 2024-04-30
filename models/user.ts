@@ -103,7 +103,7 @@ module.exports = (sequelize: Sequelize) => {
       modelName: "User",
       tableName: 'users',
       timestamps: false,
-      
+
     },
 
 
