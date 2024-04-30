@@ -45,10 +45,8 @@ const getAllOrders = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
-    console.error("Error fetching orders:", error);
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+
+    res.status(500).json({ error: "Internal server error", details: error.message });
   }
 };
 const getOrderById = async (req: Request, res: Response) => {
@@ -93,10 +91,8 @@ const getOrderById = async (req: Request, res: Response) => {
 
     res.json(order);
   } catch (error: any) {
-    console.error("Error fetching order:", error);
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+
+    res.status(500).json({ error: "Internal server error", details: error.message });
   }
 };
 
@@ -143,10 +139,8 @@ const getOrderByUserId = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
-    console.error("Error fetching orders:", error);
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+
+    res.status(500).json({ error: "Internal server error", details: error.message });
   }
 };
 
