@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import db from "../models";
 import { error } from "console";
+import sequelize from "sequelize";
 
 // This method returns all users
 const getAllOrders = async (req: Request, res: Response) => {
@@ -13,7 +14,21 @@ const getAllOrders = async (req: Request, res: Response) => {
         {
           model: db.Product,
           as: "products",
-          attributes: ["id", "quantity"],
+          attributes: [
+            "id",
+            "title",
+            "shortSubtitle",
+            "description",
+            "price",
+            "discountPercentage",
+            [
+              sequelize.literal(
+                `(SELECT smallImageUrl FROM productImages WHERE productImages.productId = products.id LIMIT 1)`
+              ),
+              "smallImageUrl",
+            ],
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"], // Generates a random number between 1 and 5
+          ],
           through: { attributes: [] },
         },
         {
@@ -30,14 +45,12 @@ const getAllOrders = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
     res
       .status(500)
       .json({ error: "Internal server error", details: error.message });
   }
 };
-
 const getOrderById = async (req: Request, res: Response) => {
   const orderId = req.params.id;
   try {
@@ -49,7 +62,21 @@ const getOrderById = async (req: Request, res: Response) => {
         {
           model: db.Product,
           as: "products",
-          attributes: ["id", "quantity"],
+          attributes: [
+            "id",
+            "title",
+            "shortSubtitle",
+            "description",
+            "price",
+            "discountPercentage",
+            [
+              sequelize.literal(
+                `(SELECT smallImageUrl FROM productImages WHERE productImages.productId = products.id LIMIT 1)`
+              ),
+              "smallImageUrl",
+            ],
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"],
+          ],
           through: { attributes: [] },
         },
         {
@@ -66,7 +93,6 @@ const getOrderById = async (req: Request, res: Response) => {
 
     res.json(order);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
     console.error("Error fetching order:", error);
     res
       .status(500)
@@ -86,7 +112,21 @@ const getOrderByUserId = async (req: Request, res: Response) => {
         {
           model: db.Product,
           as: "products",
-          attributes: ["id", "quantity"],
+          attributes: [
+            "id",
+            "title",
+            "shortSubtitle",
+            "description",
+            "price",
+            "discountPercentage",
+            [
+              sequelize.literal(
+                `(SELECT smallImageUrl FROM productImages WHERE productImages.productId = products.id LIMIT 1)`
+              ),
+              "smallImageUrl",
+            ],
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"],
+          ],
           through: { attributes: [] },
         },
         {
@@ -103,7 +143,6 @@ const getOrderByUserId = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
     res
       .status(500)
