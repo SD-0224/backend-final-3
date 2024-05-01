@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import db from "../models";
+import { reviewSchema } from '../utils/validators';
 
 // This method returns all reviews
 const getAllReviews = async (req: Request, res: Response) => {

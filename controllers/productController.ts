@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import db from "../models";
 import { Op, fn, col, literal } from "sequelize";
 import { subMonths } from "date-fns";
+import { productSchema } from '../utils/validators';
+
 // This method returns all products
 const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -33,11 +35,7 @@ const getAllProducts = async (req: Request, res: Response) => {
         const plainProduct = product.get({ plain: true });
         const normalizedProduct = {
           ...plainProduct,
-          reviews: plainProduct.reviews.map((review: any) => ({
-            userId: review.userId,
-            rating: review.rating,
-            content: review.content,
-          })),
+          reviews: plainProduct.reviews,
           largeImageUrl:
             plainProduct.images && plainProduct.images.length > 0
               ? plainProduct.images[0].largeImageUrl
@@ -116,11 +114,7 @@ const filterProductsWithSearch = async (req: Request, res: Response) => {
         title: plainProduct.title,
         shortSubtitle: plainProduct.shortSubtitle,
         createdAt: plainProduct.createdAt,
-        reviews: plainProduct.reviews.map((review: any) => ({
-          userId: review.userId,
-          rating: review.rating,
-          content: review.content,
-        })),
+        reviews: plainProduct.reviews,
         price: plainProduct.price,
         discountPercentage: plainProduct.discountPercentage,
         brandId: plainProduct.brand.id,
@@ -168,13 +162,7 @@ const getProductById = async (req: Request, res: Response) => {
     // Normalize the product data
     const normalizedProduct = {
       ...product.get({ plain: true }),
-      reviews: product.reviews
-        ? product.reviews.map((review: any) => ({
-            userId: review.userId,
-            rating: review.rating,
-            content: review.content,
-          }))
-        : [],
+      reviews: product.reviews,
       largeImageUrl:
         product.images && product.images.length > 0
           ? product.images[0].largeImageUrl
@@ -312,7 +300,7 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
 };
 
 // This method creates a new product
-const createNewProduct = async (req: Request, res: Response) => {
+  const createNewProduct = async (req: Request, res: Response) => {
 
   const {title,longSubtitle,description, price,quantity,discountPercentage,shortSubtitle,
           brandName,categoryName} = req.body;
@@ -337,9 +325,9 @@ const createNewProduct = async (req: Request, res: Response) => {
         updatedAt:Date.now(),
       },
     });
-    // Add product to category
-    // write function here
-    /////////////////
+    
+    let category= await db.Category.findOne({ where: { name: categoryName } });
+    await newProduct.setCategory(category);
 
     res.json(newProduct)
   }
@@ -349,6 +337,7 @@ const createNewProduct = async (req: Request, res: Response) => {
 
 
 };
+
 const getNewArrivals = async (req: Request, res: Response) => {
   const currentDate = new Date();
   const threeMonthsAgo = currentDate.setMonth(currentDate.getMonth() - 3);
@@ -408,6 +397,7 @@ const getNewArrivals = async (req: Request, res: Response) => {
       res.status(500).json({ error: "Database error", details: error.message });
     });
 };
+
 const getHandPickedProducts = async (
   req: Request,
   res: Response
@@ -489,6 +479,7 @@ const getHandPickedProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
+
 const getHandPickedProductsByCategory = async (
   req: Request,
   res: Response
@@ -572,6 +563,8 @@ const getHandPickedProductsByCategory = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
+
+
 
 const getLimitedEditionProducts = async (
   req: Request,
