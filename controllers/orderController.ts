@@ -27,7 +27,7 @@ const getAllOrders = async (req: Request, res: Response) => {
               ),
               "smallImageUrl",
             ],
-            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"], // Generates a random number between 1 and 5
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "orderQuantity"], // Generates a random number between 1 and 5
           ],
           through: { attributes: [] },
         },
@@ -45,6 +45,7 @@ const getAllOrders = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
+    // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
     res
       .status(500)
@@ -75,7 +76,7 @@ const getOrderById = async (req: Request, res: Response) => {
               ),
               "smallImageUrl",
             ],
-            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"],
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "orderQuantity"],
           ],
           through: { attributes: [] },
         },
@@ -93,6 +94,7 @@ const getOrderById = async (req: Request, res: Response) => {
 
     res.json(order);
   } catch (error: any) {
+    // tslint:disable-next-line:no-console
     console.error("Error fetching order:", error);
     res
       .status(500)
@@ -125,7 +127,7 @@ const getOrderByUserId = async (req: Request, res: Response) => {
               ),
               "smallImageUrl",
             ],
-            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"],
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "orderQuantity"],
           ],
           through: { attributes: [] },
         },
@@ -143,6 +145,7 @@ const getOrderByUserId = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
+    // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
     res
       .status(500)
