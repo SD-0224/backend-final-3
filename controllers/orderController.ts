@@ -27,7 +27,7 @@ const getAllOrders = async (req: Request, res: Response) => {
               ),
               "smallImageUrl",
             ],
-            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"], // Generates a random number between 1 and 5
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "orderQuantity"], // Generates a random number between 1 and 5
           ],
           through: { attributes: [] },
         },
@@ -73,7 +73,7 @@ const getOrderById = async (req: Request, res: Response) => {
               ),
               "smallImageUrl",
             ],
-            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"],
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "orderQuantity"],
           ],
           through: { attributes: [] },
         },
@@ -121,7 +121,7 @@ const getOrderByUserId = async (req: Request, res: Response) => {
               ),
               "smallImageUrl",
             ],
-            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "quantity"],
+            [sequelize.literal("FLOOR(1 + (RAND() * 4))"), "orderQuantity"],
           ],
           through: { attributes: [] },
         },
