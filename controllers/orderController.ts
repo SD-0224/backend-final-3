@@ -45,7 +45,6 @@ const getAllOrders = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
     res
       .status(500)
@@ -94,7 +93,6 @@ const getOrderById = async (req: Request, res: Response) => {
 
     res.json(order);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
     console.error("Error fetching order:", error);
     res
       .status(500)
@@ -145,7 +143,6 @@ const getOrderByUserId = async (req: Request, res: Response) => {
 
     res.json(orders);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
     console.error("Error fetching orders:", error);
     res
       .status(500)
