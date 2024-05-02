@@ -5,7 +5,7 @@ import { isAuthorized } from "../middleware/auth";
 const router=express.Router();
 
 router.get('/',getAllUsers);
-router.get('/:id',[isAuthorized],getUserById);
+router.get('/:id',getUserById);
 router.post('/auth/signup',createNewUser);
 router.post('/auth/login',loginUser);
 router.get('/auth/logout',logoutUser);
