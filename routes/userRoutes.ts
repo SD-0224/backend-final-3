@@ -5,7 +5,7 @@ const router=express.Router();
 
 router.get('/',getAllUsers);
 router.get('/:id',getUserById);
-router.post('/',createNewUser);
+router.post('/signup',createNewUser);
 router.post('/login',loginUser);
 router.get('/logout',logoutUser);
 router.put('/:userid',updateUserById);

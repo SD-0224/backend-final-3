@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import db from "../models";
 import { error } from 'console';
 import { Op } from "sequelize";
+import { registerSchema } from '../utils/validators';
 
 
 // This method returns all users
@@ -102,17 +103,22 @@ const getUserById = async (req:Request,res:Response) => {
 
 // This method creates a new user
 const createNewUser = async (req:Request,res:Response) => {
-
-    // tslint:disable-next-line:no-console
-    console.error("hello");
-
-    const {firstName,lastName,user, email,phone,dateOfBirth,password} = req.body;
-    // check if the email or username exists
-    const userExists= await db.User.findOne({where:{[Op.or]: [{ email }, { user }]}});
-    if(userExists) {
-        return res.status(400).send('Email or username is already associated with an account');
+    try {
+        const {error,value}= await registerSchema.validateAsync(req.body)
     }
-    db.User.create({
+    catch(error:any) {
+        return res.status(400).json(error.details[0].message);
+    }
+    try {
+
+        const {firstName,lastName,user, email,phone,dateOfBirth,password,confirmPassword} = req.body;
+        // check if the email or username exists
+        const userExists= await db.User.findOne({where:{[Op.or]: [{ email }, { user }]}});
+        if(userExists) {
+            return res.status(400).send('Email or username is already associated with an account');
+        }
+
+        const newUser=db.User.create({
             firstName,
             lastName,
             user,
@@ -123,18 +129,20 @@ const createNewUser = async (req:Request,res:Response) => {
             createdAt:Date.now(),
             updatedAt:Date.now(),
          })
-    .then((user:any) => {
-        res.json({user,message:"user created successfully"});
-    })
-    .catch((error:Error) => {
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            res.status(400).json({error:"Email address must be unique"})
-          }
-        else {
-            res.status(400).json(error.message)
-        }
 
-    })
+         res.json({newUser,message:"user created successfully"});
+
+    }
+
+    catch(error:any) {
+
+            if (error.name === 'SequelizeUniqueConstraintError') {
+                res.status(400).json({error:"Email address must be unique"})
+              }
+            else {
+                res.status(400).json(error.message)
+            }
+    }
 
 }
 
