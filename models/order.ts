@@ -5,6 +5,7 @@ interface OrderAttributes {
   id:string;
   category: string;
   status: string;
+  orderNumber:bigint;
   createdAt:bigint;
   updatedAt:bigint;
 }
@@ -14,6 +15,7 @@ module.exports = (sequelize: Sequelize) => {
     public id!:string;
     public category!: string;
     public status!: string;
+    public orderNumber!: bigint;
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
@@ -40,6 +42,11 @@ module.exports = (sequelize: Sequelize) => {
       status: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      orderNumber: {
+        allowNull: false,
+        unique:true,
+        type: DataTypes.BIGINT,
       },
       createdAt: {
         allowNull: false,
