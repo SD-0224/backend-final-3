@@ -13,6 +13,7 @@ import {
   filterProductsWithSearch,
   getHandPickedProductsByCategory,
 } from "../controllers/productController";
+import { isAuthorized } from "../middleware/auth";
 
 const router = express.Router();
 
@@ -29,6 +30,6 @@ router.get("/brand/:id", getProductsByBrandId);
 router.get("/search/:query", filterProductsWithSearch);
 
 router.get("/:id", getProductById);
-router.post("/", createNewProduct);
+router.post("/",[isAuthorized], createNewProduct);
 
 export default router;

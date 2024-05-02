@@ -3,6 +3,8 @@ import db from "../models";
 import { error } from 'console';
 import { Op } from "sequelize";
 import { registerSchema } from '../utils/validators';
+import { generateToken } from '../utils/jwt';
+import bcrypt from "bcrypt";
 
 
 // This method returns all users
@@ -130,7 +132,7 @@ const createNewUser = async (req:Request,res:Response) => {
             updatedAt:Date.now(),
          })
 
-         res.json({newUser,message:"user created successfully"});
+         res.status(201).json({message:"user created successfully",user:newUser,});
 
     }
 
@@ -149,13 +151,38 @@ const createNewUser = async (req:Request,res:Response) => {
 
 // This method handles user login
 const loginUser = async (req:Request,res:Response) => {
-    return;
+    const expiryInterval= 2*24*60*60; // 2 days in seconds
+    const {email,password}=req.body;
+    try {
+        const currentUser:any=await db.User.findOne({where:{email}})
+        if(!currentUser) {
+            return res.status(404).json('Email not found');
+        }
+
+        // Verify password
+        const ispassValid= await bcrypt.compare(password,currentUser.password)
+        if(!ispassValid) {
+            return res.status(404).json('Incorrect Password');
+        }
+
+        // Authenticate user with jwt
+        const token = generateToken({ id:currentUser.id, username:currentUser.user},process.env.JWT_SECRETS)
+        // tslint:disable-next-line:no-console
+        console.log(token);
+        // Create a cookie and send token to client
+        res.cookie('jwt', token, {httpOnly: true, maxAge: expiryInterval * 1000});
+        res.status(200).json({message: "User has successfully logged in",token});
+    } catch(error) {
+        return res.status(500).send('Sign in error');
+    }
 }
 
 
 // This method handles user logout
 const logoutUser = async (req:Request,res:Response) => {
-    return;
+    // replacing the current cookie with a blank one that has 1 ms lifetime
+    res.cookie('jwt','', {maxAge: 1});
+    res.status(200).json({message: "User has successfully logged out"});
 }
 
 
