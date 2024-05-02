@@ -325,8 +325,8 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
         updatedAt:Date.now(),
       },
     });
-    
-    let category= await db.Category.findOne({ where: { name: categoryName } });
+
+    const category= await db.Category.findOne({ where: { name: categoryName } });
     await newProduct.setCategory(category);
 
     res.json(newProduct)

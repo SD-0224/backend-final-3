@@ -19,19 +19,19 @@ export const loginSchema=joi.object({
 })
 
 export const productSchema=joi.object({
-    
-    
+
+
 
 })
 
 export const reviewSchema=joi.object({
-    
-    
+
+
 
 })
 
 export const addressSchema=joi.object({
-    
-    
+
+
 
 })
