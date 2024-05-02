@@ -120,7 +120,7 @@ const createNewUser = async (req:Request,res:Response) => {
             return res.status(400).send('Email or username is already associated with an account');
         }
 
-        const newUser=db.User.create({
+        const newUser=await db.User.create({
             firstName,
             lastName,
             user,
@@ -132,7 +132,7 @@ const createNewUser = async (req:Request,res:Response) => {
             updatedAt:Date.now(),
          })
 
-         res.status(201).json({message:"user created successfully",user:newUser,});
+         res.status(201).json({message:"user created successfully",user:newUser});
 
     }
 

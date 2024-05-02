@@ -22,13 +22,7 @@ FROM node:16-alpine as production
 #Define environment variables
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
-ENV DB_HOST=bumpso1olabrdxegfmme-mysql.services.clever-cloud.com
-ENV DB_USER=uo4knvxo5mpdoi1g
-ENV DB_PASSWORD=s9cF103Gguk3aGMobBnX
-ENV DB_NAME=bumpso1olabrdxegfmme
-ENV DB_PORT=3306
-ENV DB_URI=mysql://uo4knvxo5mpdoi1g:s9cF103Gguk3aGMobBnX@bumpso1olabrdxegfmme-mysql.services.clever-cloud.com:3306/bumpso1olabrdxegfmme
-ENV SERVER_PORT=3000
+
 
 WORKDIR /usr/src/app
 
