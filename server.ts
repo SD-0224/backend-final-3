@@ -11,6 +11,7 @@ import categoryRoutes from "./routes/categoryRoutes";
 import orderRoutes from "./routes/orderRoutes";
 import brandRoutes from "./routes/brandRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
+import {cronJob} from "./utils/cronJob"
 
 // initialize configuration
 dotenv.config();
@@ -36,6 +37,10 @@ app.use(express.json());
 // as if it were an environment variable
 const port:any = process.env.SERVER_PORT;
 
+
+// Start the cron job every 14 minutes to keep our live website active on render
+cronJob.start();
+
 const start = async (): Promise<void> => {
   try {
     await db.sequelize.sync();
@@ -54,6 +59,7 @@ const start = async (): Promise<void> => {
 };
 // Invokes the function to start the server
 void start();
+
 
 app.get("/", (req: Request, res: Response, err: any) => {
   res.send("E-Commerce Website Backend Service for Group#3 TAP-SD-0224");

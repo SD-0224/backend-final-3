@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import db from "../models";
 import { error } from "console";
 import { Op } from "sequelize";
-import { registerSchema } from "../utils/validators";
+import { registerSchema } from '../utils/validators';
+import { generateToken } from '../utils/jwt';
+import bcrypt from "bcrypt";
+
 
 // This method returns all users
 const getAllUsers = async (req: Request, res: Response) => {
@@ -100,64 +103,62 @@ const getUserById = async (req: Request, res: Response) => {
 };
 
 // This method creates a new user
-const createNewUser = async (req: Request, res: Response) => {
-  try {
-    const { error, value } = await registerSchema.validateAsync(req.body);
-  } catch (error: any) {
-    return res.status(400).json(error.details[0].message);
-  }
-  try {
-    const {
-      firstName,
-      lastName,
-      user,
-      email,
-      phone,
-      dateOfBirth,
-      password,
-      confirmPassword,
-    } = req.body;
-    // check if the email or username exists
-    const userExists = await db.User.findOne({
-      where: { [Op.or]: [{ email }, { user }] },
-    });
-    if (userExists) {
-      return res
-        .status(400)
-        .send("Email or username is already associated with an account");
+const createNewUser = async (req:Request,res:Response) => {
+    try {
+        const {error,value}= await registerSchema.validateAsync(req.body)
+    }
+    catch(error:any) {
+        return res.status(400).json(error.details[0].message);
+    }
+    try {
+
+        const {firstName,lastName,user, email,phone,dateOfBirth,password,confirmPassword} = req.body;
+        // check if the email or username exists
+        const userExists= await db.User.findOne({where:{[Op.or]: [{ email }, { user }]}});
+        if(userExists) {
+            return res.status(400).send('Email or username is already associated with an account');
+        }
+
+        const newUser=db.User.create({
+            firstName,
+            lastName,
+            user,
+            email,
+            phone,
+            dateOfBirth,
+            password,
+            createdAt:Date.now(),
+            updatedAt:Date.now(),
+         })
+
+         res.json({newUser,message:"user created successfully"});
+
     }
 
-    const newUser = db.User.create({
-      firstName,
-      lastName,
-      user,
-      email,
-      phone,
-      dateOfBirth,
-      password,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    });
+    catch(error:any) {
 
-    res.json({ newUser, message: "user created successfully" });
-  } catch (error: any) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      res.status(400).json({ error: "Email address must be unique" });
-    } else {
-      res.status(400).json(error.message);
+            if (error.name === 'SequelizeUniqueConstraintError') {
+                res.status(400).json({error:"Email address must be unique"})
+              }
+            else {
+                res.status(400).json(error.message)
+            }
     }
-  }
-};
+
+}
+
 
 // This method handles user login
-const loginUser = async (req: Request, res: Response) => {
-  return;
-};
+const loginUser = async (req:Request,res:Response) => {
+    return;
+}
+
 
 // This method handles user logout
-const logoutUser = async (req: Request, res: Response) => {
-  return;
-};
+const logoutUser = async (req:Request,res:Response) => {
+    return;
+}
+
 
 // this method updates user account
 const updateUserById = async (req: Request, res: Response) => {

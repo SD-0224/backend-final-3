@@ -24,6 +24,7 @@ const createNewReview = async (req: Request, res: Response) => {
   try {
     const { content, rating } = req.body;
     const productId = req.params.productId;
+    
 
     const newReview = await db.Review.create({
       content,
