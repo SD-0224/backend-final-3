@@ -24,12 +24,13 @@ const createNewReview = async (req: Request, res: Response) => {
   try {
     const { content, rating } = req.body;
     const productId = req.params.productId;
-    
+    const userId = req.user.id;
 
     const newReview = await db.Review.create({
       content,
       rating,
       productId,
+      userId,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });

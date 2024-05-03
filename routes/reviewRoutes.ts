@@ -11,13 +11,7 @@ import { isAuthorized } from "../middleware/auth";
 const router = express.Router();
 
 router.get("/", getAllReviews);
-router.post("/product/:productId", createNewReview);
-router.get("/:id", getReviewById);
-router.get("/user/:userId", getUserReviews);
-router.get("/product/:productId", getProductReviews);
-
-router.get("/", getAllReviews);
-router.post("/", [isAuthorized], createNewReview);
+router.post("/product/:productId", [isAuthorized], createNewReview);
 router.get("/:id", getReviewById);
 router.get("/user/:userId", getUserReviews);
 router.get("/product/:productId", getProductReviews);

@@ -26,6 +26,16 @@ export const productSchema = joi.object({
   discountPercentage: joi.number().min(0).max(95),
 });
 
-export const reviewSchema = joi.object({});
+export const reviewSchema = joi.object({
+  rating: joi.number().positive().precision(2).min(1).max(5).required(),
+  content: joi.string().min(0).max(1500),
+});
 
-export const addressSchema = joi.object({});
+export const addressSchema = joi.object({
+  fullName: joi.string().min(2).max(100).required(),
+  pinCode: joi.string().min(4).max(10).required(),
+  city: joi.string().min(2).max(50).required(),
+  state: joi.string().min(2).max(50).required(),
+  streetAddress: joi.string().min(2).max(100).required(),
+  mobileNumber: joi.string().min(10).max(12).required(),
+});
