@@ -65,12 +65,12 @@ const createOrderAddress = async (req: Request, res: Response) => {
 
     const userId = req.user.id;
 
-    const reviewExists = await db.Review.findOne({
+    const addressExists = await db.Address.findOne({
       where: {
         mobileNumber,
       },
     });
-    if (reviewExists) {
+    if (addressExists) {
       return res
         .status(400)
         .send(
