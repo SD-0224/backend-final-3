@@ -16,10 +16,10 @@ router.get("/:id", getReviewById);
 router.get("/user/:userId", getUserReviews);
 router.get("/product/:productId", getProductReviews);
 
-router.get('/',getAllReviews)
-router.post('/',[isAuthorized],createNewReview)
-router.get('/:id',getReviewById)
-router.get('/user/:userId',getUserReviews)
-router.get('/product/:productId',getProductReviews)
+router.get("/", getAllReviews);
+router.post("/", [isAuthorized], createNewReview);
+router.get("/:id", getReviewById);
+router.get("/user/:userId", getUserReviews);
+router.get("/product/:productId", getProductReviews);
 
 export default router;
