@@ -16,7 +16,7 @@ const getAllReviews = async (req: Request, res: Response) => {
 // This method create a new review by an authorized user
 const createNewReview = async (req: Request, res: Response) => {
   try {
-    const { error, value } = await reviewSchema.validateAsync(req.body);
+    await reviewSchema.validateAsync(req.body);
   } catch (error: any) {
     res.status(400).json(error.details[0].message);
   }
