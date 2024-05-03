@@ -12,6 +12,7 @@ import orderRoutes from "./routes/orderRoutes";
 import brandRoutes from "./routes/brandRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
 import {cronJob} from "./utils/cronJob"
+import {isCurrentUser} from './middleware/auth'
 
 // initialize configuration
 dotenv.config();
@@ -44,8 +45,7 @@ cronJob.start();
 const start = async (): Promise<void> => {
   try {
     await db.sequelize.sync();
-    // tslint:disable-next-line:no-console
-    console.log(`Databases synced Successfully`);
+
     app.listen(port,'0.0.0.0', () => {
       // tslint:disable-next-line:no-console
       console.log(`Server running at port:${port}`);
@@ -59,6 +59,8 @@ const start = async (): Promise<void> => {
 };
 // Invokes the function to start the server
 void start();
+
+app.get('*', isCurrentUser);
 
 
 app.get("/", (req: Request, res: Response, err: any) => {
@@ -75,7 +77,7 @@ app.use("/api/reviews", reviewRoutes);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {
-  res.redirect("/");
+  res.status(404).send('Page Not Found');
 });
 
 export default app;

@@ -9,8 +9,8 @@ router.get('/:id',getUserById);
 router.post('/auth/signup',createNewUser);
 router.post('/auth/login',loginUser);
 router.get('/auth/logout',logoutUser);
-router.put('/:userid',[isAuthorized],updateUserById);
-router.delete('/:userid',[isAuthorized],deleteUserById);
+router.put('/:userId',[isAuthorized],updateUserById);
+router.delete('/:userId',[isAuthorized],deleteUserById);
 
 
 export default router;
