@@ -18,7 +18,7 @@ const createNewReview = async (req: Request, res: Response) => {
   try {
     const { error, value } = await reviewSchema.validateAsync(req.body);
   } catch (error: any) {
-    return res.status(400).json(error.details[0].message);
+    res.status(400).json(error.details[0].message);
   }
 
   try {
@@ -35,7 +35,7 @@ const createNewReview = async (req: Request, res: Response) => {
       updatedAt: Date.now(),
     });
 
-    res.json(newReview);
+    res.status(201).json(newReview);
   } catch {
     res.status(500).json({ error: "Internal server error" });
   }

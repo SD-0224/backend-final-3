@@ -37,5 +37,5 @@ export const addressSchema = joi.object({
   city: joi.string().min(2).max(50).required(),
   state: joi.string().min(2).max(50).required(),
   streetAddress: joi.string().min(2).max(100).required(),
-  mobileNumber: joi.string().min(10).max(12).required(),
+  mobileNumber: joi.string().length(10).required(),
 });

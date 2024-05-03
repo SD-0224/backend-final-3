@@ -59,7 +59,7 @@ const getAllProducts = async (req: Request, res: Response) => {
       .json({ error: "Internal server error", details: error.message });
   }
 };
-//This method filters the products based on the search-bar query
+// This method filters the products based on the search-bar query
 const filterProductsWithSearch = async (req: Request, res: Response) => {
   const { query } = req.params;
   try {
@@ -348,7 +348,7 @@ const createNewProduct = async (req: Request, res: Response) => {
       where: { name: brandName.toLowerCase() },
       defaults: {
         name: brandName,
-        image: "image",
+        image: "imageUrl",
         createdAt: Date.now(),
         updatedAt: Date.now(),
       },
@@ -358,13 +358,14 @@ const createNewProduct = async (req: Request, res: Response) => {
       where: { name: categoryName },
     });
     await newProduct.setCategory(category);
+    await newProduct.setBrand(newBrand);
 
-    res.json(newProduct);
+    res.status(201).json(newProduct);
   } catch {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-//This method returns all the new Arrival products (products added within the last 3 months)
+// This method returns all the new Arrival products (products added within the last 3 months)
 const getNewArrivals = async (req: Request, res: Response) => {
   const currentDate = new Date();
   const threeMonthsAgo = currentDate.setMonth(currentDate.getMonth() - 3);
@@ -424,7 +425,7 @@ const getNewArrivals = async (req: Request, res: Response) => {
       res.status(500).json({ error: "Database error", details: error.message });
     });
 };
-//This method returns all the handpicked products (products with rating >= 4.5 && price <= 100)
+// This method returns all the handpicked products (products with rating >= 4.5 && price <= 100)
 const getHandPickedProducts = async (
   req: Request,
   res: Response
@@ -506,7 +507,7 @@ const getHandPickedProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-//This method returns all the handpicked products for a specific category filtered by category ID (products with rating >= 4.5 && price <= 100)
+// This method returns all the handpicked products for a specific category filtered by category ID (products with rating >= 4.5 && price <= 100)
 const getHandPickedProductsByCategory = async (
   req: Request,
   res: Response
@@ -590,7 +591,7 @@ const getHandPickedProductsByCategory = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-//This method returns all the Limited-edition products (products that have quantity < 20)
+// This method returns all the Limited-edition products (products that have quantity < 20)
 const getLimitedEditionProducts = async (
   req: Request,
   res: Response
@@ -647,7 +648,7 @@ const getLimitedEditionProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-//This method returns all the On-sale Products (products with discount percentage >= 15)
+// This method returns all the On-sale Products (products with discount percentage >= 15)
 const getOnSaleProducts = async (
   req: Request,
   res: Response
@@ -702,7 +703,7 @@ const getOnSaleProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-//This method returns all the Popular Products (products with rating >= 4.5 )
+// This method returns all the Popular Products (products with rating >= 4.5 )
 const getPopularProducts = async (
   req: Request,
   res: Response
