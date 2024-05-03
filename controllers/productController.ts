@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import db from "../models";
-import { Op, fn, col, literal } from "sequelize";
+import { Op, fn, col, literal, where } from "sequelize";
 import { subMonths } from "date-fns";
-import { productSchema } from '../utils/validators';
+import { productSchema } from "../utils/validators";
 
 // This method returns all products
 const getAllProducts = async (req: Request, res: Response) => {
@@ -59,6 +59,7 @@ const getAllProducts = async (req: Request, res: Response) => {
       .json({ error: "Internal server error", details: error.message });
   }
 };
+// This method filters the products based on the search-bar query
 const filterProductsWithSearch = async (req: Request, res: Response) => {
   const { query } = req.params;
   try {
@@ -300,12 +301,15 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
 };
 
 // This method creates a new product
-  const createNewProduct = async (req: Request, res: Response) => {
-
-  const {title,longSubtitle,description, price,quantity,discountPercentage,shortSubtitle,
-          brandName,categoryName} = req.body;
+const createNewProduct = async (req: Request, res: Response) => {
   try {
-    const newProduct= await db.Product.create({
+    const { error, value } = await productSchema.validateAsync(req.body);
+  } catch (error: any) {
+    return res.status(400).json(error.details[0].message);
+  }
+
+  try {
+    const {
       title,
       longSubtitle,
       description,
@@ -313,31 +317,55 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
       quantity,
       discountPercentage,
       shortSubtitle,
-      createdAt:Date.now(),
-      updatedAt:Date.now(),
-    })
-    const newBrand=db.Brand.findOrCreate({
+      brandName,
+      categoryName,
+    } = req.body;
+
+    const productExists = await db.Product.findOne({
+      where: {
+        [Op.or]: [{ title }, { longSubtitle }, { shortSubtitle }],
+      },
+    });
+    if (productExists) {
+      return res
+        .status(400)
+        .send(
+          "The product you are trying to create already exists with all these properties"
+        );
+    }
+    const newProduct = await db.Product.create({
+      title,
+      longSubtitle,
+      description,
+      price,
+      quantity,
+      discountPercentage,
+      shortSubtitle,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+    const newBrand = db.Brand.findOrCreate({
       where: { name: brandName.toLowerCase() },
       defaults: {
         name: brandName,
-        image:"image",
-        createdAt:Date.now(),
-        updatedAt:Date.now(),
+        image: "imageUrl",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       },
     });
 
-    const category= await db.Category.findOne({ where: { name: categoryName } });
+    const category = await db.Category.findOne({
+      where: { name: categoryName },
+    });
     await newProduct.setCategory(category);
+    await newProduct.setBrand(newBrand);
 
-    res.json(newProduct)
+    res.status(201).json(newProduct);
+  } catch {
+    res.status(500).json({ error: "Internal server error" });
   }
-  catch {
-    res.status(500).json({ error: 'Internal server error' });
-}
-
-
 };
-
+// This method returns all the new Arrival products (products added within the last 3 months)
 const getNewArrivals = async (req: Request, res: Response) => {
   const currentDate = new Date();
   const threeMonthsAgo = currentDate.setMonth(currentDate.getMonth() - 3);
@@ -397,7 +425,7 @@ const getNewArrivals = async (req: Request, res: Response) => {
       res.status(500).json({ error: "Database error", details: error.message });
     });
 };
-
+// This method returns all the handpicked products (products with rating >= 4.5 && price <= 100)
 const getHandPickedProducts = async (
   req: Request,
   res: Response
@@ -479,7 +507,7 @@ const getHandPickedProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-
+// This method returns all the handpicked products for a specific category filtered by category ID (products with rating >= 4.5 && price <= 100)
 const getHandPickedProductsByCategory = async (
   req: Request,
   res: Response
@@ -563,9 +591,7 @@ const getHandPickedProductsByCategory = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-
-
-
+// This method returns all the Limited-edition products (products that have quantity < 20)
 const getLimitedEditionProducts = async (
   req: Request,
   res: Response
@@ -622,7 +648,7 @@ const getLimitedEditionProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-
+// This method returns all the On-sale Products (products with discount percentage >= 15)
 const getOnSaleProducts = async (
   req: Request,
   res: Response
@@ -677,7 +703,7 @@ const getOnSaleProducts = async (
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
-
+// This method returns all the Popular Products (products with rating >= 4.5 )
 const getPopularProducts = async (
   req: Request,
   res: Response
