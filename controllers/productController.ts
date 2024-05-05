@@ -4,6 +4,7 @@ import { Op, fn, col, literal, where } from "sequelize";
 import { subMonths } from "date-fns";
 import { productSchema } from "../utils/validators";
 
+
 // This method returns all products
 const getAllProducts = async (req: Request, res: Response) => {
   try {
@@ -689,10 +690,7 @@ const getOnSaleProducts = async (
   }
 };
 // This method returns all the Popular Products (products with rating >= 4.5 )
-const getPopularProducts = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+const getPopularProducts = async (req: Request,res: Response): Promise<void> => {
   try {
     const products = await db.Product.findAll({
       include: [
@@ -766,6 +764,42 @@ const getPopularProducts = async (
   }
 };
 
+
+// This method handles uploaded images of a specific product by a user
+// User can upload up to 5 images
+const uploadProductImage= async(req: Request,res: Response): Promise<void> => {
+  if(!req.files) {
+    throw Error("Please upload an image")
+  }
+
+  try {
+
+    const productId = req.params.productId;
+    // Get the URLs of the uploaded images
+    const urls = Array.isArray(req.files) ? req.files.map(file => {
+      return {
+        productId,
+        url: `${req.protocol}://${req.get('host')}/uploads/productImages/${file.filename}`,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      };
+    }) : [];
+
+    // Save the URLs to the database
+    const images = await db.productImages.bulkCreate(urls);
+    res.status(201).json({message: "Image was uploaded successfully"})
+
+  }
+
+  catch (error: any) {
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+
+
+}
+
+
+
 export {
   getAllProducts,
   getProductById,
@@ -779,4 +813,5 @@ export {
   getPopularProducts,
   filterProductsWithSearch,
   getHandPickedProductsByCategory,
+  uploadProductImage,
 };
