@@ -689,10 +689,7 @@ const getOnSaleProducts = async (
   }
 };
 // This method returns all the Popular Products (products with rating >= 4.5 )
-const getPopularProducts = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+const getPopularProducts = async (req: Request,res: Response): Promise<void> => {
   try {
     const products = await db.Product.findAll({
       include: [
@@ -766,6 +763,23 @@ const getPopularProducts = async (
   }
 };
 
+const uploadProductImage= async(req: Request,res: Response): Promise<void> => {
+
+  try {
+
+    return;
+
+  }
+
+  catch (error: any) {
+    res.status(500).json({ error: "Internal server error", details: error.message });
+  }
+
+
+}
+
+
+
 export {
   getAllProducts,
   getProductById,
@@ -779,4 +793,5 @@ export {
   getPopularProducts,
   filterProductsWithSearch,
   getHandPickedProductsByCategory,
+  uploadProductImage,
 };

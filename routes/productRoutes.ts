@@ -12,6 +12,7 @@ import {
   getPopularProducts,
   filterProductsWithSearch,
   getHandPickedProductsByCategory,
+  uploadProductImage,
 } from "../controllers/productController";
 import { isAuthorized } from "../middleware/auth";
 
@@ -29,5 +30,6 @@ router.get("/brand/:id", getProductsByBrandId);
 router.get("/search/:query", filterProductsWithSearch);
 router.get("/:id", getProductById);
 router.post("/",[isAuthorized], createNewProduct);
+router.post("/:productId/images",[isAuthorized], uploadProductImage);
 
 export default router;
