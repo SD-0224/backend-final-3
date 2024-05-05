@@ -15,6 +15,7 @@ import {
   uploadProductImage,
 } from "../controllers/productController";
 import { isAuthorized } from "../middleware/auth";
+import upload from "../utils/imageUpload"
 
 const router = express.Router();
 /**
@@ -309,6 +310,6 @@ router.get("/:id", getProductById);
  */
 
 router.post("/", [isAuthorized], createNewProduct);
-router.post("/:productId/images",[isAuthorized], uploadProductImage);
+router.post("/:productId/images",[isAuthorized,upload.array('images')], uploadProductImage);
 
 export default router;

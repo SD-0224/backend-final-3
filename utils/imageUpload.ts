@@ -14,7 +14,7 @@ const storage= multer.diskStorage({
   // check file type, accept only images
   const checkFileType= (file:Express.Multer.File, cb:multer.FileFilterCallback) :void => {
     // Allowed mimetypes
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    const allowedMimeTypes = ['image/jpeg', 'image/png'];
     if (allowedMimeTypes.includes(file.mimetype)) {
       // Accept file
       cb(null, true);
