@@ -1,11 +1,38 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Wishlist:
+ *       type: object
+ *       required:
+ *         - itemscount
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the wishlist
+ *         itemscount:
+ *           type: integer
+ *           description: The number of items in the wishlist
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the wishlist was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the wishlist was last updated
+ */
+
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 interface WishlistAttributes {
-  id:string;
+  id: string;
   itemscount: number;
-  createdAt:bigint;
-  updatedAt:bigint;
+  createdAt: bigint;
+  updatedAt: bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
@@ -13,14 +40,24 @@ module.exports = (sequelize: Sequelize) => {
     extends Model<WishlistAttributes>
     implements WishlistAttributes
   {
-    public id!:string;
+    public id!: string;
     public itemscount!: number;
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Wishlist.belongsTo(models.User,{as: 'user',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      Wishlist.hasMany(models.Product,{as: 'products',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'wishlistId'});
+      Wishlist.belongsTo(models.User, {
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      Wishlist.hasMany(models.Product, {
+        as: "products",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "wishlistId",
+      });
     }
 
     // Define other model setup here, like hooks and scopes
@@ -30,9 +67,9 @@ module.exports = (sequelize: Sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
-        defaultValue:() => uuidv4(),
+        defaultValue: () => uuidv4(),
         allowNull: false,
-        primaryKey:true
+        primaryKey: true,
       },
       itemscount: {
         type: DataTypes.INTEGER,
@@ -50,7 +87,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Wishlist",
-      tableName: 'wishlists',
+      tableName: "wishlists",
       timestamps: false,
     }
   );

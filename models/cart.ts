@@ -1,3 +1,29 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Cart:
+ *       type: object
+ *       required:
+ *         - itemscount
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the cart
+ *         itemscount:
+ *           type: integer
+ *           description: The number of items in the cart
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the cart was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the cart was last updated
+ */
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { v4 as uuidv4 } from 'uuid';
 
