@@ -1,18 +1,53 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Order:
+ *       type: object
+ *       required:
+ *         - category
+ *         - status
+ *         - orderNumber
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the order
+ *         category:
+ *           type: string
+ *           description: The category of the order
+ *         status:
+ *           type: string
+ *           description: The status of the order
+ *         orderNumber:
+ *           type: integer
+ *           format: int64
+ *           description: The order number
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the order was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the order was last updated
+ */
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 interface OrderAttributes {
-  id:string;
+  id: string;
   category: string;
   status: string;
-  orderNumber:bigint;
-  createdAt:bigint;
-  updatedAt:bigint;
+  orderNumber: bigint;
+  createdAt: bigint;
+  updatedAt: bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
   class Order extends Model<OrderAttributes> implements OrderAttributes {
-    public id!:string;
+    public id!: string;
     public category!: string;
     public status!: string;
     public orderNumber!: bigint;
@@ -20,20 +55,35 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Order.belongsTo(models.User,{as: 'user',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      Order.belongsTo(models.Address,{as: 'address',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'addressId'});
-      Order.belongsToMany(models.Product, {as: 'products', through: "productOrders",onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'orderId'});
+      Order.belongsTo(models.User, {
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      Order.belongsTo(models.Address, {
+        as: "address",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "addressId",
+      });
+      Order.belongsToMany(models.Product, {
+        as: "products",
+        through: "productOrders",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "orderId",
+      });
     }
-
   }
 
   Order.init(
     {
       id: {
         type: DataTypes.UUID,
-        defaultValue:() => uuidv4(),
+        defaultValue: () => uuidv4(),
         allowNull: false,
-        primaryKey:true
+        primaryKey: true,
       },
       category: {
         type: DataTypes.STRING,
@@ -45,7 +95,7 @@ module.exports = (sequelize: Sequelize) => {
       },
       orderNumber: {
         allowNull: false,
-        unique:true,
+        unique: true,
         type: DataTypes.BIGINT,
       },
       createdAt: {
@@ -60,7 +110,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Order",
-      tableName: 'orders',
+      tableName: "orders",
       timestamps: false,
     }
   );

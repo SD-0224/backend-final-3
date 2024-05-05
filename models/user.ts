@@ -1,26 +1,79 @@
-// user.model.ts
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - firstName
+ *         - lastName
+ *         - user
+ *         - email
+ *         - phone
+ *         - dateOfBirth
+ *         - password
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the user
+ *         firstName:
+ *           type: string
+ *           description: The first name of the user
+ *         lastName:
+ *           type: string
+ *           description: The last name of the user
+ *         user:
+ *           type: string
+ *           description: The username of the user
+ *         email:
+ *           type: string
+ *           description: The email address of the user
+ *         phone:
+ *           type: string
+ *           description: The phone number of the user
+ *         dateOfBirth:
+ *           type: string
+ *           format: date
+ *           description: The date of birth of the user
+ *         password:
+ *           type: string
+ *           description: The password of the user
+ *         avatar:
+ *           type: string
+ *           description: The avatar URL of the user
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the user was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the user was last updated
+ */
 
 import { DataTypes, Model, Sequelize } from "sequelize";
 import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 interface UserAttributes {
-  id:string;
+  id: string;
   firstName: string;
   lastName: string;
-  user:string;
+  user: string;
   email: string;
   phone: string;
   dateOfBirth: Date;
   password: string;
   avatar: string;
-  createdAt:bigint;
-  updatedAt:bigint;
+  createdAt: bigint;
+  updatedAt: bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
   class User extends Model<UserAttributes> implements UserAttributes {
-    public id!:string;
+    public id!: string;
     public firstName!: string;
     public lastName!: string;
     public user!: string;
@@ -33,12 +86,43 @@ module.exports = (sequelize: Sequelize) => {
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      User.hasMany(models.Review,{as: 'reviews',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasMany(models.Address,{as: 'addresses',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasMany(models.Order,{as: 'orders',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasOne(models.Cart,{as: 'cart',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.hasOne(models.Wishlist,{as: 'wishlist',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      User.belongsToMany(models.Payment, {as: 'payments', through: 'userPayments',onDelete:'CASCADE', onUpdate: 'CASCADE' ,foreignKey: 'userId'});
+      User.hasMany(models.Review, {
+        as: "reviews",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      User.hasMany(models.Address, {
+        as: "addresses",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      User.hasMany(models.Order, {
+        as: "orders",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      User.hasOne(models.Cart, {
+        as: "cart",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      User.hasOne(models.Wishlist, {
+        as: "wishlist",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      User.belongsToMany(models.Payment, {
+        as: "payments",
+        through: "userPayments",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
     }
   }
 
@@ -46,9 +130,9 @@ module.exports = (sequelize: Sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
-        defaultValue:() => uuidv4(),
+        defaultValue: () => uuidv4(),
         allowNull: false,
-        primaryKey:true
+        primaryKey: true,
       },
       firstName: {
         type: DataTypes.STRING,
@@ -79,10 +163,10 @@ module.exports = (sequelize: Sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-          set(value: string) {
-          const salt=bcrypt.genSaltSync();
-          const hash=bcrypt.hashSync(value, salt);
-          this.setDataValue('password', hash);
+        set(value: string) {
+          const salt = bcrypt.genSaltSync();
+          const hash = bcrypt.hashSync(value, salt);
+          this.setDataValue("password", hash);
         },
       },
       avatar: {
@@ -101,15 +185,10 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "User",
-      tableName: 'users',
+      tableName: "users",
       timestamps: false,
-
-    },
-
-
+    }
   );
-
-
 
   return User;
 };

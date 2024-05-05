@@ -1,27 +1,66 @@
-// review.model.ts
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Review:
+ *       type: object
+ *       required:
+ *         - content
+ *         - rating
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the review
+ *         content:
+ *           type: string
+ *           description: The content of the review
+ *         rating:
+ *           type: number
+ *           description: The rating given in the review
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the review was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the review was last updated
+ */
 
 import { DataTypes, Model, Sequelize } from "sequelize";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 interface ReviewAttributes {
-  id:string;
+  id: string;
   content: string;
   rating: number;
-  createdAt:bigint;
-  updatedAt:bigint;
+  createdAt: bigint;
+  updatedAt: bigint;
 }
 
 module.exports = (sequelize: Sequelize) => {
   class Review extends Model<ReviewAttributes> implements ReviewAttributes {
-    public id!:string;
+    public id!: string;
     public content!: string;
     public rating!: number;
     public createdAt!: bigint;
     public updatedAt!: bigint;
 
     static associate(models: any) {
-      Review.belongsTo(models.User,{as: 'user',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'userId'});
-      Review.belongsTo(models.Product,{as: 'product',onDelete:'CASCADE', onUpdate: 'CASCADE',foreignKey: 'productId'});
+      Review.belongsTo(models.User, {
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "userId",
+      });
+      Review.belongsTo(models.Product, {
+        as: "product",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        foreignKey: "productId",
+      });
     }
   }
 
@@ -29,9 +68,9 @@ module.exports = (sequelize: Sequelize) => {
     {
       id: {
         type: DataTypes.UUID,
-        defaultValue:() => uuidv4(),
+        defaultValue: () => uuidv4(),
         allowNull: false,
-        primaryKey:true
+        primaryKey: true,
       },
       content: {
         type: DataTypes.STRING,
@@ -53,7 +92,7 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       modelName: "Review",
-      tableName: 'reviews',
+      tableName: "reviews",
       timestamps: false,
     }
   );

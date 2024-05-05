@@ -1,4 +1,49 @@
-// address.model.ts
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Address:
+ *       type: object
+ *       required:
+ *         - fullName
+ *         - pinCode
+ *         - city
+ *         - state
+ *         - streetAddress
+ *         - mobileNumber
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the address
+ *         fullName:
+ *           type: string
+ *           description: The full name associated with the address
+ *         pinCode:
+ *           type: string
+ *           description: The pin code of the address
+ *         city:
+ *           type: string
+ *           description: The city of the address
+ *         state:
+ *           type: string
+ *           description: The state of the address
+ *         streetAddress:
+ *           type: string
+ *           description: The street address
+ *         mobileNumber:
+ *           type: string
+ *           description: The mobile number associated with the address
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the address was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the address was last updated
+ */
 
 import { DataTypes, Model, Sequelize } from "sequelize";
 
