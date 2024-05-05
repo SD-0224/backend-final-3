@@ -19,7 +19,7 @@
         "serve": "nodemon -w ts-node ./server.ts",
         "dev": "nodemon -w ts-node ./server.ts",
         "test": "npx jest--forceExit  --detectOpenHandles __tests__/allTests.test.ts",
-        "test_pr": "npx jest --forceExit  --detectOpenHandles __tests__/baselineCheck.test.ts"
+        "test_pr": "npx jest --forceExit  --detectOpenHandles __tests__/prTests.test.ts"
     },
     "author": "",
     "license": "ISC",

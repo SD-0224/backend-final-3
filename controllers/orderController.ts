@@ -54,14 +54,13 @@ const getAllOrders = async (req: Request, res: Response) => {
 
 const createOrderAddress = async (req: Request, res: Response) => {
   try {
-    const { error, value } = await addressSchema.validateAsync(req.body);
+    await addressSchema.validateAsync(req.body);
   } catch (error: any) {
-    return res.status(400).json(error.details[0].message);
+    res.status(400).json(error.details[0].message);
   }
 
   try {
-    const { fullName, pinCode, city, state, streetAddress, mobileNumber } =
-      req.body;
+    const { fullName, pinCode, city, state, streetAddress, mobileNumber } =req.body;
 
     const userId = req.user.id;
 
@@ -90,7 +89,7 @@ const createOrderAddress = async (req: Request, res: Response) => {
       updatedAt: Date.now(),
     });
 
-    res.json(newAdress);
+    res.status(201).json(newAdress);
   } catch {
     res.status(500).json({ error: "Internal server error" });
   }

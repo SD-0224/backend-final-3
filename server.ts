@@ -14,6 +14,7 @@ import reviewRoutes from "./routes/reviewRoutes";
 import { cronJob } from "./utils/cronJob";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import { isCurrentUser } from "./middleware/auth";
 
 // initialize configuration
 dotenv.config();
@@ -62,7 +63,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://backend-final-3.onrender.com",
       },
     ],
   },
@@ -78,8 +79,7 @@ app.use(
 const start = async (): Promise<void> => {
   try {
     await db.sequelize.sync();
-    // tslint:disable-next-line:no-console
-    console.log(`Databases synced Successfully`);
+
     app.listen(port, "0.0.0.0", () => {
       // tslint:disable-next-line:no-console
       console.log(`Server running at port:${port}`);
@@ -93,6 +93,8 @@ const start = async (): Promise<void> => {
 };
 // Invokes the function to start the server
 void start();
+
+app.get("*", isCurrentUser);
 
 app.get("/", (req: Request, res: Response, err: any) => {
   res.send("E-Commerce Website Backend Service for Group#3 TAP-SD-0224");
@@ -108,7 +110,7 @@ app.use("/api/reviews", reviewRoutes);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {
-  res.redirect("/");
+  res.status(404).send("Page Not Found");
 });
 
 export default app;

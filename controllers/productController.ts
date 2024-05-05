@@ -52,11 +52,8 @@ const getAllProducts = async (req: Request, res: Response) => {
       })
     );
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
-    console.error("Error fetching products:", error);
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+
+    res.status(500).json({ error: "Internal server error", details: error.message });
   }
 };
 // This method filters the products based on the search-bar query
@@ -124,11 +121,8 @@ const filterProductsWithSearch = async (req: Request, res: Response) => {
 
     res.json(formattedProducts);
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
-    console.error("Error fetching products:", error);
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: error.message });
+
+    res.status(500).json({ error: "Internal server error", details: error.message });
   }
 };
 
@@ -178,8 +172,7 @@ const getProductById = async (req: Request, res: Response) => {
 
     res.json(normalizedProduct);
   } catch (error) {
-    // tslint:disable-next-line:no-console
-    console.error("Error finding product:", error);
+
     res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -236,8 +229,7 @@ const getProductsByCategoryId = async (req: Request, res: Response) => {
       res.json(normalizedProducts);
     })
     .catch((error: any) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error finding products by category ID:", error);
+
       res.status(500).json({ error: "Internal server error" });
     });
 };
@@ -294,8 +286,6 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
       res.json(normalizedProducts);
     })
     .catch((error: any) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error finding products by brand ID:", error);
       res.status(500).json({ error: "Internal server error" });
     });
 };
@@ -303,7 +293,7 @@ const getProductsByBrandId = async (req: Request, res: Response) => {
 // This method creates a new product
 const createNewProduct = async (req: Request, res: Response) => {
   try {
-    const { error, value } = await productSchema.validateAsync(req.body);
+    await productSchema.validateAsync(req.body);
   } catch (error: any) {
     return res.status(400).json(error.details[0].message);
   }
@@ -348,7 +338,7 @@ const createNewProduct = async (req: Request, res: Response) => {
       where: { name: brandName.toLowerCase() },
       defaults: {
         name: brandName,
-        image: "image",
+        image: "imageUrl",
         createdAt: Date.now(),
         updatedAt: Date.now(),
       },
@@ -358,8 +348,9 @@ const createNewProduct = async (req: Request, res: Response) => {
       where: { name: categoryName },
     });
     await newProduct.setCategory(category);
+    await newProduct.setBrand(newBrand);
 
-    res.json(newProduct);
+    res.status(201).json(newProduct);
   } catch {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -419,8 +410,6 @@ const getNewArrivals = async (req: Request, res: Response) => {
       res.json(normalizedProducts);
     })
     .catch((error: Error) => {
-      // tslint:disable-next-line:no-console
-      console.error("Error retrieving new arrival products:", error);
       res.status(500).json({ error: "Database error", details: error.message });
     });
 };
@@ -501,8 +490,6 @@ const getHandPickedProducts = async (
       res.json(handPickedProducts);
     }
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
-    console.error("Error retrieving handpicked products:", error);
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
@@ -585,8 +572,7 @@ const getHandPickedProductsByCategory = async (
       res.json(handPickedProducts);
     }
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
-    console.error("Error retrieving handpicked products:", error);
+
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
@@ -775,8 +761,7 @@ const getPopularProducts = async (
       res.json(PopularProducts);
     }
   } catch (error: any) {
-    // tslint:disable-next-line:no-console
-    console.error("Error retrieving Popular products:", error);
+
     res.status(500).json({ error: "Database error", details: error.message });
   }
 };
