@@ -61,21 +61,24 @@ const options = {
         email: "info@email.com",
       },
     },
-    servers: [
+    servers:
       {
         url: "https://backend-final-3.onrender.com",
       },
-    ],
+
   },
-  apis: ["./routes/*.ts", "./models/*.ts"],
+  apis: ["./dist/routes/*.js", "./dist/models/*.js"],
+
 };
 
 const specs = swaggerJsdoc(options);
+// use Swagger for API-Documentation
 app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(specs, { explorer: true })
 );
+
 const start = async (): Promise<void> => {
   try {
     await db.sequelize.sync();
