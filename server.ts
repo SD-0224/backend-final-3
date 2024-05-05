@@ -67,17 +67,12 @@ const options = {
       },
 
   },
-  paths: ["./dist/routes/*.js", "./dist/models/*.js"],
+  apis: ["./routes/*.ts", "./models/*.ts"],
 
 };
 
 const specs = swaggerJsdoc(options);
-// use Swagger for API-Documentation
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs, { explorer: true })
-);
+
 
 const start = async (): Promise<void> => {
   try {
@@ -110,6 +105,13 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
+
+// use Swagger for API-Documentation
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {
