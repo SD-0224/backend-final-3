@@ -1,3 +1,45 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Category:
+ *       type: object
+ *       required:
+ *         - name
+ *         - homeImage
+ *         - categoryImage
+ *         - title
+ *         - subtitle
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the category
+ *         name:
+ *           type: string
+ *           description: The name of the category
+ *         homeImage:
+ *           type: string
+ *           description: The URL of the home image for the category
+ *         categoryImage:
+ *           type: string
+ *           description: The URL of the category image
+ *         title:
+ *           type: string
+ *           description: The title of the category
+ *         subtitle:
+ *           type: string
+ *           description: The subtitle of the category
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the category was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the category was last updated
+ */
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { v4 as uuidv4 } from 'uuid';
 

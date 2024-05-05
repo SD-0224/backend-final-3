@@ -1,3 +1,52 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       required:
+ *         - title
+ *         - longSubtitle
+ *         - description
+ *         - price
+ *         - quantity
+ *         - discountPercentage
+ *         - createdAt
+ *         - updatedAt
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the product
+ *         title:
+ *           type: string
+ *           description: The title of the product
+ *         longSubtitle:
+ *           type: string
+ *           description: The long subtitle of the product
+ *         shortSubtitle:
+ *           type: string
+ *           description: The short subtitle of the product
+ *         description:
+ *           type: string
+ *           description: The description of the product
+ *         price:
+ *           type: number
+ *           description: The price of the product
+ *         quantity:
+ *           type: integer
+ *           description: The quantity of the product
+ *         discountPercentage:
+ *           type: integer
+ *           description: The discount percentage of the product
+ *         createdAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the product was created
+ *         updatedAt:
+ *           type: integer
+ *           format: int64
+ *           description: The timestamp when the product was last updated
+ */
 import { DataTypes, Model, Sequelize } from "sequelize";
 import { v4 as uuidv4 } from "uuid";
 
@@ -29,43 +78,43 @@ module.exports = (sequelize: Sequelize) => {
 
     static associate(models: any) {
       Product.hasMany(models.Review, {
-        as: 'reviews',
+        as: "reviews",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "productId",
       });
       Product.hasMany(models.ProductImage, {
-        as: 'images',
+        as: "images",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "productId",
       });
       Product.belongsTo(models.Category, {
-        as: 'category',
+        as: "category",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "categoryId",
       });
       Product.belongsTo(models.Brand, {
-        as: 'brand',
+        as: "brand",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "brandId",
       });
       Product.belongsTo(models.Cart, {
-        as: 'cart',
+        as: "cart",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "cartId",
       });
       Product.belongsTo(models.Wishlist, {
-        as: 'wishlist',
+        as: "wishlist",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
         foreignKey: "wishlistId",
       });
       Product.belongsToMany(models.Order, {
-        as: 'orders',
+        as: "orders",
         through: "productOrders",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",

@@ -11,8 +11,10 @@ import categoryRoutes from "./routes/categoryRoutes";
 import orderRoutes from "./routes/orderRoutes";
 import brandRoutes from "./routes/brandRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
-import {cronJob} from "./utils/cronJob"
-import {isCurrentUser} from './middleware/auth'
+import { cronJob } from "./utils/cronJob";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { isCurrentUser } from "./middleware/auth";
 
 // initialize configuration
 dotenv.config();
@@ -36,17 +38,49 @@ app.use(express.json());
 
 // port is now available to the Node.js runtime
 // as if it were an environment variable
-const port:any = process.env.SERVER_PORT;
-
+const port: any = process.env.SERVER_PORT;
 
 // Start the cron job every 14 minutes to keep our live website active on render
 cronJob.start();
 
+const options = {
+  definition: {
+    openapi: "3.1.0",
+    info: {
+      title: "LogRocket Express API with Swagger",
+      version: "0.1.0",
+      description:
+        "This is a simple CRUD API application made with Express and documented with Swagger",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      },
+      contact: {
+        name: "LogRocket",
+        url: "https://logrocket.com",
+        email: "info@email.com",
+      },
+    },
+    servers: [
+      {
+        url: "https://backend-final-3.onrender.com",
+      },
+    ],
+  },
+  apis: ["./routes/*.ts", "./models/*.ts"],
+};
+
+const specs = swaggerJsdoc(options);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+);
 const start = async (): Promise<void> => {
   try {
     await db.sequelize.sync();
 
-    app.listen(port,'0.0.0.0', () => {
+    app.listen(port, "0.0.0.0", () => {
       // tslint:disable-next-line:no-console
       console.log(`Server running at port:${port}`);
     });
@@ -60,8 +94,7 @@ const start = async (): Promise<void> => {
 // Invokes the function to start the server
 void start();
 
-app.get('*', isCurrentUser);
-
+app.get("*", isCurrentUser);
 
 app.get("/", (req: Request, res: Response, err: any) => {
   res.send("E-Commerce Website Backend Service for Group#3 TAP-SD-0224");
@@ -77,7 +110,7 @@ app.use("/api/reviews", reviewRoutes);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {
-  res.status(404).send('Page Not Found');
+  res.status(404).send("Page Not Found");
 });
 
 export default app;
