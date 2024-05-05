@@ -67,7 +67,7 @@ const options = {
       },
 
   },
-  apis: ["./dist/routes/*.js", "./dist/models/*.js"],
+  paths: ["./dist/routes/*.js", "./dist/models/*.js"],
 
 };
 
