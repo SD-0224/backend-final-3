@@ -61,19 +61,21 @@ const options = {
         email: "info@email.com",
       },
     },
-    servers:
+    servers: [
       {
         url: "https://backend-final-3.onrender.com",
       },
-
+    ],
   },
   apis: ["./routes/*.ts", "./models/*.ts"],
-
 };
 
 const specs = swaggerJsdoc(options);
-
-
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+);
 const start = async (): Promise<void> => {
   try {
     await db.sequelize.sync();
@@ -105,13 +107,6 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/brands", brandRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
-
-// use Swagger for API-Documentation
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs, { explorer: true })
-);
 
 // If route does not exist, redirect to the root
 app.use((req: Request, res: Response, err: any) => {
