@@ -49,4 +49,4 @@ To run all tests every 24 H
 ### npm run test_pr
 To run all tests required for every pull request
 
-## Refer to API documentation to learn more about available endpoints
+## Refer to Swagger-API documentation to learn more about available endpoints
