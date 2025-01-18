@@ -1,52 +1,104 @@
-# Backend servie of E-Commerce Website Final Project-Group#3
+# Backend Service for E-Commerce Website Final Project - Group #3
 
-This repo is for backend service of E-Commerce website as a requirement of TAP graduation software development cohort
+This repository contains the backend service for the E-Commerce website, developed as part of the TAP graduation software development cohort.
 
-## Live website
-https://backend-final-3.onrender.com
+## Live Website
+Access the live backend service at:
+[https://backend-final-3.onrender.com](https://backend-final-3.onrender.com)
 
-## Scripts
+## Technologies Used
+- **Backend Framework**: Express.js
+- **Frontend Framework**: React.js (Different repo)
+- **Database**: MySQL with Sequelize ORM
+- **Authentication**: JSON Web Tokens (JWT)
+- **Deployment Platforms**: Render.com and Clever-Cloud
+- **Collaboration Tools**: GitHub and GitHub Projects
 
-### npm install
-To install all required dependencies
+## Installation and Setup
+Follow the steps below to set up and run the project:
 
-### npm run migrate
-To run migration files
+### Install Dependencies
+```bash
+npm install
+```
 
-### npm run seed
-To run seeder files
+### Database Migrations
+- Run migration files:
+  ```bash
+  npm run migrate
+  ```
+- Revert a specific migration:
+  ```bash
+  npm run migrate:undo
+  ```
+- Revert all migrations:
+  ```bash
+  npm run migrate:undo-all
+  ```
 
-### npm run migrate:undo
-To revert a specific migration
+### Seed Database
+Populate the database with initial data:
+```bash
+npm run seed
+```
 
-### npm run migrate:undo-all
-To revert all migrations
+### Build for Production
+- Remove the `dist` folder:
+  ```bash
+  npm run clean
+  ```
+- Copy production assets:
+  ```bash
+  npm run copy-assets
+  ```
+- Run ESLint for code quality checks:
+  ```bash
+  npm run lint
+  ```
+- Compile TypeScript to JavaScript:
+  ```bash
+  npm run tsc
+  ```
+- Build the `dist` folder by running all the above steps:
+  ```bash
+  npm run build
+  ```
 
-### npm run clean
-To remove the dist folder (JS)
+### Start the Server
+- For production:
+  ```bash
+  npm run start
+  ```
+- For development:
+  ```bash
+  npm run serve
+  ```
 
-### npm run copy-assets
-To copy any files/folders required for production
+### Testing
+- Run all tests every 24 hours:
+  ```bash
+  npm run test
+  ```
+- Run tests for pull requests:
+  ```bash
+  npm run test_pr
+  ```
 
-### npm run lint
-To run eslint 
+## API Documentation
+Refer to the API documentation to explore available endpoints and their usage. Ensure you have the appropriate authentication tokens for accessing secure endpoints.
 
-### npm run tsc
-To run TypeScript Compiler 
+## Contributions
+Team collaboration is managed through GitHub and GitHub Projects. Please follow the contribution guidelines to ensure smooth development workflows.
 
-### npm run build
-To build the dist folder for production by running all clean,lint,tsc,copy-assets
+## Deployment
+The service is deployed on:
+- **Render.com**
+- **Clever-Cloud**
 
-### npm run start
-To run ./dist/server.js
+For deployment instructions and updates, refer to the respective platform documentation.
 
-### npm run serve
-To run server.ts for development
+---
 
-### npm run test
-To run all tests every 24 H
+For any questions or support, feel free to open an issue or contact the maintainers.
 
-### npm run test_pr
-To run all tests required for every pull request
 
-## Refer to API documentation to learn more about available endpoints
