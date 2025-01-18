@@ -1,11 +1,12 @@
-## This is a guid on how to use our swagger ui documentation
+## This is a guide on how to use our swagger API-UI documentation
 
 ## Important Note:
 
-    in order to open our swagger UI documentation
+    in order to open our swagger API-UI documentation
     *step 1 : you need to clone our repository. -> (url : "https://github.com/SD-0224/backend-final-3.git")
-    *step 2 : run it using "npm start"
-    *step 3 : the swagger UI documentation will be available on "http://localhost:3000/api-docs/"
+    *step 2 : install libraries "npm install"
+    *step 3 : run it using "npm start"
+    *step 4 : the swagger API-UI documentation will be available on "http://localhost:3000/api-docs/"
 
 ## Must Read! :
 
